@@ -11,3 +11,6 @@ os.arch=aarch64
 os.version=13.1
 derby.system.home=null
 Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Mon Mar 27 11:41:56 CEST 2023:
+Shutting down instance a816c00e-0187-2261-01c5-0000050ec1d0 on database directory memory:/Users/luisruiznunez/Documents/GitHub/SkyBank/skybank/58b16feb-19e2-408f-a6f6-a26b15e85e6a with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@251a69d7 
