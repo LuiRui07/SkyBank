@@ -6,7 +6,7 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Mensaje", schema = "skybank", catalog = "")
+@Table(name = "mensaje", schema = "skybank", catalog = "")
 public class MensajeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -22,8 +22,8 @@ public class MensajeEntity {
     @Column(name = "texto", nullable = false, length = 255)
     private String texto;
     @ManyToOne
-    @JoinColumn(name = "Conversacion_idConversacion", referencedColumnName = "idConversacion", nullable = false)
-    private ConversacionEntity conversacionByConversacionIdConversacion;
+    @JoinColumn(name = "idConversacion", referencedColumnName = "idConversacion", nullable = false)
+    private ConversacionEntity conversacionByIdConversacion;
 
     public Integer getIdMensaje() {
         return idMensaje;
@@ -70,11 +70,11 @@ public class MensajeEntity {
         return Objects.hash(idMensaje, fecha, hora, texto);
     }
 
-    public ConversacionEntity getConversacionByConversacionIdConversacion() {
-        return conversacionByConversacionIdConversacion;
+    public ConversacionEntity getConversacionByIdConversacion() {
+        return conversacionByIdConversacion;
     }
 
-    public void setConversacionByConversacionIdConversacion(ConversacionEntity conversacionByConversacionIdConversacion) {
-        this.conversacionByConversacionIdConversacion = conversacionByConversacionIdConversacion;
+    public void setConversacionByIdConversacion(ConversacionEntity conversacionByIdConversacion) {
+        this.conversacionByIdConversacion = conversacionByIdConversacion;
     }
 }

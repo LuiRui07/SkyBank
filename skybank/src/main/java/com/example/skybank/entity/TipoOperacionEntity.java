@@ -1,10 +1,11 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Tipo-Operacion", schema = "skybank", catalog = "")
+@Table(name = "tipo-operacion", schema = "skybank", catalog = "")
 public class TipoOperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -13,6 +14,8 @@ public class TipoOperacionEntity {
     @Basic
     @Column(name = "Tipo", nullable = true, length = 45)
     private String tipo;
+    @OneToMany(mappedBy = "tipoOperacionByTipoOperacionId")
+    private List<OperacionEntity> operacionsById;
 
     public Integer getId() {
         return id;
@@ -41,5 +44,13 @@ public class TipoOperacionEntity {
     @Override
     public int hashCode() {
         return Objects.hash(id, tipo);
+    }
+
+    public List<OperacionEntity> getOperacionsById() {
+        return operacionsById;
+    }
+
+    public void setOperacionsById(List<OperacionEntity> operacionsById) {
+        this.operacionsById = operacionsById;
     }
 }

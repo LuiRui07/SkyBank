@@ -1,11 +1,11 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Cliente", schema = "skybank", catalog = "")
+@Table(name = "cliente", schema = "skybank", catalog = "")
 public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -20,10 +20,16 @@ public class ClienteEntity {
     @Basic
     @Column(name = "Edad", nullable = false)
     private Integer edad;
-    @OneToMany(mappedBy = "clienteByClienteIdCliente")
-    private Collection<ConversacionEntity> conversacionsByIdCliente;
-    @OneToMany(mappedBy = "clienteByClienteIdCliente")
-    private Collection<CuentaEntity> cuentasByIdCliente;
+    @Basic
+    @Column(name = "Direccion", nullable = true, length = 100)
+    private String direccion;
+    @Basic
+    @Column(name = "Email", nullable = true, length = 100)
+    private String email;
+    @OneToMany(mappedBy = "clienteByIdCliente")
+    private List<ConversacionEntity> conversacionsByIdCliente;
+    @OneToMany(mappedBy = "clienteByIdCliente")
+    private List<CuentaEntity> cuentasByIdCliente;
 
     public Integer getIdCliente() {
         return idCliente;
@@ -57,32 +63,48 @@ public class ClienteEntity {
         this.edad = edad;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClienteEntity that = (ClienteEntity) o;
-        return Objects.equals(idCliente, that.idCliente) && Objects.equals(nombre, that.nombre) && Objects.equals(apellidos, that.apellidos) && Objects.equals(edad, that.edad);
+        return Objects.equals(idCliente, that.idCliente) && Objects.equals(nombre, that.nombre) && Objects.equals(apellidos, that.apellidos) && Objects.equals(edad, that.edad) && Objects.equals(direccion, that.direccion) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCliente, nombre, apellidos, edad);
+        return Objects.hash(idCliente, nombre, apellidos, edad, direccion, email);
     }
 
-    public Collection<ConversacionEntity> getConversacionsByIdCliente() {
+    public List<ConversacionEntity> getConversacionsByIdCliente() {
         return conversacionsByIdCliente;
     }
 
-    public void setConversacionsByIdCliente(Collection<ConversacionEntity> conversacionsByIdCliente) {
+    public void setConversacionsByIdCliente(List<ConversacionEntity> conversacionsByIdCliente) {
         this.conversacionsByIdCliente = conversacionsByIdCliente;
     }
 
-    public Collection<CuentaEntity> getCuentasByIdCliente() {
+    public List<CuentaEntity> getCuentasByIdCliente() {
         return cuentasByIdCliente;
     }
 
-    public void setCuentasByIdCliente(Collection<CuentaEntity> cuentasByIdCliente) {
+    public void setCuentasByIdCliente(List<CuentaEntity> cuentasByIdCliente) {
         this.cuentasByIdCliente = cuentasByIdCliente;
     }
 }

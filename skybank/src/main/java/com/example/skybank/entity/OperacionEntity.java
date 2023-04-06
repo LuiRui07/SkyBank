@@ -5,29 +5,27 @@ import java.sql.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Operacion", schema = "skybank", catalog = "")
-@IdClass(OperacionEntityPK.class)
+@Table(name = "operacion", schema = "skybank", catalog = "")
 public class OperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idoperación", nullable = false)
     private Integer idoperación;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
-    @Column(name = "Cuenta_idCuenta1", nullable = false)
-    private Integer cuentaIdCuenta1;
     @Basic
     @Column(name = "fecha", nullable = false)
     private Date fecha;
     @ManyToOne
-    @JoinColumn(name = "Cuenta_idCuenta", referencedColumnName = "idCuenta")
-    private CuentaEntity cuentaByCuentaIdCuenta;
+    @JoinColumn(name = "idGestor", referencedColumnName = "idGestor")
+    private GestorEntity gestorByIdGestor;
     @ManyToOne
-    @JoinColumn(name = "Cuenta_idCuenta1", referencedColumnName = "idCuenta", nullable = false)
-    private CuentaEntity cuentaByCuentaIdCuenta1;
+    @JoinColumn(name = "TipoOperacionId", referencedColumnName = "id", nullable = false)
+    private TipoOperacionEntity tipoOperacionByTipoOperacionId;
     @ManyToOne
-    @JoinColumn(name = "Gestor_idGestor", referencedColumnName = "idGestor", nullable = false)
-    private GestorEntity gestorByGestorIdGestor;
+    @JoinColumn(name = "idCuenta2", referencedColumnName = "idCuenta")
+    private CuentaEntity cuentaByIdCuenta2;
+    @ManyToOne
+    @JoinColumn(name = "idCuenta", referencedColumnName = "idCuenta", nullable = false)
+    private CuentaEntity cuentaByIdCuenta;
 
     public Integer getIdoperación() {
         return idoperación;
@@ -35,14 +33,6 @@ public class OperacionEntity {
 
     public void setIdoperación(Integer idoperación) {
         this.idoperación = idoperación;
-    }
-
-    public Integer getCuentaIdCuenta1() {
-        return cuentaIdCuenta1;
-    }
-
-    public void setCuentaIdCuenta1(Integer cuentaIdCuenta1) {
-        this.cuentaIdCuenta1 = cuentaIdCuenta1;
     }
 
     public Date getFecha() {
@@ -58,35 +48,43 @@ public class OperacionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OperacionEntity that = (OperacionEntity) o;
-        return Objects.equals(idoperación, that.idoperación) && Objects.equals(cuentaIdCuenta1, that.cuentaIdCuenta1) && Objects.equals(fecha, that.fecha);
+        return Objects.equals(idoperación, that.idoperación) && Objects.equals(fecha, that.fecha);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idoperación, cuentaIdCuenta1, fecha);
+        return Objects.hash(idoperación, fecha);
     }
 
-    public CuentaEntity getCuentaByCuentaIdCuenta() {
-        return cuentaByCuentaIdCuenta;
+    public GestorEntity getGestorByIdGestor() {
+        return gestorByIdGestor;
     }
 
-    public void setCuentaByCuentaIdCuenta(CuentaEntity cuentaByCuentaIdCuenta) {
-        this.cuentaByCuentaIdCuenta = cuentaByCuentaIdCuenta;
+    public void setGestorByIdGestor(GestorEntity gestorByIdGestor) {
+        this.gestorByIdGestor = gestorByIdGestor;
     }
 
-    public CuentaEntity getCuentaByCuentaIdCuenta1() {
-        return cuentaByCuentaIdCuenta1;
+    public TipoOperacionEntity getTipoOperacionByTipoOperacionId() {
+        return tipoOperacionByTipoOperacionId;
     }
 
-    public void setCuentaByCuentaIdCuenta1(CuentaEntity cuentaByCuentaIdCuenta1) {
-        this.cuentaByCuentaIdCuenta1 = cuentaByCuentaIdCuenta1;
+    public void setTipoOperacionByTipoOperacionId(TipoOperacionEntity tipoOperacionByTipoOperacionId) {
+        this.tipoOperacionByTipoOperacionId = tipoOperacionByTipoOperacionId;
     }
 
-    public GestorEntity getGestorByGestorIdGestor() {
-        return gestorByGestorIdGestor;
+    public CuentaEntity getCuentaByIdCuenta2() {
+        return cuentaByIdCuenta2;
     }
 
-    public void setGestorByGestorIdGestor(GestorEntity gestorByGestorIdGestor) {
-        this.gestorByGestorIdGestor = gestorByGestorIdGestor;
+    public void setCuentaByIdCuenta2(CuentaEntity cuentaByIdCuenta2) {
+        this.cuentaByIdCuenta2 = cuentaByIdCuenta2;
+    }
+
+    public CuentaEntity getCuentaByIdCuenta() {
+        return cuentaByIdCuenta;
+    }
+
+    public void setCuentaByIdCuenta(CuentaEntity cuentaByIdCuenta) {
+        this.cuentaByIdCuenta = cuentaByIdCuenta;
     }
 }

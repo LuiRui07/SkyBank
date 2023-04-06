@@ -1,18 +1,18 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Asistente", schema = "skybank", catalog = "")
+@Table(name = "asistente", schema = "skybank", catalog = "")
 public class AsistenteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idAsistente", nullable = false)
     private Integer idAsistente;
-    @OneToMany(mappedBy = "asistenteByAsistenteIdAsistente")
-    private Collection<ConversacionEntity> conversacionsByIdAsistente;
+    @OneToMany(mappedBy = "asistenteByIdAsistente")
+    private List<ConversacionEntity> conversacionsByIdAsistente;
 
     public Integer getIdAsistente() {
         return idAsistente;
@@ -35,11 +35,11 @@ public class AsistenteEntity {
         return Objects.hash(idAsistente);
     }
 
-    public Collection<ConversacionEntity> getConversacionsByIdAsistente() {
+    public List<ConversacionEntity> getConversacionsByIdAsistente() {
         return conversacionsByIdAsistente;
     }
 
-    public void setConversacionsByIdAsistente(Collection<ConversacionEntity> conversacionsByIdAsistente) {
+    public void setConversacionsByIdAsistente(List<ConversacionEntity> conversacionsByIdAsistente) {
         this.conversacionsByIdAsistente = conversacionsByIdAsistente;
     }
 }

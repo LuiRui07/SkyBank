@@ -1,11 +1,11 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Conversacion", schema = "skybank", catalog = "")
+@Table(name = "conversacion", schema = "skybank", catalog = "")
 public class ConversacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -15,13 +15,13 @@ public class ConversacionEntity {
     @Column(name = "Cerrada", nullable = false)
     private Integer cerrada;
     @ManyToOne
-    @JoinColumn(name = "Cliente_idCliente", referencedColumnName = "idCliente", nullable = false)
-    private ClienteEntity clienteByClienteIdCliente;
+    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", nullable = false)
+    private ClienteEntity clienteByIdCliente;
     @ManyToOne
-    @JoinColumn(name = "Asistente_idAsistente", referencedColumnName = "idAsistente", nullable = false)
-    private AsistenteEntity asistenteByAsistenteIdAsistente;
-    @OneToMany(mappedBy = "conversacionByConversacionIdConversacion")
-    private Collection<MensajeEntity> mensajesByIdConversacion;
+    @JoinColumn(name = "idAsistente", referencedColumnName = "idAsistente", nullable = false)
+    private AsistenteEntity asistenteByIdAsistente;
+    @OneToMany(mappedBy = "conversacionByIdConversacion")
+    private List<MensajeEntity> mensajesByIdConversacion;
 
     public Integer getIdConversacion() {
         return idConversacion;
@@ -52,27 +52,27 @@ public class ConversacionEntity {
         return Objects.hash(idConversacion, cerrada);
     }
 
-    public ClienteEntity getClienteByClienteIdCliente() {
-        return clienteByClienteIdCliente;
+    public ClienteEntity getClienteByIdCliente() {
+        return clienteByIdCliente;
     }
 
-    public void setClienteByClienteIdCliente(ClienteEntity clienteByClienteIdCliente) {
-        this.clienteByClienteIdCliente = clienteByClienteIdCliente;
+    public void setClienteByIdCliente(ClienteEntity clienteByIdCliente) {
+        this.clienteByIdCliente = clienteByIdCliente;
     }
 
-    public AsistenteEntity getAsistenteByAsistenteIdAsistente() {
-        return asistenteByAsistenteIdAsistente;
+    public AsistenteEntity getAsistenteByIdAsistente() {
+        return asistenteByIdAsistente;
     }
 
-    public void setAsistenteByAsistenteIdAsistente(AsistenteEntity asistenteByAsistenteIdAsistente) {
-        this.asistenteByAsistenteIdAsistente = asistenteByAsistenteIdAsistente;
+    public void setAsistenteByIdAsistente(AsistenteEntity asistenteByIdAsistente) {
+        this.asistenteByIdAsistente = asistenteByIdAsistente;
     }
 
-    public Collection<MensajeEntity> getMensajesByIdConversacion() {
+    public List<MensajeEntity> getMensajesByIdConversacion() {
         return mensajesByIdConversacion;
     }
 
-    public void setMensajesByIdConversacion(Collection<MensajeEntity> mensajesByIdConversacion) {
+    public void setMensajesByIdConversacion(List<MensajeEntity> mensajesByIdConversacion) {
         this.mensajesByIdConversacion = mensajesByIdConversacion;
     }
 }
