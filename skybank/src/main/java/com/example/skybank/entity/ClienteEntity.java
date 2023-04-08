@@ -12,6 +12,9 @@ public class ClienteEntity {
     @Column(name = "idCliente", nullable = false)
     private Integer idCliente;
     @Basic
+    @Column(name = "DNI", nullable = false, length = 45)
+    private String dni;
+    @Basic
     @Column(name = "Nombre", nullable = false, length = 45)
     private String nombre;
     @Basic
@@ -21,11 +24,14 @@ public class ClienteEntity {
     @Column(name = "Edad", nullable = false)
     private Integer edad;
     @Basic
-    @Column(name = "Direccion", nullable = true, length = 100)
+    @Column(name = "Direccion", nullable = false, length = 100)
     private String direccion;
     @Basic
-    @Column(name = "Email", nullable = true, length = 100)
+    @Column(name = "Email", nullable = false, length = 100)
     private String email;
+    @Basic
+    @Column(name = "password", nullable = false, length = 45)
+    private String password;
     @OneToMany(mappedBy = "clienteByIdCliente")
     private List<ConversacionEntity> conversacionsByIdCliente;
     @OneToMany(mappedBy = "clienteByIdCliente")
@@ -37,6 +43,14 @@ public class ClienteEntity {
 
     public void setIdCliente(Integer idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -79,17 +93,25 @@ public class ClienteEntity {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClienteEntity that = (ClienteEntity) o;
-        return Objects.equals(idCliente, that.idCliente) && Objects.equals(nombre, that.nombre) && Objects.equals(apellidos, that.apellidos) && Objects.equals(edad, that.edad) && Objects.equals(direccion, that.direccion) && Objects.equals(email, that.email);
+        return Objects.equals(idCliente, that.idCliente) && Objects.equals(dni, that.dni) && Objects.equals(nombre, that.nombre) && Objects.equals(apellidos, that.apellidos) && Objects.equals(edad, that.edad) && Objects.equals(direccion, that.direccion) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCliente, nombre, apellidos, edad, direccion, email);
+        return Objects.hash(idCliente, dni, nombre, apellidos, edad, direccion, email, password);
     }
 
     public List<ConversacionEntity> getConversacionsByIdCliente() {
