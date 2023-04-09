@@ -1,12 +1,4 @@
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: guzman
-  Date: 20/2/23
-  Time: 13:16
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
@@ -17,22 +9,85 @@
 
     <h1>Registro de la empresa:</h1>
 
-    <form:form modelAttribute="nuevaEmpresa" method="post" action="/" cssStyle="display: flex; flex-direction: column;">
-        <span>Nombre de la Empresa:</span>
-        <form:input path="Nombre"></form:input>
-        <br>
-        <span>Email Corporativo:</span>
-        <form:input path="EmailCorporativo"></form:input>
+    <form:form method="post" action="/empresa/crearEmpresa" modelAttribute="empresa"  cssStyle="display: flex; flex-direction: column;">
+
+        <div>
+            <h2> Datos de la empresa</h2>
+            <div>
+                <span>CIF (*):</span>
+                <form:input path="cif"></form:input>
+            </div>
+
+            <div>
+                <span>Nombre de la Empresa (*):</span>
+                <form:input path="nombre"></form:input>
+            </div>
+
+            <div>
+                <span>Email Corporativo:</span>
+                <form:input path="emailCorporativo"></form:input>
+            </div>
+
+        </div>
+
+
         <br>
 
-        <span>Contraseña Corporativa:</span>
-        <form:input path="passwordEmpresa"></form:input>
-        <br>
+        <div>
+            <h2>Dirección</h2>
+            <div style="display: flex;">
+                <div>
+                    <span>Calle(*):</span>
+                    <form:input path="calle"></form:input>
+                </div>
 
-        <span>Repite la Contraseña Corporativa:</span>
-        <form:input path="passwordEmpresa"></form:input>
-        <br>
-        <form:button> Registrar</form:button>
+                <div>
+                    <span>Número(*):</span>
+                    <form:input type="number" path="numero"></form:input>
+
+                </div>
+            </div>
+            <div>
+                <span>Planta/Puerta/Ofcina (*):</span>
+                <form:input type="number" path="planta"></form:input>
+            </div>
+
+            <div style="display: flex;">
+                <div>
+                    <span>Ciudad(*):</span>
+                    <form:input path="ciudad"></form:input>
+                </div>
+
+                <div>
+                    <span>Región:</span>
+                    <form:input path="region"></form:input>
+
+                </div>
+            </div>
+
+            <div style="display: flex;">
+                <div>
+                    <span>País(*):</span>
+                    <form:input path="pais"></form:input>
+                </div>
+
+                <div>
+                    <span>C.P.(*):</span>
+                    <form:input path="cp"></form:input>
+
+                </div>
+            </div>
+
+        <div style="margin-top: 10px; align-items: center">
+            <span>Contraseña:</span>
+            <form:input type="password" path="passwordEmpresa"></form:input>
+            <br>
+        <div>
+
+
+
+
+        <form:button>Registrar</form:button>
     </form:form>
 
 </body>

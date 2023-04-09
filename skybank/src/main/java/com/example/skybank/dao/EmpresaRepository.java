@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface EmpresaRepository extends JpaRepository<EmpresaEntity,Integer> {
 
-    @Query("select e from EmpresaEntity e where e.nombre = :name and e.passwordEmpresa = : contra")
-    public EmpresaRepository autenticar(@Param("nombre") String name,@Param("contra") String contra);
+    @Query("select e from EmpresaEntity e where e.nombre = :user and e.passwordEmpresa = :password")
+    EmpresaEntity autenticar(@Param("user") String name,@Param("password") String contra);
 }

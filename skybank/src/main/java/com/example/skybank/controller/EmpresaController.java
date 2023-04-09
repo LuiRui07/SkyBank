@@ -14,18 +14,29 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/empresa")
 public class EmpresaController {
 
-
     @Autowired
     private EmpresaRepository empresaRepository;
 
+    @GetMapping("/")
+    public String mostrarEmpresa(Model model,HttpSession sesion){
+        EmpresaEntity empresa = (EmpresaEntity) sesion.getAttribute("empresa");
+        if(empresa == null){
+            return "redirect:/empresa/login";
+        }else{
+            model.addAttribute("empresa",empresa);
+            return "empresa";
+        }
+    }
+
     @GetMapping("/register")
     public String registrarEmpresa(Model model){
-        model.addAttribute("nuevaEmpresa" , new EmpresaEntity());
+        model.addAttribute("empresa" , new EmpresaEntity());
         return "registerEmpresa";
     }
 
-    @PostMapping("/register")
-    public String registrarEmpresa(@ModelAttribute("nuevaEmpresa") EmpresaEntity empresa){
+    @PostMapping("/crearEmpresa")
+    public String registrarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa){
+        System.out.println(empresa.getIdEmpresa());
         empresaRepository.save(empresa);
         return "redirect:/empresa/login";
     }
@@ -36,12 +47,16 @@ public class EmpresaController {
     }
 
     @PostMapping("/login")
-    public String String(@RequestParam("nombre") String nombre , @RequestParam("password") String pass
+    public String String(@RequestParam("nombre") String user, @RequestParam("password") String password
             ,HttpSession sesion,Model modelo){
 
         String urlTo = "redirect:/empresa/";
 
-        EmpresaEntity empresa = (EmpresaEntity) empresaRepository.autenticar(nombre,pass);
+        System.out.println(user);
+        System.out.println(password);
+
+        EmpresaEntity empresa = (EmpresaEntity) empresaRepository.autenticar(user,password);
+
         if(empresa == null){
             modelo.addAttribute("error", "Empresa no encontrada");
             urlTo = "loginEmpresa";

@@ -23,17 +23,17 @@
         </p>
     </c:if>
 
-    <form:form method="post" action="/" cssStyle="display: flex; flex-direction: column;">
-        <span>Nombre de la Empresa:</span>
-        <form:input path="Nombre"></form:input>
+    <form method="post" action="/empresa/login" style="display: flex; flex-direction: column;">
+        <label for="nombre">Nombre de la Empresa:</label>
+        <input id="nombre" name="nombre"/>
         <br>
 
-        <span>Nombre de la Empresa:</span>
-        <form:input path="passwordEmpresa"></form:input>
+        <label for="password">Contraseña:</label>
+        <input id="password" type="password" name="password"/>
         <br>
 
-        <form:button> Iniciar Sesión</form:button>
-    </form:form>
+        <input type="submit" value="Iniciar Sesión"/>
+    </form>
 
 </body>
 </html>
