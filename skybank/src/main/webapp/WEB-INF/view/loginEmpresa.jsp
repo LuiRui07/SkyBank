@@ -25,15 +25,17 @@
 
     <form method="post" action="/empresa/login" style="display: flex; flex-direction: column;">
         <label for="nombre">Nombre de la Empresa:</label>
-        <input id="nombre" name="nombre"/>
+        <input id="nombre" name="nombre" required/>
         <br>
 
         <label for="password">Contraseña:</label>
-        <input id="password" type="password" name="password"/>
+        <input id="password" type="password" name="password" required/>
         <br>
 
         <input type="submit" value="Iniciar Sesión"/>
     </form>
+
+    <a href="/empresa/register">¡Registrate como empresa!</a>
 
 </body>
 </html>

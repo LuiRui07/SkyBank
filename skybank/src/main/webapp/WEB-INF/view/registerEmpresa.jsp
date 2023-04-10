@@ -8,7 +8,6 @@
 <body>
 
     <h1>Registro de la empresa:</h1>
-
     <form:form method="post" action="/empresa/crearEmpresa" modelAttribute="empresa"  cssStyle="display: flex; flex-direction: column;">
 
         <div>
@@ -87,8 +86,11 @@
 
 
 
-        <form:button>Registrar</form:button>
+        <form:button style="margin-bottom:10px;">Registrar</form:button>
     </form:form>
+            <br>
+
+            <a  href="/empresa/login">¡Ya tengo una cuenta!</a>
 
 </body>
 </html>
