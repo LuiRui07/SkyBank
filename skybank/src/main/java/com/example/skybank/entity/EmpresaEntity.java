@@ -9,40 +9,40 @@ import java.util.Objects;
 public class EmpresaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idEmpresa", nullable = false)
+    @Column(name = "idempresa", nullable = false)
     private Integer idEmpresa;
     @Basic
-    @Column(name = "CIF", nullable = false, length = 100)
+    @Column(name = "cif", nullable = false, length = 100)
     private String cif;
     @Basic
-    @Column(name = "Nombre", nullable = false, length = 100)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Basic
-    @Column(name = "EmailCorporativo", nullable = false, length = 100)
+    @Column(name = "emailcorporativo", nullable = false, length = 100)
     private String emailCorporativo;
     @Basic
-    @Column(name = "passwordEmpresa", nullable = false, length = 100)
+    @Column(name = "passwordempresa", nullable = false, length = 100)
     private String passwordEmpresa;
     @Basic
-    @Column(name = "Calle", nullable = false, length = 100)
+    @Column(name = "calle", nullable = false, length = 100)
     private String calle;
     @Basic
-    @Column(name = "Numero", nullable = false)
+    @Column(name = "numero", nullable = false)
     private Integer numero;
     @Basic
-    @Column(name = "Planta", nullable = false)
+    @Column(name = "planta", nullable = false)
     private Integer planta;
     @Basic
-    @Column(name = "Ciudad", nullable = false, length = 100)
+    @Column(name = "ciudad", nullable = false, length = 100)
     private String ciudad;
     @Basic
-    @Column(name = "Pais", nullable = false, length = 100)
+    @Column(name = "pais", nullable = false, length = 100)
     private String pais;
     @Basic
-    @Column(name = "Region", nullable = true, length = 100)
+    @Column(name = "region", nullable = true, length = 100)
     private String region;
     @Basic
-    @Column(name = "CP", nullable = false)
+    @Column(name = "cp", nullable = false)
     private Integer cp;
     @OneToMany(mappedBy = "empresaByIdEmpresa")
     private List<AutorizadoEntity> autorizadosByIdEmpresa;

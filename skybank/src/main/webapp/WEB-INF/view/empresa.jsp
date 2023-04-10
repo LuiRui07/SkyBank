@@ -20,6 +20,8 @@
 <body>
 
     <h1> Datos de la empresa <%=empresa.getNombre()%></h1>
+    <h3><%=empresa.getPais()%></h3>
+    <h3><%=empresa.getEmailCorporativo()%></h3>
 
 
 </body>

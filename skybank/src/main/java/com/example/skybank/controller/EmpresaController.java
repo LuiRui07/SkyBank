@@ -52,8 +52,8 @@ public class EmpresaController {
 
         String urlTo = "redirect:/empresa/";
 
-        System.out.println(user);
-        System.out.println(password);
+        //System.out.println(user);
+        //System.out.println(password);
 
         EmpresaEntity empresa = (EmpresaEntity) empresaRepository.autenticar(user,password);
 
