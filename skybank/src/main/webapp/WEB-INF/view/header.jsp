@@ -8,10 +8,29 @@
 </c:if>
 
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div style="width: 100%;">
+        <a class="navbar-brand" href="/empresa/">Bienvenido, ${empresa.getNombre()} </a>
+        <ul style=" float: right;margin: 0;padding: 0;list-style: none; display: flex; gap: 15px; align-items: center">
 
-<table style="border: 0px; width: 100%; background-color: grey; padding: 10px;">
-  <tr>
-    <td>Bienvenido, ${empresa.getNombre()} </td>
-    <td><a style="float: right; text-decoration: none; color: black;" href="/empresa/logout">Salir</a></td>
-  </tr>
-</table>
+            <li>
+                <a  class="navbar-text" href="/empresa/transferencias/">Hacer Transferencia</a>
+            </li>
+
+            <li>
+                <a  class="navbar-text" href="/empresa/socios">Socios/Autorizados</a>
+            </li>
+
+
+            <li>
+                <a  class="navbar-text" href="/empresa/datos">Mi cuenta</a>
+            </li>
+
+            <li>
+                <a  class="navbar-text" style="color: red;" href="/empresa/logout">Salir</a>
+            </li>
+        </ul>
+    </div>
+
+</nav>
+

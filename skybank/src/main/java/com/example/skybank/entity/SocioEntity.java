@@ -11,13 +11,13 @@ public class SocioEntity {
     @Column(name = "id", nullable = false)
     private Integer id;
     @Basic
-    @Column(name = "Nombre", nullable = false, length = 100)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Basic
-    @Column(name = "NIF", nullable = false, length = 45)
+    @Column(name = "nif", nullable = false, length = 45)
     private String nif;
     @ManyToOne
-    @JoinColumn(name = "idEmpresa", referencedColumnName = "idEmpresa", nullable = false)
+    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
     private EmpresaEntity empresaByIdEmpresa;
 
     public Integer getId() {

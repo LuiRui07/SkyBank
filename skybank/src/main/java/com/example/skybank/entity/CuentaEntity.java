@@ -9,22 +9,22 @@ import java.util.Objects;
 public class CuentaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idCuenta", nullable = false)
+    @Column(name = "idcuenta", nullable = false)
     private Integer idCuenta;
     @Basic
-    @Column(name = "Saldo", nullable = false, precision = 0)
+    @Column(name = "saldo", nullable = false, precision = 0)
     private Double saldo;
     @Basic
-    @Column(name = "Divisa", nullable = false, length = 10)
+    @Column(name = "divisa", nullable = false, length = 10)
     private String divisa;
     @Basic
-    @Column(name = "Sospechosa", nullable = false)
+    @Column(name = "sospechosa", nullable = false)
     private Integer sospechosa;
     @ManyToOne
-    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", nullable = false)
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
     private ClienteEntity clienteByIdCliente;
     @ManyToOne
-    @JoinColumn(name = "idEmpresa", referencedColumnName = "idEmpresa", nullable = false)
+    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
     private EmpresaEntity empresaByIdEmpresa;
     @OneToMany(mappedBy = "cuentaByIdCuenta2")
     private List<OperacionEntity> operacionsByIdCuenta;

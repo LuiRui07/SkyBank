@@ -85,7 +85,6 @@
 
 
 
-
         <form:button style="margin-bottom:10px;">Registrar</form:button>
     </form:form>
             <br>

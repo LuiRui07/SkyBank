@@ -3,6 +3,7 @@ package com.example.skybank.entity;
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "empresa", schema = "skybank")
@@ -44,12 +45,16 @@ public class EmpresaEntity {
     @Basic
     @Column(name = "cp", nullable = false)
     private Integer cp;
+
+
     @OneToMany(mappedBy = "empresaByIdEmpresa")
-    private List<AutorizadoEntity> autorizadosByIdEmpresa;
+    private Set<AutorizadoEntity> autorizadosByIdEmpresa;
+
     @OneToMany(mappedBy = "empresaByIdEmpresa")
-    private List<CuentaEntity> cuentasByIdEmpresa;
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
-    private List<SocioEntity> sociosByIdEmpresa;
+    private Set<CuentaEntity> cuentasByIdEmpresa;
+
+    @OneToMany(mappedBy = "empresaByIdEmpresa",fetch = FetchType.EAGER)
+    private Set<SocioEntity> sociosByIdEmpresa;
 
     public Integer getIdEmpresa() {
         return idEmpresa;
@@ -160,27 +165,27 @@ public class EmpresaEntity {
         return Objects.hash(idEmpresa, cif, nombre, emailCorporativo, passwordEmpresa, calle, numero, planta, ciudad, pais, region, cp);
     }
 
-    public List<AutorizadoEntity> getAutorizadosByIdEmpresa() {
+    public Set<AutorizadoEntity> getAutorizadosByIdEmpresa() {
         return autorizadosByIdEmpresa;
     }
 
-    public void setAutorizadosByIdEmpresa(List<AutorizadoEntity> autorizadosByIdEmpresa) {
+    public void setAutorizadosByIdEmpresa(Set<AutorizadoEntity> autorizadosByIdEmpresa) {
         this.autorizadosByIdEmpresa = autorizadosByIdEmpresa;
     }
 
-    public List<CuentaEntity> getCuentasByIdEmpresa() {
+    public Set<CuentaEntity> getCuentasByIdEmpresa() {
         return cuentasByIdEmpresa;
     }
 
-    public void setCuentasByIdEmpresa(List<CuentaEntity> cuentasByIdEmpresa) {
+    public void setCuentasByIdEmpresa(Set<CuentaEntity> cuentasByIdEmpresa) {
         this.cuentasByIdEmpresa = cuentasByIdEmpresa;
     }
 
-    public List<SocioEntity> getSociosByIdEmpresa() {
+    public Set<SocioEntity> getSociosByIdEmpresa() {
         return sociosByIdEmpresa;
     }
 
-    public void setSociosByIdEmpresa(List<SocioEntity> sociosByIdEmpresa) {
+    public void setSociosByIdEmpresa(Set<SocioEntity> sociosByIdEmpresa) {
         this.sociosByIdEmpresa = sociosByIdEmpresa;
     }
 }

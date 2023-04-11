@@ -2,7 +2,9 @@ package com.example.skybank.controller;
 
 
 import com.example.skybank.dao.EmpresaRepository;
+import com.example.skybank.dao.SocioRepository;
 import com.example.skybank.entity.EmpresaEntity;
+import com.example.skybank.entity.SocioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +18,9 @@ public class EmpresaController {
 
     @Autowired
     private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private SocioRepository socioRepository;
 
     @GetMapping("/")
     public String mostrarEmpresa(Model model,HttpSession sesion){
@@ -52,8 +57,8 @@ public class EmpresaController {
 
         String urlTo = "redirect:/empresa/";
 
-        //System.out.println(user);
-        //System.out.println(password);
+        System.out.println(user);
+        System.out.println(password);
 
         EmpresaEntity empresa = (EmpresaEntity) empresaRepository.autenticar(user,password);
 
@@ -61,6 +66,8 @@ public class EmpresaController {
             modelo.addAttribute("error", "Empresa no encontrada");
             urlTo = "loginEmpresa";
         }else{
+            System.out.println(empresa.getIdEmpresa());
+
             sesion.setAttribute("empresa",empresa);
         }
 
