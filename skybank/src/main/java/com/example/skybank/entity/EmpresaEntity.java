@@ -1,17 +1,16 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name = "empresa", schema = "skybank")
+@Table(name = "empresa", schema = "skybank", catalog = "")
 public class EmpresaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idempresa", nullable = false)
-    private Integer idEmpresa;
+    private int idEmpresa;
     @Basic
     @Column(name = "cif", nullable = false, length = 100)
     private String cif;
@@ -29,10 +28,10 @@ public class EmpresaEntity {
     private String calle;
     @Basic
     @Column(name = "numero", nullable = false)
-    private Integer numero;
+    private int numero;
     @Basic
     @Column(name = "planta", nullable = false)
-    private Integer planta;
+    private int planta;
     @Basic
     @Column(name = "ciudad", nullable = false, length = 100)
     private String ciudad;
@@ -44,23 +43,22 @@ public class EmpresaEntity {
     private String region;
     @Basic
     @Column(name = "cp", nullable = false)
-    private Integer cp;
-
-
+    private int cp;
+    @Basic
+    @Column(name = "verificado", nullable = false)
+    private int verificado;
     @OneToMany(mappedBy = "empresaByIdEmpresa")
     private Set<AutorizadoEntity> autorizadosByIdEmpresa;
-
     @OneToMany(mappedBy = "empresaByIdEmpresa")
     private Set<CuentaEntity> cuentasByIdEmpresa;
-
-    @OneToMany(mappedBy = "empresaByIdEmpresa",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "empresaByIdEmpresa", fetch = FetchType.EAGER)
     private Set<SocioEntity> sociosByIdEmpresa;
 
-    public Integer getIdEmpresa() {
+    public int getIdEmpresa() {
         return idEmpresa;
     }
 
-    public void setIdEmpresa(Integer idEmpresa) {
+    public void setIdEmpresa(int idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
@@ -104,19 +102,19 @@ public class EmpresaEntity {
         this.calle = calle;
     }
 
-    public Integer getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(Integer numero) {
+    public void setNumero(int numero) {
         this.numero = numero;
     }
 
-    public Integer getPlanta() {
+    public int getPlanta() {
         return planta;
     }
 
-    public void setPlanta(Integer planta) {
+    public void setPlanta(int planta) {
         this.planta = planta;
     }
 
@@ -144,12 +142,20 @@ public class EmpresaEntity {
         this.region = region;
     }
 
-    public Integer getCp() {
+    public int getCp() {
         return cp;
     }
 
-    public void setCp(Integer cp) {
+    public void setCp(int cp) {
         this.cp = cp;
+    }
+
+    public int getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(int verificado) {
+        this.verificado = verificado;
     }
 
     @Override
@@ -157,12 +163,12 @@ public class EmpresaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmpresaEntity empresa = (EmpresaEntity) o;
-        return Objects.equals(idEmpresa, empresa.idEmpresa) && Objects.equals(cif, empresa.cif) && Objects.equals(nombre, empresa.nombre) && Objects.equals(emailCorporativo, empresa.emailCorporativo) && Objects.equals(passwordEmpresa, empresa.passwordEmpresa) && Objects.equals(calle, empresa.calle) && Objects.equals(numero, empresa.numero) && Objects.equals(planta, empresa.planta) && Objects.equals(ciudad, empresa.ciudad) && Objects.equals(pais, empresa.pais) && Objects.equals(region, empresa.region) && Objects.equals(cp, empresa.cp);
+        return idEmpresa == empresa.idEmpresa && numero == empresa.numero && planta == empresa.planta && cp == empresa.cp && verificado == empresa.verificado && Objects.equals(cif, empresa.cif) && Objects.equals(nombre, empresa.nombre) && Objects.equals(emailCorporativo, empresa.emailCorporativo) && Objects.equals(passwordEmpresa, empresa.passwordEmpresa) && Objects.equals(calle, empresa.calle) && Objects.equals(ciudad, empresa.ciudad) && Objects.equals(pais, empresa.pais) && Objects.equals(region, empresa.region);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEmpresa, cif, nombre, emailCorporativo, passwordEmpresa, calle, numero, planta, ciudad, pais, region, cp);
+        return Objects.hash(idEmpresa, cif, nombre, emailCorporativo, passwordEmpresa, calle, numero, planta, ciudad, pais, region, cp, verificado);
     }
 
     public Set<AutorizadoEntity> getAutorizadosByIdEmpresa() {

@@ -4,7 +4,6 @@ package com.example.skybank.controller;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
 import com.example.skybank.entity.EmpresaEntity;
-import com.example.skybank.entity.SocioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -66,9 +65,14 @@ public class EmpresaController {
             modelo.addAttribute("error", "Empresa no encontrada");
             urlTo = "loginEmpresa";
         }else{
-            System.out.println(empresa.getIdEmpresa());
 
-            sesion.setAttribute("empresa",empresa);
+            if(empresa.getVerificado() == 1){
+                sesion.setAttribute("empresa",empresa);
+            }else{
+                modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+                urlTo = "loginEmpresa";
+            }
+
         }
 
         return urlTo;

@@ -1,8 +1,8 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "asistente", schema = "skybank", catalog = "")
@@ -10,15 +10,15 @@ public class AsistenteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idAsistente", nullable = false)
-    private Integer idAsistente;
+    private int idAsistente;
     @OneToMany(mappedBy = "asistenteByIdAsistente")
-    private List<ConversacionEntity> conversacionsByIdAsistente;
+    private Set<ConversacionEntity> conversacionsByIdAsistente;
 
-    public Integer getIdAsistente() {
+    public int getIdAsistente() {
         return idAsistente;
     }
 
-    public void setIdAsistente(Integer idAsistente) {
+    public void setIdAsistente(int idAsistente) {
         this.idAsistente = idAsistente;
     }
 
@@ -27,7 +27,7 @@ public class AsistenteEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AsistenteEntity that = (AsistenteEntity) o;
-        return Objects.equals(idAsistente, that.idAsistente);
+        return idAsistente == that.idAsistente;
     }
 
     @Override
@@ -35,11 +35,11 @@ public class AsistenteEntity {
         return Objects.hash(idAsistente);
     }
 
-    public List<ConversacionEntity> getConversacionsByIdAsistente() {
+    public Set<ConversacionEntity> getConversacionsByIdAsistente() {
         return conversacionsByIdAsistente;
     }
 
-    public void setConversacionsByIdAsistente(List<ConversacionEntity> conversacionsByIdAsistente) {
+    public void setConversacionsByIdAsistente(Set<ConversacionEntity> conversacionsByIdAsistente) {
         this.conversacionsByIdAsistente = conversacionsByIdAsistente;
     }
 }

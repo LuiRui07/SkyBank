@@ -1,8 +1,8 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tipo-operacion", schema = "skybank", catalog = "")
@@ -10,18 +10,18 @@ public class TipoOperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
     @Basic
     @Column(name = "Tipo", nullable = true, length = 45)
     private String tipo;
     @OneToMany(mappedBy = "tipoOperacionByTipoOperacionId")
-    private List<OperacionEntity> operacionsById;
+    private Set<OperacionEntity> operacionsById;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -38,7 +38,7 @@ public class TipoOperacionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TipoOperacionEntity that = (TipoOperacionEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(tipo, that.tipo);
+        return id == that.id && Objects.equals(tipo, that.tipo);
     }
 
     @Override
@@ -46,11 +46,11 @@ public class TipoOperacionEntity {
         return Objects.hash(id, tipo);
     }
 
-    public List<OperacionEntity> getOperacionsById() {
+    public Set<OperacionEntity> getOperacionsById() {
         return operacionsById;
     }
 
-    public void setOperacionsById(List<OperacionEntity> operacionsById) {
+    public void setOperacionsById(Set<OperacionEntity> operacionsById) {
         this.operacionsById = operacionsById;
     }
 }

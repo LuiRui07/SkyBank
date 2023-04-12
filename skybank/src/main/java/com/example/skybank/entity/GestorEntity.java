@@ -1,8 +1,8 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "gestor", schema = "skybank", catalog = "")
@@ -10,18 +10,18 @@ public class GestorEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idGestor", nullable = false)
-    private Integer idGestor;
+    private int idGestor;
     @Basic
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @OneToMany(mappedBy = "gestorByIdGestor")
-    private List<OperacionEntity> operacionsByIdGestor;
+    private Set<OperacionEntity> operacionsByIdGestor;
 
-    public Integer getIdGestor() {
+    public int getIdGestor() {
         return idGestor;
     }
 
-    public void setIdGestor(Integer idGestor) {
+    public void setIdGestor(int idGestor) {
         this.idGestor = idGestor;
     }
 
@@ -38,7 +38,7 @@ public class GestorEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         GestorEntity that = (GestorEntity) o;
-        return Objects.equals(idGestor, that.idGestor) && Objects.equals(nombre, that.nombre);
+        return idGestor == that.idGestor && Objects.equals(nombre, that.nombre);
     }
 
     @Override
@@ -46,11 +46,11 @@ public class GestorEntity {
         return Objects.hash(idGestor, nombre);
     }
 
-    public List<OperacionEntity> getOperacionsByIdGestor() {
+    public Set<OperacionEntity> getOperacionsByIdGestor() {
         return operacionsByIdGestor;
     }
 
-    public void setOperacionsByIdGestor(List<OperacionEntity> operacionsByIdGestor) {
+    public void setOperacionsByIdGestor(Set<OperacionEntity> operacionsByIdGestor) {
         this.operacionsByIdGestor = operacionsByIdGestor;
     }
 }

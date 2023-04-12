@@ -9,22 +9,25 @@ public class AutorizadoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
     @Basic
     @Column(name = "Nombre", nullable = false, length = 100)
     private String nombre;
     @Basic
     @Column(name = "NIF", nullable = false, length = 45)
     private String nif;
+    @Basic
+    @Column(name = "bloqueado", nullable = false)
+    private int bloqueado;
     @ManyToOne
     @JoinColumn(name = "idEmpresa", referencedColumnName = "idEmpresa", nullable = false)
     private EmpresaEntity empresaByIdEmpresa;
 
-    public Integer getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -44,17 +47,25 @@ public class AutorizadoEntity {
         this.nif = nif;
     }
 
+    public int getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(int bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AutorizadoEntity that = (AutorizadoEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(nombre, that.nombre) && Objects.equals(nif, that.nif);
+        return id == that.id && bloqueado == that.bloqueado && Objects.equals(nombre, that.nombre) && Objects.equals(nif, that.nif);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, nif);
+        return Objects.hash(id, nombre, nif, bloqueado);
     }
 
     public EmpresaEntity getEmpresaByIdEmpresa() {
