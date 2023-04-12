@@ -9,25 +9,25 @@ import java.util.Set;
 public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idCliente", nullable = false)
+    @Column(name = "idcliente", nullable = false)
     private int idCliente;
     @Basic
-    @Column(name = "DNI", nullable = false, length = 45)
+    @Column(name = "dni", nullable = false, length = 45)
     private String dni;
     @Basic
-    @Column(name = "Nombre", nullable = false, length = 45)
+    @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @Basic
-    @Column(name = "Apellidos", nullable = false, length = 100)
+    @Column(name = "apellidos", nullable = false, length = 100)
     private String apellidos;
     @Basic
-    @Column(name = "Edad", nullable = false)
+    @Column(name = "edad", nullable = false)
     private int edad;
     @Basic
-    @Column(name = "Direccion", nullable = false, length = 100)
+    @Column(name = "direccion", nullable = false, length = 100)
     private String direccion;
     @Basic
-    @Column(name = "Email", nullable = false, length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
     @Basic
     @Column(name = "password", nullable = false, length = 45)

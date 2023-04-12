@@ -1,8 +1,10 @@
 package com.example.skybank.controller;
 
 
+import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
+import com.example.skybank.entity.CuentaEntity;
 import com.example.skybank.entity.EmpresaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,9 @@ public class EmpresaController {
 
     @Autowired
     private SocioRepository socioRepository;
+
+    @Autowired
+    private CuentaRepository cuentaRepository;
 
     @GetMapping("/")
     public String mostrarEmpresa(Model model,HttpSession sesion){
@@ -40,8 +45,9 @@ public class EmpresaController {
 
     @PostMapping("/crearEmpresa")
     public String registrarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa){
-        System.out.println(empresa.getIdEmpresa());
         empresaRepository.save(empresa);
+
+        addCuentaToEmpresa(empresa);
         return "redirect:/empresa/login";
     }
 
@@ -56,8 +62,8 @@ public class EmpresaController {
 
         String urlTo = "redirect:/empresa/";
 
-        System.out.println(user);
-        System.out.println(password);
+        //System.out.println(user);
+        //System.out.println(password);
 
         EmpresaEntity empresa = (EmpresaEntity) empresaRepository.autenticar(user,password);
 
@@ -85,6 +91,16 @@ public class EmpresaController {
         return "redirect:/empresa/login";
     }
 
+
+    private void addCuentaToEmpresa(EmpresaEntity empresa){
+        CuentaEntity c = new CuentaEntity();
+        c.setEmpresaByIdEmpresa(empresa);
+        c.setDivisa("EUR");
+        cuentaRepository.save(c);
+
+        empresa.getCuentasByIdEmpresa().add(c);
+        empresaRepository.save(empresa);
+    }
 
 
 }

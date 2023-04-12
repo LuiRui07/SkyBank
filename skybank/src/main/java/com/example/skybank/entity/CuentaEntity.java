@@ -12,19 +12,19 @@ public class CuentaEntity {
     @Column(name = "idcuenta", nullable = false)
     private int idCuenta;
     @Basic
-    @Column(name = "saldo", nullable = false, precision = 0)
+    @Column(name = "saldo", nullable = true, precision = 0)
     private double saldo;
     @Basic
-    @Column(name = "divisa", nullable = false, length = 10)
+    @Column(name = "divisa", nullable = false, length = 3)
     private String divisa;
     @Basic
     @Column(name = "sospechosa", nullable = false)
     private int sospechosa;
     @ManyToOne
-    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     private ClienteEntity clienteByIdCliente;
     @ManyToOne
-    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
+    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
     private EmpresaEntity empresaByIdEmpresa;
     @OneToMany(mappedBy = "cuentaByIdCuenta2")
     private Set<OperacionEntity> operacionsByIdCuenta;
