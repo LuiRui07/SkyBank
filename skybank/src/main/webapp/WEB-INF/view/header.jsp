@@ -18,12 +18,12 @@
             </li>
 
             <li>
-                <a  class="navbar-text" href="/empresa/socios">Socios/Autorizados</a>
+                <a  class="navbar-text" href="/empresa/socios/">Socios/Autorizados</a>
             </li>
 
 
             <li>
-                <a  class="navbar-text" href="/empresa/datos">Mi cuenta</a>
+                <a  class="navbar-text" href="/empresa/datos/">Mi cuenta</a>
             </li>
 
             <li>

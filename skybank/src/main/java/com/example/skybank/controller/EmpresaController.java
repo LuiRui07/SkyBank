@@ -33,6 +33,7 @@ public class EmpresaController {
             return "redirect:/empresa/login";
         }else{
             model.addAttribute("empresa",empresa);
+
             return "empresa";
         }
     }
@@ -61,9 +62,6 @@ public class EmpresaController {
             ,HttpSession sesion,Model modelo){
 
         String urlTo = "redirect:/empresa/";
-
-        //System.out.println(user);
-        //System.out.println(password);
 
         EmpresaEntity empresa = (EmpresaEntity) empresaRepository.autenticar(user,password);
 

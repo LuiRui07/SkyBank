@@ -11,16 +11,16 @@ public class AutorizadoEntity {
     @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    @Column(name = "Nombre", nullable = false, length = 100)
+    @Column(name = "nombre", nullable = false, length = 100)
     private String nombre;
     @Basic
-    @Column(name = "NIF", nullable = false, length = 45)
+    @Column(name = "nif", nullable = false, length = 45)
     private String nif;
     @Basic
     @Column(name = "bloqueado", nullable = false)
     private int bloqueado;
     @ManyToOne
-    @JoinColumn(name = "idEmpresa", referencedColumnName = "idEmpresa", nullable = false)
+    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
     private EmpresaEntity empresaByIdEmpresa;
 
     public int getId() {

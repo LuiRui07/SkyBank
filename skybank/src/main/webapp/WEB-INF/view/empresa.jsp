@@ -22,6 +22,10 @@
 
     <jsp:include page="header.jsp" />
 
+    <div class="hidden">
+
+    </div>
+
     <div class="container">
         <%
             System.out.println(empresa.getSociosByIdEmpresa());
@@ -33,7 +37,7 @@
         <div class="alert alert-danger container mt-4" role="alert">
             La empresa no tiene ningun socio.
             <br>
-            <a href="/empresa/socios#addSocio" style="color: darkred; font-weight: bold;">[+] Añadir nuevo socio</a>
+            <a href="/empresa/socios/#addSocio" style="color: darkred; font-weight: bold;">[+] Añadir nuevo socio</a>
         </div>
 
         <%
