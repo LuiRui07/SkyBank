@@ -1,5 +1,6 @@
 package com.example.skybank.controller;
 
+import com.example.skybank.dao.AutorizadoRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
 import com.example.skybank.entity.AutorizadoEntity;
@@ -7,6 +8,7 @@ import com.example.skybank.entity.EmpresaEntity;
 import com.example.skybank.entity.SocioEntity;
 import com.example.skybank.service.AutorizadoService;
 import com.example.skybank.service.SocioService;
+import com.example.skybank.ui.TipoPersonaEmpresa;
 import com.example.skybank.ui.socioOAutorizado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -32,6 +34,9 @@ public class SocioController {
 
     @Autowired
     private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private AutorizadoRepository autorizadoRepository;
 
 
     @GetMapping("/")
@@ -66,5 +71,40 @@ public class SocioController {
        //empresa.getSociosByIdEmpresa().add(socio);
        //empresaRepository.save(empresa);
        return "redirect:/empresa/login";
+    }
+
+    @PostMapping("/addSocioOrAutorizado")
+    public String addSocioOrAutorizado(@ModelAttribute("NuevoSocioOAutorizado") socioOAutorizado persona, @RequestParam("id") Integer idEmpresa) {
+        EmpresaEntity empresa = empresaRepository.getById(idEmpresa);
+        if (persona.getTipo() == TipoPersonaEmpresa.Socio) {
+            SocioEntity s = new SocioEntity();
+            s.setNombre(persona.getNombre());
+            s.setApellido1(persona.getApellido1());
+            s.setCalle(persona.getCalle());
+            s.setNif(persona.getNif());
+            s.setCp(persona.getCp());
+            s.setBloqueado(persona.getBloqueado());
+            s.setEmpresaByIdEmpresa(empresa);
+            s.setFechanacimiento(persona.getFechanacimiento());
+            socioRepository.save(s);
+
+            empresa.getSociosByIdEmpresa().add(s);
+            empresaRepository.save(empresa);
+        } else if (persona.getTipo() == TipoPersonaEmpresa.Autorizado) {
+            AutorizadoEntity a = new AutorizadoEntity();
+            a.setNombre(persona.getNombre());
+            a.setApellido1(persona.getApellido1());
+            a.setCalle(persona.getCalle());
+            a.setNif(persona.getNif());
+            a.setCp(persona.getCp());
+            a.setBloqueado(persona.getBloqueado());
+            a.setEmpresaByIdEmpresa(empresa);
+            a.setFechanacimiento(persona.getFechanacimiento());
+            autorizadoRepository.save(a);
+
+            empresa.getAutorizadosByIdEmpresa().add(a);
+            empresaRepository.save(empresa);
+        }
+        return "redirect:/empresa/socios/";
     }
 }

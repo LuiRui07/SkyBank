@@ -87,7 +87,7 @@
         </p>
         <div style="min-height: 120px;">
             <div class="collapse" id="collapseWidthExample">
-                <form:form modelAttribute="NuevoSocioOAutorizado" cssClass="rounded bg-light p-4">
+                <form:form modelAttribute="NuevoSocioOAutorizado" cssClass="rounded bg-light p-4" action="/empresa/socios/addSocioOrAutorizado" method="post">
                     <form:select path="tipo" cssClass="form-control">
                         <form:option value="Socio">Socio</form:option>
                         <form:option value="Autorizado">Autorizado</form:option>

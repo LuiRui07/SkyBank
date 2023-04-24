@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.ui.socioOAutorizado;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
@@ -208,4 +210,5 @@ public class SocioEntity {
     public void setEmpresaByIdEmpresa(EmpresaEntity empresaByIdEmpresa) {
         this.empresaByIdEmpresa = empresaByIdEmpresa;
     }
+
 }

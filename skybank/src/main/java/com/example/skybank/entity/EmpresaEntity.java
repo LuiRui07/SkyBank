@@ -195,4 +195,5 @@ public class EmpresaEntity {
     public void setSociosByIdEmpresa(List<SocioEntity> sociosByIdEmpresa) {
         this.sociosByIdEmpresa = sociosByIdEmpresa;
     }
+
 }
