@@ -1,8 +1,8 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "conversacion", schema = "skybank", catalog = "")
@@ -10,10 +10,10 @@ public class ConversacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idConversacion", nullable = false)
-    private Integer idConversacion;
+    private int idConversacion;
     @Basic
     @Column(name = "Cerrada", nullable = false)
-    private Integer cerrada;
+    private int cerrada;
     @ManyToOne
     @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", nullable = false)
     private ClienteEntity clienteByIdCliente;
@@ -21,21 +21,21 @@ public class ConversacionEntity {
     @JoinColumn(name = "idAsistente", referencedColumnName = "idAsistente", nullable = false)
     private AsistenteEntity asistenteByIdAsistente;
     @OneToMany(mappedBy = "conversacionByIdConversacion")
-    private List<MensajeEntity> mensajesByIdConversacion;
+    private Set<MensajeEntity> mensajesByIdConversacion;
 
-    public Integer getIdConversacion() {
+    public int getIdConversacion() {
         return idConversacion;
     }
 
-    public void setIdConversacion(Integer idConversacion) {
+    public void setIdConversacion(int idConversacion) {
         this.idConversacion = idConversacion;
     }
 
-    public Integer getCerrada() {
+    public int getCerrada() {
         return cerrada;
     }
 
-    public void setCerrada(Integer cerrada) {
+    public void setCerrada(int cerrada) {
         this.cerrada = cerrada;
     }
 
@@ -44,7 +44,7 @@ public class ConversacionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ConversacionEntity that = (ConversacionEntity) o;
-        return Objects.equals(idConversacion, that.idConversacion) && Objects.equals(cerrada, that.cerrada);
+        return idConversacion == that.idConversacion && cerrada == that.cerrada;
     }
 
     @Override
@@ -68,11 +68,11 @@ public class ConversacionEntity {
         this.asistenteByIdAsistente = asistenteByIdAsistente;
     }
 
-    public List<MensajeEntity> getMensajesByIdConversacion() {
+    public Set<MensajeEntity> getMensajesByIdConversacion() {
         return mensajesByIdConversacion;
     }
 
-    public void setMensajesByIdConversacion(List<MensajeEntity> mensajesByIdConversacion) {
+    public void setMensajesByIdConversacion(Set<MensajeEntity> mensajesByIdConversacion) {
         this.mensajesByIdConversacion = mensajesByIdConversacion;
     }
 }

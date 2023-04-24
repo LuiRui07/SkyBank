@@ -10,7 +10,7 @@ public class OperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idoperación", nullable = false)
-    private Integer idoperación;
+    private int idoperación;
     @Basic
     @Column(name = "fecha", nullable = false)
     private Date fecha;
@@ -27,11 +27,11 @@ public class OperacionEntity {
     @JoinColumn(name = "idCuenta", referencedColumnName = "idCuenta", nullable = false)
     private CuentaEntity cuentaByIdCuenta;
 
-    public Integer getIdoperación() {
+    public int getIdoperación() {
         return idoperación;
     }
 
-    public void setIdoperación(Integer idoperación) {
+    public void setIdoperación(int idoperación) {
         this.idoperación = idoperación;
     }
 
@@ -48,7 +48,7 @@ public class OperacionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OperacionEntity that = (OperacionEntity) o;
-        return Objects.equals(idoperación, that.idoperación) && Objects.equals(fecha, that.fecha);
+        return idoperación == that.idoperación && Objects.equals(fecha, that.fecha);
     }
 
     @Override

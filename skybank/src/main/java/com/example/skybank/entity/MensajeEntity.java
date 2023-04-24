@@ -11,7 +11,7 @@ public class MensajeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idMensaje", nullable = false)
-    private Integer idMensaje;
+    private int idMensaje;
     @Basic
     @Column(name = "fecha", nullable = false)
     private Date fecha;
@@ -25,11 +25,11 @@ public class MensajeEntity {
     @JoinColumn(name = "idConversacion", referencedColumnName = "idConversacion", nullable = false)
     private ConversacionEntity conversacionByIdConversacion;
 
-    public Integer getIdMensaje() {
+    public int getIdMensaje() {
         return idMensaje;
     }
 
-    public void setIdMensaje(Integer idMensaje) {
+    public void setIdMensaje(int idMensaje) {
         this.idMensaje = idMensaje;
     }
 
@@ -62,7 +62,7 @@ public class MensajeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MensajeEntity that = (MensajeEntity) o;
-        return Objects.equals(idMensaje, that.idMensaje) && Objects.equals(fecha, that.fecha) && Objects.equals(hora, that.hora) && Objects.equals(texto, that.texto);
+        return idMensaje == that.idMensaje && Objects.equals(fecha, that.fecha) && Objects.equals(hora, that.hora) && Objects.equals(texto, that.texto);
     }
 
     @Override

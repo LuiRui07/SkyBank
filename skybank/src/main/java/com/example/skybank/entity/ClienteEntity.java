@@ -1,42 +1,56 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "cliente", schema = "skybank", catalog = "")
 public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idCliente", nullable = false)
-    private Integer idCliente;
+    @Column(name = "idcliente", nullable = false)
+    private int idCliente;
     @Basic
-    @Column(name = "Nombre", nullable = false, length = 45)
+    @Column(name = "dni", nullable = false, length = 45)
+    private String dni;
+    @Basic
+    @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @Basic
-    @Column(name = "Apellidos", nullable = false, length = 100)
+    @Column(name = "apellidos", nullable = false, length = 100)
     private String apellidos;
     @Basic
-    @Column(name = "Edad", nullable = false)
-    private Integer edad;
+    @Column(name = "edad", nullable = false)
+    private int edad;
     @Basic
-    @Column(name = "Direccion", nullable = true, length = 100)
+    @Column(name = "direccion", nullable = false, length = 100)
     private String direccion;
     @Basic
-    @Column(name = "Email", nullable = true, length = 100)
+    @Column(name = "email", nullable = false, length = 100)
     private String email;
+    @Basic
+    @Column(name = "password", nullable = false, length = 45)
+    private String password;
     @OneToMany(mappedBy = "clienteByIdCliente")
-    private List<ConversacionEntity> conversacionsByIdCliente;
+    private Set<ConversacionEntity> conversacionsByIdCliente;
     @OneToMany(mappedBy = "clienteByIdCliente")
-    private List<CuentaEntity> cuentasByIdCliente;
+    private Set<CuentaEntity> cuentasByIdCliente;
 
-    public Integer getIdCliente() {
+    public int getIdCliente() {
         return idCliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
+    public void setIdCliente(int idCliente) {
         this.idCliente = idCliente;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -55,11 +69,11 @@ public class ClienteEntity {
         this.apellidos = apellidos;
     }
 
-    public Integer getEdad() {
+    public int getEdad() {
         return edad;
     }
 
-    public void setEdad(Integer edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
 
@@ -79,32 +93,40 @@ public class ClienteEntity {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClienteEntity that = (ClienteEntity) o;
-        return Objects.equals(idCliente, that.idCliente) && Objects.equals(nombre, that.nombre) && Objects.equals(apellidos, that.apellidos) && Objects.equals(edad, that.edad) && Objects.equals(direccion, that.direccion) && Objects.equals(email, that.email);
+        return idCliente == that.idCliente && edad == that.edad && Objects.equals(dni, that.dni) && Objects.equals(nombre, that.nombre) && Objects.equals(apellidos, that.apellidos) && Objects.equals(direccion, that.direccion) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCliente, nombre, apellidos, edad, direccion, email);
+        return Objects.hash(idCliente, dni, nombre, apellidos, edad, direccion, email, password);
     }
 
-    public List<ConversacionEntity> getConversacionsByIdCliente() {
+    public Set<ConversacionEntity> getConversacionsByIdCliente() {
         return conversacionsByIdCliente;
     }
 
-    public void setConversacionsByIdCliente(List<ConversacionEntity> conversacionsByIdCliente) {
+    public void setConversacionsByIdCliente(Set<ConversacionEntity> conversacionsByIdCliente) {
         this.conversacionsByIdCliente = conversacionsByIdCliente;
     }
 
-    public List<CuentaEntity> getCuentasByIdCliente() {
+    public Set<CuentaEntity> getCuentasByIdCliente() {
         return cuentasByIdCliente;
     }
 
-    public void setCuentasByIdCliente(List<CuentaEntity> cuentasByIdCliente) {
+    public void setCuentasByIdCliente(Set<CuentaEntity> cuentasByIdCliente) {
         this.cuentasByIdCliente = cuentasByIdCliente;
     }
 }

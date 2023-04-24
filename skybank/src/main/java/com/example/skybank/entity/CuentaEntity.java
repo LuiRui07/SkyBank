@@ -1,49 +1,49 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "cuenta", schema = "skybank", catalog = "")
 public class CuentaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idCuenta", nullable = false)
-    private Integer idCuenta;
+    @Column(name = "idcuenta", nullable = false)
+    private int idCuenta;
     @Basic
-    @Column(name = "Saldo", nullable = false, precision = 0)
-    private Double saldo;
+    @Column(name = "saldo", nullable = true, precision = 0)
+    private double saldo;
     @Basic
-    @Column(name = "Divisa", nullable = false, length = 10)
+    @Column(name = "divisa", nullable = false, length = 3)
     private String divisa;
     @Basic
-    @Column(name = "Sospechosa", nullable = false)
-    private Integer sospechosa;
+    @Column(name = "sospechosa", nullable = false)
+    private int sospechosa;
     @ManyToOne
-    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", nullable = false)
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     private ClienteEntity clienteByIdCliente;
     @ManyToOne
-    @JoinColumn(name = "idEmpresa", referencedColumnName = "idEmpresa", nullable = false)
+    @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
     private EmpresaEntity empresaByIdEmpresa;
     @OneToMany(mappedBy = "cuentaByIdCuenta2")
-    private List<OperacionEntity> operacionsByIdCuenta;
+    private Set<OperacionEntity> operacionsByIdCuenta;
     @OneToMany(mappedBy = "cuentaByIdCuenta")
-    private List<OperacionEntity> operacionsByIdCuenta_0;
+    private Set<OperacionEntity> operacionsByIdCuenta_0;
 
-    public Integer getIdCuenta() {
+    public int getIdCuenta() {
         return idCuenta;
     }
 
-    public void setIdCuenta(Integer idCuenta) {
+    public void setIdCuenta(int idCuenta) {
         this.idCuenta = idCuenta;
     }
 
-    public Double getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(Double saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
@@ -55,11 +55,11 @@ public class CuentaEntity {
         this.divisa = divisa;
     }
 
-    public Integer getSospechosa() {
+    public int getSospechosa() {
         return sospechosa;
     }
 
-    public void setSospechosa(Integer sospechosa) {
+    public void setSospechosa(int sospechosa) {
         this.sospechosa = sospechosa;
     }
 
@@ -68,7 +68,7 @@ public class CuentaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CuentaEntity that = (CuentaEntity) o;
-        return Objects.equals(idCuenta, that.idCuenta) && Objects.equals(saldo, that.saldo) && Objects.equals(divisa, that.divisa) && Objects.equals(sospechosa, that.sospechosa);
+        return idCuenta == that.idCuenta && Double.compare(that.saldo, saldo) == 0 && sospechosa == that.sospechosa && Objects.equals(divisa, that.divisa);
     }
 
     @Override
@@ -92,19 +92,19 @@ public class CuentaEntity {
         this.empresaByIdEmpresa = empresaByIdEmpresa;
     }
 
-    public List<OperacionEntity> getOperacionsByIdCuenta() {
+    public Set<OperacionEntity> getOperacionsByIdCuenta() {
         return operacionsByIdCuenta;
     }
 
-    public void setOperacionsByIdCuenta(List<OperacionEntity> operacionsByIdCuenta) {
+    public void setOperacionsByIdCuenta(Set<OperacionEntity> operacionsByIdCuenta) {
         this.operacionsByIdCuenta = operacionsByIdCuenta;
     }
 
-    public List<OperacionEntity> getOperacionsByIdCuenta_0() {
+    public Set<OperacionEntity> getOperacionsByIdCuenta_0() {
         return operacionsByIdCuenta_0;
     }
 
-    public void setOperacionsByIdCuenta_0(List<OperacionEntity> operacionsByIdCuenta_0) {
+    public void setOperacionsByIdCuenta_0(Set<OperacionEntity> operacionsByIdCuenta_0) {
         this.operacionsByIdCuenta_0 = operacionsByIdCuenta_0;
     }
 }
