@@ -74,8 +74,9 @@ public class SocioController {
     }
 
     @PostMapping("/addSocioOrAutorizado")
-    public String addSocioOrAutorizado(@ModelAttribute("NuevoSocioOAutorizado") socioOAutorizado persona, @RequestParam("id") Integer idEmpresa) {
+    public String addSocioOrAutorizado(@ModelAttribute("NuevoSocioOAutorizado") socioOAutorizado persona, @RequestParam("id") Integer idEmpresa,HttpSession session) {
         EmpresaEntity empresa = empresaRepository.getById(idEmpresa);
+        session.setAttribute("empresa",empresa);
         if (persona.getTipo() == TipoPersonaEmpresa.Socio) {
             SocioEntity s = new SocioEntity();
             s.setNombre(persona.getNombre());
@@ -86,6 +87,10 @@ public class SocioController {
             s.setBloqueado(persona.getBloqueado());
             s.setEmpresaByIdEmpresa(empresa);
             s.setFechanacimiento(persona.getFechanacimiento());
+            s.setCiudad(persona.getCiudad());
+            s.setEmail(persona.getEmail());
+            s.setPais(persona.getPais());
+            s.setPassword(persona.getPassword());
             socioRepository.save(s);
 
             empresa.getSociosByIdEmpresa().add(s);
@@ -100,6 +105,11 @@ public class SocioController {
             a.setBloqueado(persona.getBloqueado());
             a.setEmpresaByIdEmpresa(empresa);
             a.setFechanacimiento(persona.getFechanacimiento());
+            a.setCiudad(persona.getCiudad());
+            a.setEmail(persona.getEmail());
+            a.setPais(persona.getPais());
+            a.setPassword(persona.getPassword());
+
             autorizadoRepository.save(a);
 
             empresa.getAutorizadosByIdEmpresa().add(a);
