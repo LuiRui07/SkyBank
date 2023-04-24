@@ -1,4 +1,3 @@
-use skybank;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: localhost    Database: skybank
@@ -48,8 +47,20 @@ DROP TABLE IF EXISTS `autorizado`;
 CREATE TABLE `autorizado` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idEmpresa` int NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
   `NIF` varchar(45) NOT NULL,
+  `Nombre` varchar(100) NOT NULL,
+  `Apellido1` varchar(100) NOT NULL,
+  `Apellido2` varchar(100) DEFAULT NULL,
+  `fechanacimiento` date NOT NULL,
+  `Email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `Calle` varchar(100) NOT NULL,
+  `Numero` int NOT NULL,
+  `Planta` int NOT NULL,
+  `Ciudad` varchar(100) NOT NULL,
+  `Pais` varchar(100) NOT NULL,
+  `Region` varchar(100) DEFAULT NULL,
+  `CP` int NOT NULL,
   `bloqueado` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_Socio_Empresa1_idx` (`idEmpresa`) /*!80000 INVISIBLE */,
@@ -133,17 +144,17 @@ DROP TABLE IF EXISTS `cuenta`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cuenta` (
   `idCuenta` int NOT NULL AUTO_INCREMENT,
-  `idCliente` int NOT NULL,
-  `idEmpresa` int NOT NULL,
+  `idCliente` int DEFAULT NULL,
+  `idEmpresa` int DEFAULT NULL,
   `Saldo` double NOT NULL DEFAULT '0',
-  `Divisa` varchar(10) NOT NULL DEFAULT 'EUR',
+  `Divisa` varchar(3) NOT NULL DEFAULT 'EUR',
   `Sospechosa` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idCuenta`),
   KEY `fk_Cuenta_Cliente1_idx` (`idCliente`),
   KEY `fk_Cuenta_Empresa1_idx` (`idEmpresa`),
   CONSTRAINT `fk_Cuenta_Cliente1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`),
   CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,6 +163,7 @@ CREATE TABLE `cuenta` (
 
 LOCK TABLES `cuenta` WRITE;
 /*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
+INSERT INTO `cuenta` VALUES (2,NULL,2,0,'EUR',0),(3,NULL,3,0,'EUR',0);
 /*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,7 +190,7 @@ CREATE TABLE `empresa` (
   `verificado` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idEmpresa`),
   UNIQUE KEY `CIF_UNIQUE` (`CIF`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +199,7 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1);
+INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1),(3,'','','','','',0,0,'','','',0,0);
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -287,9 +299,21 @@ DROP TABLE IF EXISTS `socio`;
 CREATE TABLE `socio` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idEmpresa` int NOT NULL,
-  `Nombre` varchar(100) NOT NULL,
   `NIF` varchar(45) NOT NULL,
+  `Nombre` varchar(100) NOT NULL,
+  `Apellido1` varchar(100) NOT NULL,
+  `Apellido2` varchar(100) DEFAULT NULL,
+  `fechanacimiento` date NOT NULL,
   `bloqueado` int NOT NULL DEFAULT '0',
+  `Email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `Calle` varchar(100) NOT NULL,
+  `Numero` int NOT NULL,
+  `Planta` int NOT NULL,
+  `Ciudad` varchar(100) NOT NULL,
+  `Pais` varchar(100) NOT NULL,
+  `Region` varchar(100) DEFAULT NULL,
+  `CP` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idEmpresa_idx` (`idEmpresa`),
   CONSTRAINT `idEmpresa` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`)
@@ -337,4 +361,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-12 23:26:33
+-- Dump completed on 2023-04-24 13:28:11
