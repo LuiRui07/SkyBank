@@ -9,6 +9,7 @@
 
 <%
     ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
+    CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
 %>
 
 <html>
@@ -25,8 +26,18 @@
 </div>
 
 <div class="container">
+    <br/>
     <h1><%=cliente.getNombre()%>  <%=cliente.getApellidos()%></h1>
-
+    <h2>Saldo: <%=cuenta.getSaldo()%> <%=cuenta.getDivisa()%></h2>
+    <a class="btn btn-outline-primary">Modificar Datos</a>
+    <a class="btn btn-outline-primary">Historial</a>
+    <% if (cuenta.getActiva() == 1){%>
+    <a class="btn btn-outline-primary">Realizar Transferencia</a>
+    <a class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
+    <a class="btn btn-outline-danger">Solicitar Desactivacion</a>
+    <% } else { %>
+    <a class="btn btn-outline-primary">Solicitar Activacion</a>
+    <%}%>
 </div>
 
 

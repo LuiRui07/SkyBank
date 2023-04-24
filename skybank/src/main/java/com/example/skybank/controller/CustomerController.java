@@ -1,6 +1,8 @@
 package com.example.skybank.controller;
+import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.CustomerRepository;
 import com.example.skybank.entity.ClienteEntity;
+import com.example.skybank.entity.CuentaEntity;
 import com.example.skybank.entity.EmpresaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +21,9 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CuentaRepository cuentaRepository;
+
     @GetMapping("/")
     public String getCustomers(Model model, HttpSession session){
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("cliente");
@@ -26,6 +31,8 @@ public class CustomerController {
             return "redirect:/cliente/login";
         } else {
             model.addAttribute("cliente",cliente);
+            CuentaEntity cuenta = cuentaRepository.getByCliente(cliente.getIdCliente());
+            model.addAttribute("cuenta",cuenta);
             return "cliente";
         }
     }
@@ -36,7 +43,7 @@ public class CustomerController {
     }
 
     @PostMapping("/login")
-    public String logear(@RequestParam("nombre") String user, @RequestParam("password") String contra,
+    public String logear(@RequestParam("DNI") String user, @RequestParam("password") String contra,
                          HttpSession sesion, Model model){
         String urlTo = "redirect:/cliente/";
 

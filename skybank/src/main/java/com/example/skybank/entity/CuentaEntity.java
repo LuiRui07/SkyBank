@@ -20,6 +20,11 @@ public class CuentaEntity {
     @Basic
     @Column(name = "sospechosa", nullable = false)
     private int sospechosa;
+
+    @Basic
+    @Column(name = "activa", nullable = false)
+    private int activa;
+
     @ManyToOne
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     private ClienteEntity clienteByIdCliente;
@@ -61,6 +66,14 @@ public class CuentaEntity {
 
     public void setSospechosa(int sospechosa) {
         this.sospechosa = sospechosa;
+    }
+
+    public int getActiva() {
+        return activa;
+    }
+
+    public void setActiva(int activa) {
+        this.activa = activa;
     }
 
     @Override
