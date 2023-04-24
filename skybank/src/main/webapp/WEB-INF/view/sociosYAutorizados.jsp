@@ -54,7 +54,7 @@
             for (SocioEntity s : sociosEmpresa){
         %>
             <tr >
-                <td><%=s.getNombre()%></td>
+                <td><%=s.getNombre()%> <%=s.getApellido1()%> <%=s.getApellido2() == null ? "" : s.getApellido2()%></td>
                 <td><%=s.getNif()%></td>
                 <td>Socio</td>
                 <td> <a href="/empresa/socios/bloquear?id" + <%=s.getId()%>></a></td>

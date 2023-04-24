@@ -8,7 +8,7 @@
 
 <%
     EmpresaEntity empresa = (EmpresaEntity) request.getAttribute("empresa");
-    Set<CuentaEntity> cuentas = empresa.getCuentasByIdEmpresa();
+    List<CuentaEntity> cuentas = empresa.getCuentasByIdEmpresa();
 %>
 
 <html>
