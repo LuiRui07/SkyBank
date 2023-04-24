@@ -103,7 +103,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'11223344J','lui','rui',20,'me','lui@gmail','lui');
+INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz Nuñez',20,'me','lui@gmail','lui');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -149,13 +149,14 @@ CREATE TABLE `cuenta` (
   `idEmpresa` int DEFAULT NULL,
   `Saldo` double NOT NULL DEFAULT '0',
   `Divisa` varchar(3) NOT NULL DEFAULT 'EUR',
-  `Sospechosa` int NOT NULL DEFAULT '0',
+  `Sospechosa` int unsigned NOT NULL DEFAULT '0',
+  `Activa` int NOT NULL DEFAULT '1',
   PRIMARY KEY (`idCuenta`),
   KEY `fk_Cuenta_Cliente1_idx` (`idCliente`),
   KEY `fk_Cuenta_Empresa1_idx` (`idEmpresa`),
   CONSTRAINT `fk_Cuenta_Cliente1` FOREIGN KEY (`idCliente`) REFERENCES `cliente` (`idCliente`),
   CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idEmpresa`) REFERENCES `empresa` (`idEmpresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +165,7 @@ CREATE TABLE `cuenta` (
 
 LOCK TABLES `cuenta` WRITE;
 /*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
-INSERT INTO `cuenta` VALUES (2,NULL,2,0,'EUR',0),(3,NULL,3,0,'EUR',0);
+INSERT INTO `cuenta` VALUES (2,NULL,2,0,'EUR',0,1),(3,NULL,3,0,'EUR',0,1),(4,1,NULL,100,'EUR',0,1);
 /*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,4 +363,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-24 13:57:04
+-- Dump completed on 2023-04-24 21:14:34
