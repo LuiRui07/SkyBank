@@ -4,6 +4,7 @@ import com.example.skybank.dao.CustomerRepository;
 import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.entity.CuentaEntity;
 import com.example.skybank.entity.EmpresaEntity;
+import com.example.skybank.entity.OperacionEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -63,6 +65,21 @@ public class CustomerController {
     public String registrarCliente (Model model){
         model.addAttribute("cliente",new ClienteEntity());
         return "registerCliente";
+    }
+
+    @GetMapping("/historial")
+    public String verHistorial (Model model, @RequestParam("id") int IdCuenta){
+       CuentaEntity cuenta = cuentaRepository.findById(IdCuenta).orElse(null);
+       Set<OperacionEntity> operaciones = cuenta.getOperacionsByIdCuenta();
+        model.addAttribute("operaciones",operaciones);
+        return "historialCliente";
+    }
+
+    @GetMapping("/editar")
+    public String mostrarDatos (Model model, @RequestParam("id") int idCliente){
+        ClienteEntity cliente = (ClienteEntity) customerRepository.findById(idCliente).orElse(null);
+        model.addAttribute("cliente",cliente);
+        return "editarCliente";
     }
 
 }

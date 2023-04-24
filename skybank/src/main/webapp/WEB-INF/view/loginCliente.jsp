@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>Inicio Sesión de Usuario</title>
+    <title>Sesión de Cliente</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
@@ -20,7 +20,7 @@
 <div class="container">
 
 
-    <h1 class="mt-5">Inicio Sesión de Cliente:</h1>
+    <h1 class="mt-5">Inicio Sesión como Cliente:</h1>
     <% String error = (String) request.getAttribute("error");
         if (error != null) { %>
     <div class="alert alert-danger mt-3" role="alert">
@@ -39,7 +39,7 @@
         </div>
         <div>
             <button type="submit" class="btn btn-outline-danger">Iniciar Sesión</button>
-            <a class="btn btn-outline-primary ml-3" href="/cliente/register">¡Registrate!</a>
+            <a class="btn btn-outline-primary ml-3" href="/cliente/register">Registrate</a>
         </div>
 
     </form>

@@ -21,16 +21,12 @@
 </head>
 <body>
 
-<div class="hidden">
-
-</div>
-
 <div class="container">
     <br/>
     <h1><%=cliente.getNombre()%>  <%=cliente.getApellidos()%></h1>
     <h2>Saldo: <%=cuenta.getSaldo()%> <%=cuenta.getDivisa()%></h2>
-    <a class="btn btn-outline-primary">Modificar Datos</a>
-    <a class="btn btn-outline-primary">Historial</a>
+    <a href="editar?id=${cliente.idCliente}" class="btn btn-outline-primary">Modificar Datos</a>
+    <a href="historial?id=${cuenta.idCuenta}" class="btn btn-outline-primary">Historial</a>
     <% if (cuenta.getActiva() == 1){%>
     <a class="btn btn-outline-primary">Realizar Transferencia</a>
     <a class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
