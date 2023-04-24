@@ -7,6 +7,7 @@ import com.example.skybank.entity.EmpresaEntity;
 import com.example.skybank.entity.SocioEntity;
 import com.example.skybank.service.AutorizadoService;
 import com.example.skybank.service.SocioService;
+import com.example.skybank.ui.socioOAutorizado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -45,6 +46,9 @@ public class SocioController {
             model.addAttribute("socios", socios);
             List<AutorizadoEntity> autorizados = autorizadoService.getAllAutorizadosOfEmpresa(empresa);
             model.addAttribute("autorizados", autorizados);
+
+            model.addAttribute("NuevoSocioOAutorizado", new socioOAutorizado(null));
+
             return "sociosYAutorizados";
         }
 
