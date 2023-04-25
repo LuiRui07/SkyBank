@@ -10,6 +10,7 @@ import com.example.skybank.service.AutorizadoService;
 import com.example.skybank.service.SocioService;
 import com.example.skybank.ui.TipoPersonaEmpresa;
 import com.example.skybank.ui.socioOAutorizado;
+import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -115,6 +116,33 @@ public class SocioController {
             empresa.getAutorizadosByIdEmpresa().add(a);
             empresaRepository.save(empresa);
         }
+        return "redirect:/empresa/socios/";
+    }
+
+
+    @GetMapping("/bloquear")
+    public String bloquearSocio(@RequestParam("id") Integer idSocio,@RequestParam("e") Integer idEmpresa, HttpSession sesion){
+        SocioEntity s = this.socioRepository.getById(idSocio);
+
+        sesion.setAttribute("empresa",empresaRepository.getById(idEmpresa));
+
+        if(s.getBloqueado() == 1){
+            s.setBloqueado(0);
+        }else if(s.getBloqueado() == 0){
+            s.setBloqueado(1);
+        }
+        socioRepository.save(s);
+
+        return "redirect:/empresa/socios/";
+    }
+
+    @GetMapping("/borrar")
+    public String borrarSocio(@RequestParam("id") Integer idSocio,@RequestParam("e") Integer idEmpresa, HttpSession sesion){
+        this.socioRepository.deleteById(idSocio);
+
+        sesion.setAttribute("empresa",empresaRepository.getById(idEmpresa));
+
+
         return "redirect:/empresa/socios/";
     }
 }

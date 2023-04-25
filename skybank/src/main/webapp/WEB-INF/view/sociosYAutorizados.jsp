@@ -58,8 +58,8 @@
                 <td><%=s.getNombre()%> <%=s.getApellido1()%> <%=s.getApellido2() == null ? "" : s.getApellido2()%></td>
                 <td><%=s.getNif()%></td>
                 <td>Socio</td>
-                <td> <a href="/empresa/socios/bloquear?id=<%=s.getId()%>" class="btn btn-warning">Bloquear</a></td>
-                <td> <a href="/empresa/socios/borrar?id=<%=s.getId()%>" class="btn btn-danger">Eliminar</a></td>
+                <td> <a href="/empresa/socios/bloquear?id=<%=s.getId()%>&e=<%=empresa.getIdEmpresa()%>" class="btn btn-warning"><%=s.getBloqueado() == 1 ? "Desbloquear" : "Bloquear" %></a></td>
+                <td> <a href="/empresa/socios/borrar?id=<%=s.getId()%>&e=<%=empresa.getIdEmpresa()%>" class="btn btn-danger">Eliminar</a></td>
             </tr>
         <%
             }
@@ -72,8 +72,8 @@
             <td><%=a.getNombre()%></td>
             <td><%=a.getNif()%></td>
             <td>Autorizado</td>
-            <td> <a href="/empresa/autorizados/bloquear?id=<%=a.getId()%>" class="btn btn-warning">Bloquear</a></td>
-            <td> <a href="/empresa/autorizados/borrar?id=<%=a.getId()%>" class="btn btn-danger">Eliminar</a></td>
+            <td> <a href="/empresa/autorizados/bloquear?id=<%=a.getId()%>&e=<%=empresa.getIdEmpresa()%>" class="btn btn-warning"><%=a.getBloqueado() == 1 ? "Desbloquear" : "Bloquear" %></a></td>
+            <td> <a href="/empresa/autorizados/borrar?id=<%=a.getId()%>&e=<%=empresa.getIdEmpresa()%>" class="btn btn-danger">Eliminar</a></td>
         </tr>
         <%
             }
