@@ -90,7 +90,7 @@ CREATE TABLE `cliente` (
   `Nombre` varchar(45) NOT NULL,
   `Apellido1` varchar(100) NOT NULL,
   `Apellido2` varchar(100) DEFAULT NULL,
-  `F. Nacimiento` date DEFAULT NULL,
+  `Nacimiento` date DEFAULT NULL,
   `Calle` varchar(100) NOT NULL,
   `Email` varchar(100) NOT NULL,
   `password` varchar(45) NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE `cliente` (
   `Pais` varchar(100) DEFAULT NULL,
   `Planta` int DEFAULT NULL,
   `Region` varchar(100) DEFAULT NULL,
-  `CP` int DEFAULT NULL,
+  `CP` int NOT NULL,
   PRIMARY KEY (`idCliente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -110,7 +110,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-11-07','e','lui@gmail','lui',NULL,'Mala','España',NULL,NULL,NULL);
+INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-11-07','e','lui@gmail','lui',3,'Mala','España',0,NULL,29017);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -370,4 +370,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-25 22:21:52
+-- Dump completed on 2023-04-25 22:43:06
