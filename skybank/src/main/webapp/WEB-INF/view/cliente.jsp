@@ -9,7 +9,7 @@
 
 <%
     ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
-    CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
+    Set<CuentaEntity> cuentas = (Set<CuentaEntity>) request.getAttribute("cuentas");
 %>
 
 <html>
@@ -23,17 +23,27 @@
 
 <div class="container">
     <br/>
-    <h1><%=cliente.getNombre()%>  <%=cliente.getApellidos()%></h1>
-    <h2>Saldo: <%=cuenta.getSaldo()%> <%=cuenta.getDivisa()%></h2>
-    <a href="editar?id=${cliente.idCliente}" class="btn btn-outline-primary">Modificar Datos</a>
-    <a href="historial?id=${cuenta.idCuenta}" class="btn btn-outline-primary">Historial</a>
-    <% if (cuenta.getActiva() == 1){%>
-    <a class="btn btn-outline-primary">Realizar Transferencia</a>
-    <a class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
-    <a class="btn btn-outline-danger">Solicitar Desactivacion</a>
-    <% } else { %>
-    <a class="btn btn-outline-primary">Solicitar Activacion</a>
-    <%}%>
+    <h1><%=cliente.getNombre()%>  <%=cliente.getApellido1()%> <%=cliente.getApellido2()%>
+        <a style="margin-left: 60.8%" href="editar?id=${cliente.idCliente}" class="btn btn-outline-primary">Modificar Datos</a>
+    </h1>
+
+    <% for (CuentaEntity cuenta : cuentas) { %>
+        <div class="card" style="margin-bottom: 3%">
+            <h2 style="margin-top: 1%;" class="card-title">Saldo: <%=cuenta.getSaldo()%> <%=cuenta.getDivisa()%></h2>
+
+            <a href="historial?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Historial</a>
+            <% if (cuenta.getActiva() == 1){%>
+            <a style="margin-top:1%" class="btn btn-outline-primary">Realizar Transferencia</a>
+            <a style="margin-top:1%" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
+            <a style="margin-top:1%" class="btn btn-outline-danger">Solicitar Desactivacion</a>
+        </div>
+    <%} else {%>
+    <a style="margin-top:1%" class="btn btn-outline-success">Solicitar Activacion</a> <br/>
+
+    <%}}%>
+    <div>
+        <a href="logout" style="margin-top: 0%;" class="btn btn-outline-info"> Cerrar Sesión </a>
+    </div>
 </div>
 
 
