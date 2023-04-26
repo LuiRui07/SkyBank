@@ -108,5 +108,25 @@ public class EmpresaController {
 
 
 
+    @GetMapping("/datos")
+    public String mostrarDatos(Model model, HttpSession session){
+        EmpresaEntity empresa = (EmpresaEntity) session.getAttribute("empresa");
+
+        if(empresa == null){
+            return "redirect:/empresa/login";
+        }else{
+            model.addAttribute("empresa",empresa);
+            return "datosEmpresa";
+        }
+    }
+
+    @PostMapping("/editarEmpresa")
+    public String editarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa,HttpSession sesion){
+        empresaRepository.save(empresa);
+        sesion.setAttribute("empresa",empresa);
+
+        return "redirect:/empresa/datos";
+    }
+
 
 }
