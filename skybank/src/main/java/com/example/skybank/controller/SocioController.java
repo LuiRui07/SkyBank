@@ -4,6 +4,7 @@ import com.example.skybank.dao.AutorizadoRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
 import com.example.skybank.entity.AutorizadoEntity;
+import com.example.skybank.entity.CuentaEntity;
 import com.example.skybank.entity.EmpresaEntity;
 import com.example.skybank.entity.SocioEntity;
 import com.example.skybank.service.AutorizadoService;
@@ -145,4 +146,79 @@ public class SocioController {
 
         return "redirect:/empresa/socios/";
     }
+
+    @GetMapping("/login")
+    public String loginEmpresa(){
+
+        return "loginSocioAutorizado";
+
+    }
+
+    @PostMapping("/login")
+    public String String(@RequestParam("nif") String nif, @RequestParam("password") String password
+            ,HttpSession sesion,Model modelo){
+
+        String urlTo = "redirect:/empresa/";
+
+        AutorizadoEntity autorizado = autorizadoRepository.autenticar(nif, password);
+
+        Object cuenta = autorizado != null ? autorizado : socioRepository.autenticar(nif,password);
+
+        if(cuenta == null){
+            modelo.addAttribute("error", "Empresa no encontrada");
+            urlTo = "loginSocioAutorizado";
+        }else{
+            EmpresaEntity empresa;
+            String tipoCuenta = "";
+            try{
+                empresa = ((AutorizadoEntity) cuenta).getEmpresaByIdEmpresa();
+                tipoCuenta = "Autorizado";
+            }catch (Exception e){
+                empresa = ((SocioEntity) cuenta).getEmpresaByIdEmpresa();
+                tipoCuenta = "Socio";
+
+            }
+
+            System.out.println(cuenta.toString());
+
+            if(empresa.getVerificado() == 1){
+                sesion.setAttribute("empresa",empresa);
+                sesion.setAttribute("cuenta", cuenta);
+                sesion.setAttribute("tipoCuenta",tipoCuenta);
+            }else{
+                modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+                urlTo = "loginSocioAutorizado";
+            }
+
+        }
+
+        return urlTo;
+
+    }
+
+
+    @GetMapping("/{id}")
+    public String mostrarDatosSocio(@PathVariable("id") Integer idSocio, Model model){
+        SocioEntity socio = this.socioRepository.getById(idSocio);
+
+        model.addAttribute("socio", socio);
+
+        return "datosSocio";
+    }
+
+    @PostMapping("/edit")
+    public String editarAutorizado(@ModelAttribute("socio") SocioEntity socio, @RequestParam("eId") Integer empresaId, HttpSession session){
+
+        EmpresaEntity empresa = empresaRepository.getById(empresaId);
+        socio.setEmpresaByIdEmpresa(empresa);
+
+        session.setAttribute("empresa", empresa);
+        session.setAttribute("cuenta", socio);
+        session.setAttribute("tipoCuenta","Socio");
+
+        socioRepository.save(socio);
+
+        return "redirect:/empresa/autorizados/" + socio.getId();
+    }
+
 }
