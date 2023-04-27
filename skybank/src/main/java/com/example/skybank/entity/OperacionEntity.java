@@ -1,7 +1,7 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -14,6 +14,18 @@ public class OperacionEntity {
     @Basic
     @Column(name = "fecha", nullable = false)
     private Date fecha;
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    @Basic
+    @Column(name = "cantidad", nullable = false)
+    private int cantidad;
     @ManyToOne
     @JoinColumn(name = "idGestor", referencedColumnName = "idGestor")
     private GestorEntity gestorByIdGestor;

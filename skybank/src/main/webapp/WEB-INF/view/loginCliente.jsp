@@ -2,7 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
-  User: guzman
+  User: luisruiznunez
   Date: 20/2/23
   Time: 13:16
   To change this template use File | Settings | File Templates.
@@ -11,7 +11,7 @@
 
 <html>
 <head>
-    <title>Inicio Sesión de Usuario</title>
+    <title>Sesión de Cliente</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
@@ -20,36 +20,30 @@
 <div class="container">
 
 
-    <h1>Inicio Sesión de Cliente:</h1>
-
-
-    <%
-        String error = (String) request.getAttribute("error");
-        if (error != null) {
-    %>
-
-    <div class="alert alert-danger container" role="alert">
+    <h1 class="mt-5">Inicio Sesión como Cliente:</h1>
+    <% String error = (String) request.getAttribute("error");
+        if (error != null) { %>
+    <div class="alert alert-danger mt-3" role="alert">
         ${error}
     </div>
+    <% } %>
 
-    <%
-        }
-    %>
+    <form method="post" action="/cliente/login" class="mt-3">
+        <div class="mb-3">
+            <label for="DNI" class="form-label">DNI o Email de Usuario:</label>
+            <input type="text" class="form-control" id="DNI" name="DNI" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Contraseña:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-outline-danger">Iniciar Sesión</button>
+            <a class="btn btn-outline-primary ml-3" href="/cliente/register">Registrate</a>
+            <a class="btn btn-outline-secondary" href="/empresa/logout" style="margin-left: 61%"> Iniciar como Empresa</a>
+        </div>
 
-    <form method="post" action="/cliente/login" style="display: flex; flex-direction: column;" class="form-group">
-        <label for="nombre">Nombre de Usuario:</label>
-        <input id="nombre" name="nombre" class="form-control" required/>
-        <br>
-
-        <label for="password">Contraseña:</label>
-        <input id="password" type="password" name="password" class="form-control" required/>
-        <br>
-
-        <input type="submit" class="btn btn-outline-danger" value="Iniciar Sesión"/>
     </form>
-
-    <a href="/cliente/register">¡Registrate!</a>
-</div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

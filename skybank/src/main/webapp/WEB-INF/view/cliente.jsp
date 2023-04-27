@@ -9,6 +9,7 @@
 
 <%
     ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
+    Set<CuentaEntity> cuentas = (Set<CuentaEntity>) request.getAttribute("cuentas");
 %>
 
 <html>
@@ -20,13 +21,28 @@
 </head>
 <body>
 
-<div class="hidden">
-
-</div>
-
 <div class="container">
-    <h1><%=cliente.getNombre()%>  <%=cliente.getApellidos()%></h1>
+    <br/>
+    <h1><%=cliente.getNombre()%>  <%=cliente.getApellido1()%> <%=cliente.getApellido2()%>
+        <a style="margin-left: 60.9%" href="editar?id=${cliente.idCliente}" class="btn btn-outline-primary">Modificar Datos</a>
+    </h1>
 
+    <% for (CuentaEntity cuenta : cuentas) { %>
+        <div class="card" style="margin-bottom: 3%">
+            <p class="display-3 p-3 rounded bg-light"><%=cuenta.getSaldo()%>     <%=cuenta.getDivisa()%></p>
+            <a href="historial?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Historial</a>
+            <% if (cuenta.getActiva() == 1){%>
+            <a style="margin-top:1%" href="trans?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Realizar Transferencia</a>
+            <a style="margin-top:1%" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
+            <a style="margin-top:1%" class="btn btn-outline-danger">Solicitar Desactivacion</a>
+        </div>
+    <%} else {%>
+    <a style="margin-top:1%" class="btn btn-outline-success">Solicitar Activacion</a> <br/>
+
+    <%}}%>
+    <div>
+        <a href="logout" style="margin-top: 0%;" class="btn btn-outline-info"> Cerrar Sesión </a>
+    </div>
 </div>
 
 
