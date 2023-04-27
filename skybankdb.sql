@@ -110,7 +110,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-11-02','e','lui@gmail','lui',3,'Mala','España',0,'',29017);
+INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-11-01','Marcos Zapata','lui@gmail','lui',3,'Mala','España',0,'',29017);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -278,6 +278,7 @@ CREATE TABLE `operacion` (
   `TipoOperacionId` int NOT NULL,
   `idCuenta2` int DEFAULT NULL,
   `idCuenta` int NOT NULL,
+  `cantidad` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idoperación`),
   KEY `fk_operación_Cuenta2_idx` (`idCuenta2`),
   KEY `fk_Operacion_Gestor1_idx` (`idGestor`) /*!80000 INVISIBLE */,
@@ -296,7 +297,7 @@ CREATE TABLE `operacion` (
 
 LOCK TABLES `operacion` WRITE;
 /*!40000 ALTER TABLE `operacion` DISABLE KEYS */;
-INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4);
+INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4,0);
 /*!40000 ALTER TABLE `operacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,4 +374,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-27 13:21:24
+-- Dump completed on 2023-04-27 13:58:48
