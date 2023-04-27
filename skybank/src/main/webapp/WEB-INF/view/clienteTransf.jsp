@@ -20,7 +20,7 @@
 <body>
 
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
-    <h3 class="text_26 text-bold text-grey_600 margin-bottom-small" id="stepViewDestiny-accounts-title">Destino</h3>
+    <h3 class="display-1">Destino</h3>
      Elegir Destinatario
     <select>
         <% for (CuentaEntity c : cuentas) {%>

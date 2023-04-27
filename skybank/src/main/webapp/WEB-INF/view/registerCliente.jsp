@@ -16,9 +16,13 @@
 <body>
 <div class="container">
     <h1>Registro de Cliente:</h1>
-    <form:form method="post" action="/cliente/crearCliente" modelAttribute="cliente"  cssStyle="display: flex; flex-direction: column;" cssClass="form-group">
+    <form:form method="post" action="/cliente/crearCliente" modelAttribute="clienteNuevo"  cssStyle="display: flex; flex-direction: column;" cssClass="form-group">
     <div>
         <h2> Datos del Cliente</h2>
+        <div>
+            <span>DNI(*):</span>
+            <form:input path="dni" cssClass="form-control"></form:input>
+        </div>
         <div>
             <span>Nombre (*):</span>
             <form:input path="nombre" cssClass="form-control"></form:input>
@@ -60,7 +64,7 @@
         </div>
         <div>
             <span>Planta/Puerta/Ofcina (*):</span>
-            <form:input type="number" path="planta" cssClass="form-control"></form:input>
+            <form:input type="number" path="planta" cssClass="form-control" cssStyle="width: 41%"></form:input>
         </div>
 
         <div style="display: flex; gap: 10px;">

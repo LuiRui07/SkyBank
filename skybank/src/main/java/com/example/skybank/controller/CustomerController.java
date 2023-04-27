@@ -71,12 +71,12 @@ public class CustomerController {
 
     @GetMapping("/register")
     public String registrarCliente (Model model){
-        model.addAttribute("cliente",new ClienteEntity());
+        model.addAttribute("clienteNuevo",new ClienteEntity());
         return "registerCliente";
     }
 
     @PostMapping("/crearCliente")
-    public String registarClient (@ModelAttribute("cliente") ClienteEntity cliente){
+    public String registarClient (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
         customerRepository.save(cliente);
         return "redirect:/cliente/login";
     }
@@ -108,7 +108,7 @@ public class CustomerController {
         cliente.setPais(clienteForm.getPais());
         cliente.setRegion(clienteForm.getRegion());
         cliente.setCp(clienteForm.getCp());
-        //cliente.setNacimiento(clienteForm.getNacimiento());
+        //cliente.setNacimiento(clienteForm.getNacimiento()); FALTA
         cliente.setEmail(clienteForm.getEmail());
         customerRepository.save(cliente);
         sesion.setAttribute("cliente",cliente);
@@ -120,16 +120,25 @@ public class CustomerController {
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
         List<CuentaEntity> cuentas = cuentaRepository.findAll();
         OperacionEntity operacion = new OperacionEntity();
-        model.addAttribute("cuenta",cuenta);
+        model.addAttribute("cuentaOrigen",cuenta);
         model.addAttribute("cuentas",cuentas);
         model.addAttribute("operacion",operacion);
         return "clienteTransf";
     }
 
     @PostMapping("/realizarTransf")
-    public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacion, @ModelAttribute("cuenta") CuentaEntity cuenta){
-
+    public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacion, @ModelAttribute("cuentaOrigen") CuentaEntity cuenta){
+        //Not working
         return "redirect:/cliente/";
+    }
+
+    @GetMapping("/cambio")
+    public String mostrarCambio(Model model, @RequestParam("id") int idCuenta){
+        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        OperacionEntity operacion = new OperacionEntity();
+        model.addAttribute("cuentaCambio",cuenta);
+        model.addAttribute("operacionCambio",operacion);
+        return "clienteCambio";
     }
 
 }
