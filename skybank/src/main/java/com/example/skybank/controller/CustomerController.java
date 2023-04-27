@@ -2,15 +2,14 @@ package com.example.skybank.controller;
 import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.CustomerRepository;
 import com.example.skybank.dao.OperacionRepository;
-import com.example.skybank.entity.ClienteEntity;
-import com.example.skybank.entity.CuentaEntity;
-import com.example.skybank.entity.EmpresaEntity;
-import com.example.skybank.entity.OperacionEntity;
+import com.example.skybank.dao.TipoOperacionRepository;
+import com.example.skybank.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -28,6 +27,9 @@ public class CustomerController {
 
     @Autowired
     private OperacionRepository operacionRepository;
+
+    @Autowired
+    private TipoOperacionRepository tipoOperacionRepository;
 
     @GetMapping("/")
     public String getCustomers(Model model, HttpSession session){
@@ -110,6 +112,23 @@ public class CustomerController {
         cliente.setEmail(clienteForm.getEmail());
         customerRepository.save(cliente);
         sesion.setAttribute("cliente",cliente);
+        return "redirect:/cliente/";
+    }
+
+    @GetMapping("/trans")
+    public String doTrans (Model model, @RequestParam("id") int idCuenta){
+        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        List<CuentaEntity> cuentas = cuentaRepository.findAll();
+        OperacionEntity operacion = new OperacionEntity();
+        model.addAttribute("cuenta",cuenta);
+        model.addAttribute("cuentas",cuentas);
+        model.addAttribute("operacion",operacion);
+        return "clienteTransf";
+    }
+
+    @PostMapping("/realizarTransf")
+    public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacion, @ModelAttribute("cuenta") CuentaEntity cuenta){
+
         return "redirect:/cliente/";
     }
 

@@ -40,6 +40,7 @@
         <div>
             <button type="submit" class="btn btn-outline-danger">Iniciar Sesión</button>
             <a class="btn btn-outline-primary ml-3" href="/cliente/register">Registrate</a>
+            <a class="btn btn-outline-secondary" href="/empresa/logout" style="margin-left: 61%"> Iniciar como Empresa</a>
         </div>
 
     </form>

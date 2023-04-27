@@ -16,7 +16,7 @@
 </head>
 <body>
   <div class="container" style="align-items: center; text-align: center">
-    <h1 style="margin-bottom: 10%; margin-top: 5%"> Modificar Datos </h1>
+    <h1  class="display-4"style="margin-bottom: 10%; margin-top: 5%; "> Modificar Datos </h1>
       <form:form modelAttribute="cliente" action="/cliente/editar" method="post">
       <form:hidden path="idCliente"></form:hidden>
        Nombre: <form:input cssStyle="margin-right: 10%" path="nombre" maxlength="30" size="15"></form:input>
@@ -26,15 +26,16 @@
           Fecha de Nacimiento:   <input type="date" value="${cliente.nacimiento}" cssStyle="margin-right: 10.5%" size="15"></input>
        Email: <form:input path="email"  size="15"></form:input>  <br/> <br/>
        <br/>
-       Calle:   <form:input path="calle" size="15"></form:input>  <br/> <br/>
-       Numero: <form:input path="numero" size="15"></form:input>  <br/> <br/>
-       Planta: <form:input path="planta" size="15"></form:input>  <br/> <br/>
-       Ciudad: <form:input path="ciudad" size="15"></form:input>  <br/> <br/>
+          <h3 class=""> Direccion: </h3> <br/>
+       Calle:   <form:input path="calle" size="15"></form:input>
+       Numero: <form:input path="numero" size="15"></form:input>
+       Planta: <form:input path="planta" size="15"></form:input>
        CP:   <form:input path="cp" size="15"></form:input>  <br/> <br/>
-       Region:<form:input path="region" size="15"></form:input>  <br/> <br/>
-       Pais:<form:input path="pais" size="15"></form:input>  <br/> <br/>
+       Ciudad: <form:input path="ciudad" size="15"></form:input>
+       Region:<form:input path="region" size="15"></form:input>
+       Pais:<form:input path="pais" size="15"></form:input> <br/>
 
-          <button class="btn btn-success"   > Guardar
+          <button class="btn btn-success" style="margin-top: 2%;"   > Guardar
           </button>
       </form:form>
   </div>

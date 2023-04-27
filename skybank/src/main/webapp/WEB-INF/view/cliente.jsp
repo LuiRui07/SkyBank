@@ -29,11 +29,10 @@
 
     <% for (CuentaEntity cuenta : cuentas) { %>
         <div class="card" style="margin-bottom: 3%">
-            <h2 style="margin-top: 1%;" class="card-title">Saldo: <%=cuenta.getSaldo()%> <%=cuenta.getDivisa()%></h2>
-
+            <p class="display-3 p-3 rounded bg-light"><%=cuenta.getSaldo()%>     <%=cuenta.getDivisa()%></p>
             <a href="historial?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Historial</a>
             <% if (cuenta.getActiva() == 1){%>
-            <a style="margin-top:1%" class="btn btn-outline-primary">Realizar Transferencia</a>
+            <a style="margin-top:1%" href="trans?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Realizar Transferencia</a>
             <a style="margin-top:1%" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
             <a style="margin-top:1%" class="btn btn-outline-danger">Solicitar Desactivacion</a>
         </div>
