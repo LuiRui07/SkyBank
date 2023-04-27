@@ -101,7 +101,7 @@ CREATE TABLE `cliente` (
   `Region` varchar(100) DEFAULT NULL,
   `CP` int NOT NULL,
   PRIMARY KEY (`idCliente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +110,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-11-01','Marcos Zapata','lui@gmail','lui',3,'Mala','España',0,'',29017);
+INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-10-31','Marcos Zapata','lui@gmail','lui',3,'Mala','España',0,'Andaluz',29017),(2,'777','jjjj','jjj','jjj',NULL,'jjjj','jjj','pepe',2,'hjhj','dskjk',2,'hjhj',1212);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,6 +174,31 @@ LOCK TABLES `cuenta` WRITE;
 /*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
 INSERT INTO `cuenta` VALUES (2,NULL,2,0,'EUR',0,1),(3,NULL,3,0,'EUR',0,1),(4,1,NULL,100,'EUR',0,1);
 /*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `divisa`
+--
+
+DROP TABLE IF EXISTS `divisa`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `divisa` (
+  `iddivisa` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(45) DEFAULT NULL,
+  `valor` double DEFAULT NULL,
+  PRIMARY KEY (`iddivisa`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `divisa`
+--
+
+LOCK TABLES `divisa` WRITE;
+/*!40000 ALTER TABLE `divisa` DISABLE KEYS */;
+INSERT INTO `divisa` VALUES (1,'EUR',1),(2,'USD',1.1),(3,'GBP',0.88),(4,'JPY',147),(5,'CHF',0.98),(6,'CAD',1.49),(7,'AUD',1.66),(8,'NZD',1.79);
+/*!40000 ALTER TABLE `divisa` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -279,6 +304,8 @@ CREATE TABLE `operacion` (
   `idCuenta2` int DEFAULT NULL,
   `idCuenta` int NOT NULL,
   `cantidad` int NOT NULL DEFAULT '0',
+  `operacioncol` varchar(45) DEFAULT NULL,
+  `divisa` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idoperación`),
   KEY `fk_operación_Cuenta2_idx` (`idCuenta2`),
   KEY `fk_Operacion_Gestor1_idx` (`idGestor`) /*!80000 INVISIBLE */,
@@ -297,7 +324,7 @@ CREATE TABLE `operacion` (
 
 LOCK TABLES `operacion` WRITE;
 /*!40000 ALTER TABLE `operacion` DISABLE KEYS */;
-INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4,0);
+INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4,0,NULL,NULL);
 /*!40000 ALTER TABLE `operacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -374,4 +401,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-27 13:58:48
+-- Dump completed on 2023-04-27 21:46:15
