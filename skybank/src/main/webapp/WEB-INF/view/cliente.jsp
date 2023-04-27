@@ -33,7 +33,7 @@
             <a href="historial?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Historial</a>
             <% if (cuenta.getActiva() == 1){%>
             <a style="margin-top:1%" href="trans?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Realizar Transferencia</a>
-            <a style="margin-top:1%" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
+            <a style="margin-top:1%" href="cambio?id=<%=cuenta.getIdCuenta()%>" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
             <a style="margin-top:1%" class="btn btn-outline-danger">Solicitar Desactivacion</a>
         </div>
     <%} else {%>

@@ -26,6 +26,18 @@ public class OperacionEntity {
     @Basic
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
+    @Basic
+    @Column(name = "divisa", length = 45)
+    private String divisa;
+
+    public String getDivisa() {
+        return divisa;
+    }
+
+    public void setDivisa(String divisa) {
+        this.divisa = divisa;
+    }
+
     @ManyToOne
     @JoinColumn(name = "idGestor", referencedColumnName = "idGestor")
     private GestorEntity gestorByIdGestor;
