@@ -1,8 +1,5 @@
 package com.example.skybank.controller;
-import com.example.skybank.dao.CuentaRepository;
-import com.example.skybank.dao.CustomerRepository;
-import com.example.skybank.dao.OperacionRepository;
-import com.example.skybank.dao.TipoOperacionRepository;
+import com.example.skybank.dao.*;
 import com.example.skybank.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +27,9 @@ public class CustomerController {
 
     @Autowired
     private TipoOperacionRepository tipoOperacionRepository;
+
+    @Autowired
+    private DivisaRepository divisaRepository;
 
     @GetMapping("/")
     public String getCustomers(Model model, HttpSession session){
@@ -136,8 +136,10 @@ public class CustomerController {
     public String mostrarCambio(Model model, @RequestParam("id") int idCuenta){
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
         OperacionEntity operacion = new OperacionEntity();
+        List<DivisaEntity> divisas = (List<DivisaEntity>) divisaRepository.findAll();
         model.addAttribute("cuentaCambio",cuenta);
         model.addAttribute("operacionCambio",operacion);
+        model.addAttribute("divisas",divisas);
         return "clienteCambio";
     }
 
