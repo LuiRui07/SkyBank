@@ -1,7 +1,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="java.util.Set" %>
-<%@ page import="java.util.Iterator" %><%--
+<%@ page import="java.util.Iterator" %>
+<%@ page import="com.example.skybank.entity.TipoOperacionEntity" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: luisruiznunez
   Date: 24/4/23
@@ -10,7 +12,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% Set< OperacionEntity> operaciones = (Set<OperacionEntity>) request.getAttribute("operaciones");%>
+<% OperacionEntity operacion = (OperacionEntity) request.getAttribute("operacion");%>
 <html>
 <head>
     <title>Historial</title>
@@ -21,6 +23,18 @@
 
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
     <h1>Historial de Operaciones:</h1>
+    <%--
+    <%for (OperacionEntity operacion : operaciones){ %>
+    <div class="card" style="margin-bottom: 3%">
+        <h2 style="margin-top: 1%;" class="card-title">Tipo: <%=operacion.getIdoperación()%></h2>
+
+        <a>Gestor: <%=operacion.getGestorByIdGestor().getNombre()%></a>
+        <a datatype="date"><%=operacion.getFecha()%></a>
+        <a> De la cuenta: <%=operacion.getCuentaByIdCuenta().getIdCuenta()%></a>
+        <a> A la cuent: <%=operacion.getCuentaByIdCuenta2().getIdCuenta()%></a>
+    </div>
+    <%}%>
+    --%>
 </div>
 
 

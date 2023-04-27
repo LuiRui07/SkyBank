@@ -1,6 +1,7 @@
 package com.example.skybank.controller;
 import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.CustomerRepository;
+import com.example.skybank.dao.OperacionRepository;
 import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.entity.CuentaEntity;
 import com.example.skybank.entity.EmpresaEntity;
@@ -24,6 +25,9 @@ public class CustomerController {
 
     @Autowired
     private CuentaRepository cuentaRepository;
+
+    @Autowired
+    private OperacionRepository operacionRepository;
 
     @GetMapping("/")
     public String getCustomers(Model model, HttpSession session){
@@ -78,9 +82,8 @@ public class CustomerController {
     @GetMapping("/historial")
     public String verHistorial (Model model, @RequestParam("id") int IdCuenta){
        CuentaEntity cuenta = cuentaRepository.findById(IdCuenta).orElse(null);
-       Set<OperacionEntity> operaciones = cuenta.getOperacionsByIdCuenta();
-        model.addAttribute("operaciones",operaciones);
-        return "historialCliente";
+       //model.addAttribute("operacion",operacion);
+       return "historialCliente";
     }
 
     @GetMapping("/editar")
