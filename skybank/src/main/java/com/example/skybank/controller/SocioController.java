@@ -162,9 +162,10 @@ public class SocioController {
 
         Object cuenta = autorizado != null ? autorizado : socioRepository.autenticar(nif,password);
 
-        if(cuenta == null){
-            modelo.addAttribute("error", "Empresa no encontrada");
+        if(cuenta == null) {
+            modelo.addAttribute("error", "Usuario no encontrado");
             urlTo = "loginSocioAutorizado";
+
         }else{
             EmpresaEntity empresa;
             String tipoCuenta = "";
@@ -177,16 +178,19 @@ public class SocioController {
 
             }
 
-            System.out.println(cuenta.toString());
-
-            if(empresa.getVerificado() == 1){
-                sesion.setAttribute("empresa",empresa);
-                sesion.setAttribute("cuenta", cuenta);
-                sesion.setAttribute("tipoCuenta",tipoCuenta);
-
-            }else{
-                modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+            if((tipoCuenta.equals("Autorizado") && ((AutorizadoEntity) cuenta).getBloqueado() == 1) || (tipoCuenta.equals("Socio") && ((SocioEntity) cuenta).getBloqueado() == 1)) {
+                modelo.addAttribute("error", String.format("Esta cuenta ha sido bloqueada, solicite el desbloqueo entrando en el siguiente enlace: <br><a href='/empresa/socios/solicitarDesbloqueo?%s'>Solicitar desbloqueo.</a>",cuenta.getClass() == AutorizadoEntity.class ? "id=" + ((AutorizadoEntity) cuenta).getId()  + "&tipo=Autorizado" : "id=" + ((SocioEntity) cuenta).getId() + "&tipo=Socio"));
                 urlTo = "loginSocioAutorizado";
+            }else{
+                if(empresa.getVerificado() == 1){
+                    sesion.setAttribute("empresa",empresa);
+                    sesion.setAttribute("cuenta", cuenta);
+                    sesion.setAttribute("tipoCuenta",tipoCuenta);
+
+                }else{
+                    modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+                    urlTo = "loginSocioAutorizado";
+                }
             }
 
         }
@@ -218,6 +222,22 @@ public class SocioController {
         socioRepository.save(socio);
 
         return "redirect:/empresa/autorizados/" + socio.getId();
+    }
+
+    @GetMapping("/solicitarDesbloqueo")
+    public String solicitarDesbloqueo(@RequestParam("id") Integer idCuenta,@RequestParam("tipo") String tipoCuenta){
+
+        if(tipoCuenta.equals("Socio")){
+
+
+        }else if(tipoCuenta.equals("Autorizado")){
+
+
+
+        }
+
+        return "solicitarDesbloqueo";
+
     }
 
 }

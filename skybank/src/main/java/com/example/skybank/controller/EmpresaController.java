@@ -59,7 +59,13 @@ public class EmpresaController {
 
     private void addCuentaToEmpresa(EmpresaEntity empresa){
         CuentaEntity c = new CuentaEntity();
+        DivisaEntity d = divisaRepository.getById(1);
+
+        c.setDivisaByDivisa(d);
+
         c.setEmpresaByIdempresa(empresa);
+
+
         cuentaRepository.save(c);
 
         empresa.getCuentasByIdempresa().add(c);
