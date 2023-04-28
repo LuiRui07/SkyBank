@@ -38,7 +38,7 @@ public class CustomerController {
             return "redirect:/cliente/login";
         } else {
             model.addAttribute("cliente",cliente);
-            Set<CuentaEntity> cuentas = cliente.getCuentasByIdCliente();
+            List<CuentaEntity> cuentas = cliente.getCuentasByIdcliente();
             model.addAttribute("cuentas",cuentas);
             return "cliente";
         }
@@ -97,7 +97,7 @@ public class CustomerController {
 
     @PostMapping("/editar")
     public String doEditar (Model model, @ModelAttribute("cliente") ClienteEntity clienteForm, HttpSession sesion){
-        ClienteEntity cliente = customerRepository.findById(clienteForm.getIdCliente()).orElse(null);
+        ClienteEntity cliente = customerRepository.findById(clienteForm.getIdcliente()).orElse(null);
         cliente.setNombre(clienteForm.getNombre());
         cliente.setApellido1(clienteForm.getApellido1());
         cliente.setApellido2(clienteForm.getApellido2());
