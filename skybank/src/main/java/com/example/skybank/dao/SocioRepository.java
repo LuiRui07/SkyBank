@@ -11,6 +11,9 @@ import java.util.List;
 @Repository
 public interface SocioRepository extends JpaRepository<SocioEntity,Integer> {
 
-    @Query("SELECT s from SocioEntity s where s.empresaByIdEmpresa.idEmpresa = :id")
+    @Query("select s from SocioEntity s where s.nif = :nif and s.password = :password")
+    SocioEntity autenticar(@Param("nif") String nif, @Param("password") String password);
+
+    @Query("SELECT s from SocioEntity s where s.empresaByIdempresa.idempresa = :id")
     List<SocioEntity> todosDeUnaEmpresa(@Param("id") Integer id);
 }

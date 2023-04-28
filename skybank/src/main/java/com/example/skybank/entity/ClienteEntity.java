@@ -1,9 +1,9 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "cliente", schema = "skybank", catalog = "")
@@ -11,7 +11,7 @@ public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idcliente", nullable = false)
-    private int idCliente;
+    private int idcliente;
     @Basic
     @Column(name = "dni", nullable = false, length = 45)
     private String dni;
@@ -21,9 +21,8 @@ public class ClienteEntity {
     @Basic
     @Column(name = "apellido1", nullable = false, length = 100)
     private String apellido1;
-
     @Basic
-    @Column(name = "apellido2", nullable = false, length = 100)
+    @Column(name = "apellido2", nullable = true, length = 100)
     private String apellido2;
     @Basic
     @Column(name = "nacimiento", nullable = true)
@@ -37,42 +36,35 @@ public class ClienteEntity {
     @Basic
     @Column(name = "password", nullable = false, length = 45)
     private String password;
-
     @Basic
     @Column(name = "numero", nullable = true)
-    private int numero;
-
+    private Integer numero;
     @Basic
     @Column(name = "ciudad", nullable = true, length = 100)
     private String ciudad;
-
     @Basic
     @Column(name = "pais", nullable = true, length = 100)
     private String pais;
-
     @Basic
     @Column(name = "planta", nullable = true)
-    private int planta;
-
+    private Integer planta;
     @Basic
     @Column(name = "region", nullable = true, length = 100)
     private String region;
-
     @Basic
-    @Column(name = "CP", nullable = false)
-    private int CP;
+    @Column(name = "cp", nullable = false)
+    private int cp;
+    @OneToMany(mappedBy = "clienteByIdcliente")
+    private List<ConversacionEntity> conversacionsByIdcliente;
+    @OneToMany(mappedBy = "clienteByIdcliente")
+    private List<CuentaEntity> cuentasByIdcliente;
 
-    @OneToMany(mappedBy = "clienteByIdCliente")
-    private Set<ConversacionEntity> conversacionsByIdCliente;
-    @OneToMany(mappedBy = "clienteByIdCliente")
-    private Set<CuentaEntity> cuentasByIdCliente;
-
-    public int getIdCliente() {
-        return idCliente;
+    public int getIdcliente() {
+        return idcliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setIdcliente(int idcliente) {
+        this.idcliente = idcliente;
     }
 
     public String getDni() {
@@ -89,22 +81,6 @@ public class ClienteEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getApellido1() {
@@ -139,11 +115,27 @@ public class ClienteEntity {
         this.calle = calle;
     }
 
-    public int getNumero() {
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getNumero() {
         return numero;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 
@@ -163,11 +155,11 @@ public class ClienteEntity {
         this.pais = pais;
     }
 
-    public int getPlanta() {
+    public Integer getPlanta() {
         return planta;
     }
 
-    public void setPlanta(int planta) {
+    public void setPlanta(Integer planta) {
         this.planta = planta;
     }
 
@@ -180,26 +172,39 @@ public class ClienteEntity {
     }
 
     public int getCp() {
-        return CP;
+        return cp;
     }
 
     public void setCp(int cp) {
-        this.CP = cp;
+        this.cp = cp;
     }
 
-    public Set<ConversacionEntity> getConversacionsByIdCliente() {
-        return conversacionsByIdCliente;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ClienteEntity that = (ClienteEntity) o;
+        return idcliente == that.idcliente && cp == that.cp && Objects.equals(dni, that.dni) && Objects.equals(nombre, that.nombre) && Objects.equals(apellido1, that.apellido1) && Objects.equals(apellido2, that.apellido2) && Objects.equals(nacimiento, that.nacimiento) && Objects.equals(calle, that.calle) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(numero, that.numero) && Objects.equals(ciudad, that.ciudad) && Objects.equals(pais, that.pais) && Objects.equals(planta, that.planta) && Objects.equals(region, that.region);
     }
 
-    public void setConversacionsByIdCliente(Set<ConversacionEntity> conversacionsByIdCliente) {
-        this.conversacionsByIdCliente = conversacionsByIdCliente;
+    @Override
+    public int hashCode() {
+        return Objects.hash(idcliente, dni, nombre, apellido1, apellido2, nacimiento, calle, email, password, numero, ciudad, pais, planta, region, cp);
     }
 
-    public Set<CuentaEntity> getCuentasByIdCliente() {
-        return cuentasByIdCliente;
+    public List<ConversacionEntity> getConversacionsByIdcliente() {
+        return conversacionsByIdcliente;
     }
 
-    public void setCuentasByIdCliente(Set<CuentaEntity> cuentasByIdCliente) {
-        this.cuentasByIdCliente = cuentasByIdCliente;
+    public void setConversacionsByIdcliente(List<ConversacionEntity> conversacionsByIdcliente) {
+        this.conversacionsByIdcliente = conversacionsByIdcliente;
+    }
+
+    public List<CuentaEntity> getCuentasByIdcliente() {
+        return cuentasByIdcliente;
+    }
+
+    public void setCuentasByIdcliente(List<CuentaEntity> cuentasByIdcliente) {
+        this.cuentasByIdcliente = cuentasByIdcliente;
     }
 }

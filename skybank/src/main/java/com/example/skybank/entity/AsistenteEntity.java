@@ -1,25 +1,25 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "asistente", schema = "skybank", catalog = "")
 public class AsistenteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idAsistente", nullable = false)
-    private int idAsistente;
-    @OneToMany(mappedBy = "asistenteByIdAsistente")
-    private Set<ConversacionEntity> conversacionsByIdAsistente;
+    @Column(name = "idasistente", nullable = false)
+    private int idasistente;
+    @OneToMany(mappedBy = "asistenteByIdasistente")
+    private List<ConversacionEntity> conversacionsByIdasistente;
 
-    public int getIdAsistente() {
-        return idAsistente;
+    public int getIdasistente() {
+        return idasistente;
     }
 
-    public void setIdAsistente(int idAsistente) {
-        this.idAsistente = idAsistente;
+    public void setIdasistente(int idasistente) {
+        this.idasistente = idasistente;
     }
 
     @Override
@@ -27,19 +27,19 @@ public class AsistenteEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AsistenteEntity that = (AsistenteEntity) o;
-        return idAsistente == that.idAsistente;
+        return idasistente == that.idasistente;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idAsistente);
+        return Objects.hash(idasistente);
     }
 
-    public Set<ConversacionEntity> getConversacionsByIdAsistente() {
-        return conversacionsByIdAsistente;
+    public List<ConversacionEntity> getConversacionsByIdasistente() {
+        return conversacionsByIdasistente;
     }
 
-    public void setConversacionsByIdAsistente(Set<ConversacionEntity> conversacionsByIdAsistente) {
-        this.conversacionsByIdAsistente = conversacionsByIdAsistente;
+    public void setConversacionsByIdasistente(List<ConversacionEntity> conversacionsByIdasistente) {
+        this.conversacionsByIdasistente = conversacionsByIdasistente;
     }
 }

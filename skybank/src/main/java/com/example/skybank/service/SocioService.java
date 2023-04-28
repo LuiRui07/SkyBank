@@ -15,7 +15,7 @@ public class SocioService {
     private SocioRepository socioRepository;
 
     public List<SocioEntity> getAllSociosOfEmpresa(EmpresaEntity empresa){
-        return socioRepository.todosDeUnaEmpresa(empresa.getIdEmpresa());
+        return socioRepository.todosDeUnaEmpresa(empresa.getIdempresa());
     }
 
 }

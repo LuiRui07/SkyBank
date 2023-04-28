@@ -1,10 +1,8 @@
 package com.example.skybank.service;
 
 import com.example.skybank.dao.AutorizadoRepository;
-import com.example.skybank.dao.SocioRepository;
 import com.example.skybank.entity.AutorizadoEntity;
 import com.example.skybank.entity.EmpresaEntity;
-import com.example.skybank.entity.SocioEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +15,7 @@ public class AutorizadoService {
     private AutorizadoRepository autorizadoRepository;
 
     public List<AutorizadoEntity> getAllAutorizadosOfEmpresa(EmpresaEntity empresa){
-        return autorizadoRepository.todosDeUnaEmpresa(empresa.getIdEmpresa());
+        return autorizadoRepository.todosDeUnaEmpresa(empresa.getIdempresa());
     }
 
 }

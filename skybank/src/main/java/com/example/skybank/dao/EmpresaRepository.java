@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EmpresaRepository extends JpaRepository<EmpresaEntity,Integer> {
 
-    @Query("select e from EmpresaEntity e where e.nombre = :user and e.passwordEmpresa = :password")
+    @Query("select e from EmpresaEntity e where e.nombre = :user and e.passwordempresa = :password")
     EmpresaEntity autenticar(@Param("user") String name,@Param("password") String contra);
 }
