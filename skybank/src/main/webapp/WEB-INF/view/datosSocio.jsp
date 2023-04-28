@@ -19,7 +19,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 
 <div class="container mt-3">
-  <form:form modelAttribute="socio" cssClass="rounded bg-light p-4" action="/empresa/socios/edit?eId=${socio.empresaByIdEmpresa.idEmpresa}" method="post">
+  <form:form modelAttribute="socio" cssClass="rounded bg-light p-4" action="/empresa/socios/edit?eId=${socio.empresaByIdempresa.idempresa}" method="post">
 
   <h1>Tipo de cuenta: <strong style="color: darkred;">Socio</strong></h1>
   <h3>Socio de la empresa: <span style="color: darkred">${socio.empresaByIdempresa.nombre}</span></h3>

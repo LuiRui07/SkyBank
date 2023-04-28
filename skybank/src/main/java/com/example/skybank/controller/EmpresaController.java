@@ -2,11 +2,10 @@ package com.example.skybank.controller;
 
 
 import com.example.skybank.dao.CuentaRepository;
+import com.example.skybank.dao.DivisaRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
-import com.example.skybank.entity.CuentaEntity;
-import com.example.skybank.entity.EmpresaEntity;
-import com.example.skybank.entity.SocioEntity;
+import com.example.skybank.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +21,12 @@ public class EmpresaController {
     @Autowired
     private EmpresaRepository empresaRepository;
 
-    @Autowired
-    private SocioRepository socioRepository;
 
     @Autowired
     private CuentaRepository cuentaRepository;
+
+    @Autowired
+    private DivisaRepository divisaRepository;
 
     @GetMapping("/")
     public String mostrarEmpresa(Model model,HttpSession sesion){
@@ -35,7 +35,7 @@ public class EmpresaController {
             return "redirect:/empresa/login";
         }else{
             model.addAttribute("empresa",empresa);
-
+            model.addAttribute("divisas", divisaRepository.findAll());
             return "empresa";
         }
     }
@@ -125,6 +125,29 @@ public class EmpresaController {
         sesion.setAttribute("empresa",empresa);
 
         return "redirect:/empresa/datos";
+    }
+
+    @PostMapping("/cambioDivisa")
+    public String realizarCambioDivisa(@RequestParam("id") Integer idCuenta,@RequestParam("divisa") Integer idDivisa, HttpSession sesion){
+        DivisaEntity d = divisaRepository.getById(idDivisa);
+        CuentaEntity c = cuentaRepository.getById(idCuenta);
+
+        Double saldo = c.getSaldo();
+        Double nuevoSaldo;
+        if(c.getDivisaByDivisa().getIddivisa() == 1){
+            nuevoSaldo = Math.ceil((double) saldo * d.getValor());
+
+        }else{
+            nuevoSaldo = Math.ceil((double) saldo / c.getDivisaByDivisa().getValor());
+        }
+
+        c.setSaldo(nuevoSaldo);
+        c.setDivisaByDivisa(d);
+        cuentaRepository.save(c);
+
+        sesion.setAttribute("empresa",c.getEmpresaByIdempresa());
+
+        return "redirect:/empresa/";
     }
 
 

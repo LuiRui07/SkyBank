@@ -183,6 +183,7 @@ public class SocioController {
                 sesion.setAttribute("empresa",empresa);
                 sesion.setAttribute("cuenta", cuenta);
                 sesion.setAttribute("tipoCuenta",tipoCuenta);
+
             }else{
                 modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
                 urlTo = "loginSocioAutorizado";

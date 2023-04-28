@@ -4,6 +4,7 @@
 <%@ page import="com.example.skybank.entity.AutorizadoEntity" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 
 <c:if test="${empty empresa}">
@@ -20,7 +21,7 @@
     <div style="width: 100%; display:flex; align-items: center; justify-content: space-between;">
         <div>
             <a class="navbar-brand" href="/empresa/">Bienvenido a SkyBank: <strong>${empresa.getNombre()}</strong> </a>
-            <% if (tipoCuenta != null) { %>
+            <% if (cuenta != null) { %>
             <p> NIF <%=tipoCuenta.equals("Autorizado") ? " Autorizado: " + ((AutorizadoEntity) cuenta).getNif() : " Socio: " + ((SocioEntity) cuenta).getNif()%></p>
             <% } %>
         </div>
@@ -30,22 +31,33 @@
                 <a  class="navbar-text" href="/empresa/">Cuentas</a>
             </li>
 
-            <li>
-                <a  class="navbar-text" href="/empresa/transferencias/">Transferencias</a>
-            </li>
 
+            <%
+                if(cuenta == null || (tipoCuenta != null && !tipoCuenta.equals("Autorizado"))){
+            %>
+                <li>
+                    <a  class="navbar-text" href="/empresa/transferencias/">Transferencias</a>
+                </li>
+            <%
+                }
+            %>
+
+            <%
+                if(cuenta == null || (tipoCuenta != null && !tipoCuenta.equals("Autorizado"))){
+            %>
             <li>
                 <a  class="navbar-text" href="/empresa/socios/">Socios/Autorizados</a>
             </li>
-
-
+            <%
+                }
+            %>
 
             <li>
                 <a  class="navbar-text" href="/empresa/datos/">Mi empresa</a>
             </li>
 
             <%
-                if(tipoCuenta != null && tipoCuenta.equals("Autorizado")){
+                if((cuenta != null && tipoCuenta != null && tipoCuenta.equals("Autorizado"))){
             %>
             <li>
                 <a  class="navbar-text" href="/empresa/autorizados/<%=((AutorizadoEntity)cuenta).getId()%>">Mis datos</a>
@@ -55,7 +67,7 @@
             %>
 
             <%
-                if(tipoCuenta != null && tipoCuenta.equals("Socio")){
+                if((cuenta != null && tipoCuenta != null && !tipoCuenta.equals("Autorizado"))){
             %>
             <li>
                 <a  class="navbar-text" href="/empresa/socios/<%=((SocioEntity)cuenta).getId()%>">Mis datos</a>

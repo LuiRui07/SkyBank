@@ -19,7 +19,7 @@
 <jsp:include page="header.jsp"></jsp:include>
 
 <div class="container mt-3">
-  <form:form modelAttribute="autorizado" cssClass="rounded bg-light p-4" action="/empresa/autorizados/edit?eId=${autorizado.empresaByIdEmpresa.idEmpresa}" method="post">
+  <form:form modelAttribute="autorizado" cssClass="rounded bg-light p-4" action="/empresa/autorizados/edit?eId=${autorizado.empresaByIdempresa.idempresa}" method="post">
 
   <h1>Tipo de cuenta: <strong style="color: darkred;">Autorizado</strong></h1>
   <h3>Autorizado en la empresa: <span style="color: darkred">${autorizado.empresaByIdempresa.nombre}</span></h3>
