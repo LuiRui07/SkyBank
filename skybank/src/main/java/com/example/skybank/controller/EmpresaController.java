@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 @Controller
 @RequestMapping("/empresa")
@@ -60,17 +59,17 @@ public class EmpresaController {
 
     private void addCuentaToEmpresa(EmpresaEntity empresa){
         CuentaEntity c = new CuentaEntity();
-        c.setEmpresaByIdEmpresa(empresa);
-        c.setDivisa("EUR");
+        c.setEmpresaByIdempresa(empresa);
         cuentaRepository.save(c);
 
-        empresa.getCuentasByIdEmpresa().add(c);
+        empresa.getCuentasByIdempresa().add(c);
         empresaRepository.save(empresa);
     }
 
 
     @GetMapping("/login")
     public String loginEmpresa(){
+
         return "loginEmpresa";
     }
 
@@ -121,7 +120,7 @@ public class EmpresaController {
     }
 
     @PostMapping("/editarEmpresa")
-    public String editarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa,HttpSession sesion){
+    public String editarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa, HttpSession sesion){
         empresaRepository.save(empresa);
         sesion.setAttribute("empresa",empresa);
 

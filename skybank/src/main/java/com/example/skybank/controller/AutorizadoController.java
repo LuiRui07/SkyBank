@@ -5,7 +5,6 @@ import com.example.skybank.dao.AutorizadoRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.entity.AutorizadoEntity;
 import com.example.skybank.entity.EmpresaEntity;
-import org.apache.tomcat.util.http.parser.HttpParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -62,7 +61,7 @@ public class AutorizadoController {
     public String editarAutorizado(@ModelAttribute("autorizado") AutorizadoEntity autorizado, @RequestParam("eId") Integer empresaId, HttpSession session){
 
         EmpresaEntity empresa = empresaRepository.getById(empresaId);
-        autorizado.setEmpresaByIdEmpresa(empresa);
+        autorizado.setEmpresaByIdempresa(empresa);
 
         session.setAttribute("empresa", empresa);
         session.setAttribute("cuenta", autorizado);

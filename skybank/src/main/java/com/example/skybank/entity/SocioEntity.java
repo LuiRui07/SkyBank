@@ -1,7 +1,5 @@
 package com.example.skybank.entity;
 
-import com.example.skybank.ui.socioOAutorizado;
-
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
@@ -60,7 +58,7 @@ public class SocioEntity {
     private int cp;
     @ManyToOne
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
-    private EmpresaEntity empresaByIdEmpresa;
+    private EmpresaEntity empresaByIdempresa;
 
     public int getId() {
         return id;
@@ -203,12 +201,11 @@ public class SocioEntity {
         return Objects.hash(id, nif, nombre, apellido1, apellido2, fechanacimiento, bloqueado, email, password, calle, numero, planta, ciudad, pais, region, cp);
     }
 
-    public EmpresaEntity getEmpresaByIdEmpresa() {
-        return empresaByIdEmpresa;
+    public EmpresaEntity getEmpresaByIdempresa() {
+        return empresaByIdempresa;
     }
 
-    public void setEmpresaByIdEmpresa(EmpresaEntity empresaByIdEmpresa) {
-        this.empresaByIdEmpresa = empresaByIdEmpresa;
+    public void setEmpresaByIdempresa(EmpresaEntity empresaByIdempresa) {
+        this.empresaByIdempresa = empresaByIdempresa;
     }
-
 }

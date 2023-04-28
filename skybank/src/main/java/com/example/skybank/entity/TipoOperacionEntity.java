@@ -1,8 +1,8 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "tipo-operacion", schema = "skybank", catalog = "")
@@ -12,10 +12,10 @@ public class TipoOperacionEntity {
     @Column(name = "id", nullable = false)
     private int id;
     @Basic
-    @Column(name = "Tipo", nullable = true, length = 45)
+    @Column(name = "tipo", nullable = true, length = 45)
     private String tipo;
-    @OneToMany(mappedBy = "tipoOperacionByTipoOperacionId")
-    private Set<OperacionEntity> operacionsById;
+    @OneToMany(mappedBy = "tipoOperacionByTipopperacionid")
+    private List<OperacionEntity> operacionsById;
 
     public int getId() {
         return id;
@@ -46,11 +46,11 @@ public class TipoOperacionEntity {
         return Objects.hash(id, tipo);
     }
 
-    public Set<OperacionEntity> getOperacionsById() {
+    public List<OperacionEntity> getOperacionsById() {
         return operacionsById;
     }
 
-    public void setOperacionsById(Set<OperacionEntity> operacionsById) {
+    public void setOperacionsById(List<OperacionEntity> operacionsById) {
         this.operacionsById = operacionsById;
     }
 }

@@ -27,7 +27,7 @@
 
                 <div>
                     <span>Email Corporativo:</span>
-                    <form:input path="emailCorporativo" cssClass="form-control" required="required"></form:input>
+                    <form:input path="emailcorporativo" cssClass="form-control" required="required"></form:input>
                 </div>
 
             </div>
@@ -82,7 +82,7 @@
 
             <div style="margin-top: 10px; align-items: center">
                 <span>Contraseña:</span>
-                <form:input type="password" path="passwordEmpresa" cssClass="form-control" required="required"></form:input>
+                <form:input type="password" path="passwordempresa" cssClass="form-control" required="required"></form:input>
                 <br>
             <div>
 

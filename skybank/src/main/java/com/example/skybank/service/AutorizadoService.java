@@ -15,7 +15,7 @@ public class AutorizadoService {
     private AutorizadoRepository autorizadoRepository;
 
     public List<AutorizadoEntity> getAllAutorizadosOfEmpresa(EmpresaEntity empresa){
-        return autorizadoRepository.todosDeUnaEmpresa(empresa.getIdEmpresa());
+        return autorizadoRepository.todosDeUnaEmpresa(empresa.getIdempresa());
     }
 
 }

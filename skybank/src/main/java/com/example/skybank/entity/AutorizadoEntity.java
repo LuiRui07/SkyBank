@@ -58,7 +58,7 @@ public class AutorizadoEntity {
     private int bloqueado;
     @ManyToOne
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
-    private EmpresaEntity empresaByIdEmpresa;
+    private EmpresaEntity empresaByIdempresa;
 
     public int getId() {
         return id;
@@ -201,11 +201,11 @@ public class AutorizadoEntity {
         return Objects.hash(id, nif, nombre, apellido1, apellido2, fechanacimiento, email, password, calle, numero, planta, ciudad, pais, region, cp, bloqueado);
     }
 
-    public EmpresaEntity getEmpresaByIdEmpresa() {
-        return empresaByIdEmpresa;
+    public EmpresaEntity getEmpresaByIdempresa() {
+        return empresaByIdempresa;
     }
 
-    public void setEmpresaByIdEmpresa(EmpresaEntity empresaByIdEmpresa) {
-        this.empresaByIdEmpresa = empresaByIdEmpresa;
+    public void setEmpresaByIdempresa(EmpresaEntity empresaByIdempresa) {
+        this.empresaByIdempresa = empresaByIdempresa;
     }
 }

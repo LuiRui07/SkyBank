@@ -1,8 +1,8 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "cuenta", schema = "skybank", catalog = "")
@@ -10,33 +10,36 @@ public class CuentaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idcuenta", nullable = false)
-    private int idCuenta;
+    private int idcuenta;
     @Basic
-    @Column(name = "saldo", nullable = true, precision = 0)
+    @Column(name = "saldo", nullable = false, precision = 0)
     private double saldo;
-    @Basic
-    @Column(name = "divisa", nullable = false, length = 3)
-    private String divisa;
     @Basic
     @Column(name = "sospechosa", nullable = false)
     private int sospechosa;
+    @Basic
+    @Column(name = "activa", nullable = false)
+    private int activa;
     @ManyToOne
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
-    private ClienteEntity clienteByIdCliente;
+    private ClienteEntity clienteByIdcliente;
     @ManyToOne
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
-    private EmpresaEntity empresaByIdEmpresa;
-    @OneToMany(mappedBy = "cuentaByIdCuenta2")
-    private Set<OperacionEntity> operacionsByIdCuenta;
-    @OneToMany(mappedBy = "cuentaByIdCuenta")
-    private Set<OperacionEntity> operacionsByIdCuenta_0;
+    private EmpresaEntity empresaByIdempresa;
+    @ManyToOne
+    @JoinColumn(name = "divisa", referencedColumnName = "iddivisa", nullable = false)
+    private DivisaEntity divisaByDivisa;
+    @OneToMany(mappedBy = "cuentaByIdcuenta2")
+    private List<OperacionEntity> operacionsByIdcuenta;
+    @OneToMany(mappedBy = "cuentaByIdcuenta")
+    private List<OperacionEntity> operacionsByIdcuenta_0;
 
-    public int getIdCuenta() {
-        return idCuenta;
+    public int getIdcuenta() {
+        return idcuenta;
     }
 
-    public void setIdCuenta(int idCuenta) {
-        this.idCuenta = idCuenta;
+    public void setIdcuenta(int idcuenta) {
+        this.idcuenta = idcuenta;
     }
 
     public double getSaldo() {
@@ -47,14 +50,6 @@ public class CuentaEntity {
         this.saldo = saldo;
     }
 
-    public String getDivisa() {
-        return divisa;
-    }
-
-    public void setDivisa(String divisa) {
-        this.divisa = divisa;
-    }
-
     public int getSospechosa() {
         return sospechosa;
     }
@@ -63,48 +58,64 @@ public class CuentaEntity {
         this.sospechosa = sospechosa;
     }
 
+    public int getActiva() {
+        return activa;
+    }
+
+    public void setActiva(int activa) {
+        this.activa = activa;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CuentaEntity that = (CuentaEntity) o;
-        return idCuenta == that.idCuenta && Double.compare(that.saldo, saldo) == 0 && sospechosa == that.sospechosa && Objects.equals(divisa, that.divisa);
+        CuentaEntity cuenta = (CuentaEntity) o;
+        return idcuenta == cuenta.idcuenta && Double.compare(cuenta.saldo, saldo) == 0 && activa == cuenta.activa && Objects.equals(sospechosa, cuenta.sospechosa);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCuenta, saldo, divisa, sospechosa);
+        return Objects.hash(idcuenta, saldo, sospechosa, activa);
     }
 
-    public ClienteEntity getClienteByIdCliente() {
-        return clienteByIdCliente;
+    public ClienteEntity getClienteByIdcliente() {
+        return clienteByIdcliente;
     }
 
-    public void setClienteByIdCliente(ClienteEntity clienteByIdCliente) {
-        this.clienteByIdCliente = clienteByIdCliente;
+    public void setClienteByIdcliente(ClienteEntity clienteByIdcliente) {
+        this.clienteByIdcliente = clienteByIdcliente;
     }
 
-    public EmpresaEntity getEmpresaByIdEmpresa() {
-        return empresaByIdEmpresa;
+    public EmpresaEntity getEmpresaByIdempresa() {
+        return empresaByIdempresa;
     }
 
-    public void setEmpresaByIdEmpresa(EmpresaEntity empresaByIdEmpresa) {
-        this.empresaByIdEmpresa = empresaByIdEmpresa;
+    public void setEmpresaByIdempresa(EmpresaEntity empresaByIdempresa) {
+        this.empresaByIdempresa = empresaByIdempresa;
     }
 
-    public Set<OperacionEntity> getOperacionsByIdCuenta() {
-        return operacionsByIdCuenta;
+    public DivisaEntity getDivisaByDivisa() {
+        return divisaByDivisa;
     }
 
-    public void setOperacionsByIdCuenta(Set<OperacionEntity> operacionsByIdCuenta) {
-        this.operacionsByIdCuenta = operacionsByIdCuenta;
+    public void setDivisaByDivisa(DivisaEntity divisaByDivisa) {
+        this.divisaByDivisa = divisaByDivisa;
     }
 
-    public Set<OperacionEntity> getOperacionsByIdCuenta_0() {
-        return operacionsByIdCuenta_0;
+    public List<OperacionEntity> getOperacionsByIdcuenta() {
+        return operacionsByIdcuenta;
     }
 
-    public void setOperacionsByIdCuenta_0(Set<OperacionEntity> operacionsByIdCuenta_0) {
-        this.operacionsByIdCuenta_0 = operacionsByIdCuenta_0;
+    public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
+        this.operacionsByIdcuenta = operacionsByIdcuenta;
+    }
+
+    public List<OperacionEntity> getOperacionsByIdcuenta_0() {
+        return operacionsByIdcuenta_0;
+    }
+
+    public void setOperacionsByIdcuenta_0(List<OperacionEntity> operacionsByIdcuenta_0) {
+        this.operacionsByIdcuenta_0 = operacionsByIdcuenta_0;
     }
 }

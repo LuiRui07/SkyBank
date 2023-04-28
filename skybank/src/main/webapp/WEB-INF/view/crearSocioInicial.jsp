@@ -16,7 +16,7 @@
 
 <div class="container">
   <h1>Registro de un nuevo socio para <%=empresa.getNombre()%>:</h1>
-  <form:form method="post" action="/empresa/socios/crearSocioEmpresa?id=${empresa.idEmpresa}" modelAttribute="socio"  cssStyle="display: flex; flex-direction: column;" cssClass="form-group">
+  <form:form method="post" action="/empresa/socios/crearSocioEmpresa?id=${empresa.idempresa}" modelAttribute="socio"  cssStyle="display: flex; flex-direction: column;" cssClass="form-group">
   <form:hidden path="id"></form:hidden>
   <div>
     <h2> Datos del socio</h2>

@@ -27,6 +27,10 @@
         <ul style="float: right;margin: 0;padding: 0;list-style: none; display: flex; gap: 15px; align-items: center">
 
             <li>
+                <a  class="navbar-text" href="/empresa/">Cuentas</a>
+            </li>
+
+            <li>
                 <a  class="navbar-text" href="/empresa/transferencias/">Transferencias</a>
             </li>
 

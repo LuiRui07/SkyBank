@@ -14,7 +14,7 @@
 <div class="container">
     <h1>Datos de mi empresa:</h1>
     <form:form method="post" action="/empresa/editarEmpresa" modelAttribute="empresa"  cssStyle="display: flex; flex-direction: column;" cssClass="form-group">
-    <form:hidden path="idEmpresa"></form:hidden>
+    <form:hidden path="idempresa"></form:hidden>
     <div>
         <div>
             <span>CIF (*):</span>
@@ -28,7 +28,7 @@
 
         <div>
             <span>Email Corporativo:</span>
-            <form:input path="emailCorporativo" cssClass="form-control" required="required"></form:input>
+            <form:input path="emailcorporativo" cssClass="form-control" required="required"></form:input>
         </div>
 
     </div>
@@ -83,7 +83,7 @@
 
         <div style="margin-top: 10px; align-items: center">
             <span>Contraseña:</span>
-                <form:input type="password" path="passwordEmpresa" cssClass="form-control" required="required"></form:input>
+                <form:input type="password" path="passwordempresa" cssClass="form-control" required="required"></form:input>
             <br>
             <div>
 

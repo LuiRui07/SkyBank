@@ -8,7 +8,7 @@
 
 <%
     EmpresaEntity empresa = (EmpresaEntity) request.getAttribute("empresa");
-    List<CuentaEntity> cuentas = empresa.getCuentasByIdEmpresa();
+    List<CuentaEntity> cuentas = empresa.getCuentasByIdempresa();
 %>
 
 <html>
@@ -28,9 +28,9 @@
 
     <div class="container">
         <%
-            System.out.println(empresa.getSociosByIdEmpresa());
+            System.out.println(empresa.getSociosByIdempresa());
 
-            if (empresa.getSociosByIdEmpresa().size() == 0) {
+            if (empresa.getSociosByIdempresa().size() == 0) {
 
         %>
 
@@ -50,13 +50,13 @@
         <p class="lead"> Tienes un total de <%=cuentas.size()%> cuentas.</p>
 
         <%
-            for(CuentaEntity cuenta : cuentas){
+            for(CuentaEntity c : cuentas){
 
         %>
         <p>
 
             <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                ID Cuenta:  <%=cuenta.getIdCuenta()%>
+                ID Cuenta:  <%=c.getIdcuenta()%>
             </a>
 
         </p>
@@ -64,11 +64,11 @@
             <div class="card card-body d-flex flex-row align-middle" >
                 <div>
                     <p class="display-5">Saldo disponible:</p>
-                    <p class="display-1 p-3 rounded bg-light"><%=cuenta.getSaldo()%></p>
+                    <p class="display-1 p-3 rounded bg-light"><%=c.getSaldo()%></p>
                 </div>
                 <div class="ml-5 mt-5">
-                    <p class="display-4">Divisa: <%=cuenta.getDivisa()%></p>
-                    <p>Cuenta Sospechosa: <%=cuenta.getSospechosa() == 1 ? "Si" : "No" %></p>
+                    <p class="display-4">Divisa: <%=c.getDivisaByDivisa().getNombre()%></p>
+                    <p>Cuenta Sospechosa: <%=c.getSospechosa() == 1 ? "Si" : "No" %></p>
                 </div>
             </div>
         </div>

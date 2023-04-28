@@ -10,8 +10,8 @@ import java.util.Objects;
 public class MensajeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idMensaje", nullable = false)
-    private int idMensaje;
+    @Column(name = "idmensaje", nullable = false)
+    private int idmensaje;
     @Basic
     @Column(name = "fecha", nullable = false)
     private Date fecha;
@@ -22,15 +22,15 @@ public class MensajeEntity {
     @Column(name = "texto", nullable = false, length = 255)
     private String texto;
     @ManyToOne
-    @JoinColumn(name = "idConversacion", referencedColumnName = "idConversacion", nullable = false)
-    private ConversacionEntity conversacionByIdConversacion;
+    @JoinColumn(name = "idconversacion", referencedColumnName = "idconversacion", nullable = false)
+    private ConversacionEntity conversacionByIdconversacion;
 
-    public int getIdMensaje() {
-        return idMensaje;
+    public int getIdmensaje() {
+        return idmensaje;
     }
 
-    public void setIdMensaje(int idMensaje) {
-        this.idMensaje = idMensaje;
+    public void setIdmensaje(int idmensaje) {
+        this.idmensaje = idmensaje;
     }
 
     public Date getFecha() {
@@ -62,19 +62,19 @@ public class MensajeEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MensajeEntity that = (MensajeEntity) o;
-        return idMensaje == that.idMensaje && Objects.equals(fecha, that.fecha) && Objects.equals(hora, that.hora) && Objects.equals(texto, that.texto);
+        return idmensaje == that.idmensaje && Objects.equals(fecha, that.fecha) && Objects.equals(hora, that.hora) && Objects.equals(texto, that.texto);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idMensaje, fecha, hora, texto);
+        return Objects.hash(idmensaje, fecha, hora, texto);
     }
 
-    public ConversacionEntity getConversacionByIdConversacion() {
-        return conversacionByIdConversacion;
+    public ConversacionEntity getConversacionByIdconversacion() {
+        return conversacionByIdconversacion;
     }
 
-    public void setConversacionByIdConversacion(ConversacionEntity conversacionByIdConversacion) {
-        this.conversacionByIdConversacion = conversacionByIdConversacion;
+    public void setConversacionByIdconversacion(ConversacionEntity conversacionByIdconversacion) {
+        this.conversacionByIdconversacion = conversacionByIdconversacion;
     }
 }
