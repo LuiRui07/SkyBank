@@ -17,7 +17,7 @@
     Object cuenta = (Object) session.getAttribute("cuenta");
 %>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="position: sticky; top: 0;">
     <div style="width: 100%; display:flex; align-items: center; justify-content: space-between;">
         <div>
             <a class="navbar-brand" href="/empresa/">Bienvenido a SkyBank: <strong>${empresa.getNombre()}</strong> </a>

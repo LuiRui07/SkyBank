@@ -9,6 +9,9 @@ import java.util.List;
 
 public interface OperacionRepository extends JpaRepository<OperacionEntity,Integer> {
 
-    @Query("select o from OperacionEntity o where o.cuentaByIdcuenta.idcuenta = :idCuenta and o.tipoOperacionByTipopperacionid.id = 1 order by o.fecha desc")
-    List<OperacionEntity> obtenerTransferenciasCuenta(@Param("idCuenta") Integer idCuenta);
+    @Query("select o from OperacionEntity o where o.cuentaByIdcuenta.idcuenta = :idCuenta and o.tipoOperacionByTipopperacionid.id = 1 and o.cantidad < 0 order by o.fecha desc")
+    List<OperacionEntity> obtenerPagosNegativos(@Param("idCuenta") int idCuenta);
+
+    @Query("select o from OperacionEntity o where o.cuentaByIdcuenta2.idcuenta = :idCuenta and o.tipoOperacionByTipopperacionid.id = 1 and o.cantidad > 0 order by o.fecha desc")
+    List<OperacionEntity> obtenerPagosPositivos(@Param("idCuenta") int idCuenta);
 }

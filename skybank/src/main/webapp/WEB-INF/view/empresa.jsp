@@ -72,12 +72,12 @@
                 </div>
 
                 <div class="ml-auto mt-5">
-                    <button type="button" class="btn btn-success" style="background: url('https://img.freepik.com/vector-gratis/servicio-cambio-moneda-transferencia-monetaria-cambio-dolar-euro-compra-venta-moneda-extranjera-monedas-oro-simbolos-moneda-ue-ee-uu-ilustracion-metafora-concepto-aislado-vector_335657-2818.jpg?w=180'); width: 180px;height: 180px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <button type="button" class="btn btn-success" style="background: url('https://img.freepik.com/vector-gratis/servicio-cambio-moneda-transferencia-monetaria-cambio-dolar-euro-compra-venta-moneda-extranjera-monedas-oro-simbolos-moneda-ue-ee-uu-ilustracion-metafora-concepto-aislado-vector_335657-2818.jpg?w=180'); width: 180px;height: 180px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=c.getIdcuenta()%>">
 
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade" id="staticBackdrop<%=c.getIdcuenta()%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <form method="post" action="/empresa/cambioDivisa?id=<%=c.getIdcuenta()%>">
                             <div class="modal-content">

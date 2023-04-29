@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/empresa")
@@ -48,30 +50,29 @@ public class EmpresaController {
 
     @PostMapping("/crearEmpresa")
     public String registrarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa, Model model){
-        empresa.setCuentasByIdEmpresa(new ArrayList<>());
+
         empresaRepository.save(empresa);
-        addCuentaToEmpresa(empresa);
 
-        model.addAttribute("socio",new SocioEntity());
-        model.addAttribute("empresa",empresa);
-        return "crearSocioInicial";
-    }
+        EmpresaEntity e = empresaRepository.getById(empresa.getIdempresa());
 
-    private void addCuentaToEmpresa(EmpresaEntity empresa){
         CuentaEntity c = new CuentaEntity();
         DivisaEntity d = divisaRepository.getById(1);
 
         c.setDivisaByDivisa(d);
-
-        c.setEmpresaByIdempresa(empresa);
-
-
+        c.setEmpresaByIdempresa(e);
         cuentaRepository.save(c);
 
-        empresa.getCuentasByIdempresa().add(c);
-        empresaRepository.save(empresa);
-    }
+        ArrayList<CuentaEntity> cuentas = new ArrayList<>();
+        cuentas.add(c);
 
+        empresa.setCuentasByIdempresa(cuentas);
+
+        empresaRepository.save(e);
+
+        model.addAttribute("socio",new SocioEntity());
+        model.addAttribute("empresa",e);
+        return "crearSocioInicial";
+    }
 
     @GetMapping("/login")
     public String loginEmpresa(){
