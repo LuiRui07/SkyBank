@@ -1,4 +1,8 @@
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %><%--
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
+<%@ page import="com.example.skybank.entity.OperacionEntity" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.skybank.entity.CuentaEntity" %><%--
   Created by IntelliJ IDEA.
   User: Pepe
   Date: 11/04/2023
@@ -9,6 +13,7 @@
 <%
 
     EmpresaEntity empresa = (EmpresaEntity) request.getAttribute("empresa");
+    List<List<OperacionEntity>> transferencias = (List<List<OperacionEntity>>) request.getAttribute("transferencias");
 %>
 
 <html>
@@ -20,7 +25,86 @@
 <body>
     <jsp:include page="header.jsp"></jsp:include>
     <div class="container mt-3">
-        <h1>Transferencias realizadas:</h1>
+
+        <div class="card">
+            <div class="card-title text-center">
+                <h1 class="display-5 mt-3">Realizar una nueva transferencia</h1>
+            </div>
+            <div class="card-body">
+                <%
+                    String error = (String) request.getAttribute("error");
+                    if (error != null) {
+
+                %>
+                <div class="alert alert-danger container" role="alert">
+                    ${error}
+                </div>
+                <%
+                    }
+                %>
+
+                <%
+                    String success = (String) request.getAttribute("success");
+                    if (success != null) {
+
+                %>
+                <div class="alert alert-success container" role="alert">
+                    ${success}
+                </div>
+                <%
+                    }
+                %>
+
+
+                <form method="post" action="/empresa/transferencias/nueva">
+                    <div style="display: flex; gap: 10px; align-items: center; justify-content: center;">
+                        <label for="cantidad">Cantidad a transferir: </label>
+                        <input name="cantidad" id="cantidad" type="number" min="1" step="0.01" class="form-control"  style="width: 100px; height: fit-content;" required/>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-evenly; gap: 20px; margin-top: 10px;">
+                        <div>
+                            <label for="idCuenta">Cuenta Origen: </label>
+                            <select name="IdOrigen" id="idCuenta" class="custom-select" required>
+                                <%
+                                    for(CuentaEntity c : empresa.getCuentasByIdempresa()){
+                                %>
+                                <option  value="<%=c.getIdcuenta()%>"><%=c.getIdcuenta()%> (<%=c.getSaldo()%> <%=c.getDivisaByDivisa().getSimbolo()%>)</option>
+                                <%
+                                    }
+                                %>
+                            </select>
+                        </div>
+
+                        <div>
+                            <img src="https://i.imgur.com/2q9Z5D7.png" width="90px" height="90px;" draggable="false"/>
+                        </div>
+
+                        <div>
+                            <label for="idCuenta">Cuenta Destino: </label>
+                            <input name="IdDestino" type="text" class="form-control" placeholder="Id de la cuenta destino" required/>
+
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger mt-5" style="display: flex; margin: auto;">Realizar transferencia</button>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="mt-4">
+            <h1 class="display-5">Transferencias realizadas:</h1>
+            <%
+                if(transferencias.size() == 0){
+            %>
+            <div class="alert alert-danger container" role="alert">
+                No se ha realizado ninguna transferencia.
+            </div>
+            <%
+                }
+            %>
+        </div>
 
     </div>
 

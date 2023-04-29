@@ -55,12 +55,12 @@
         %>
         <p>
 
-            <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn btn-success" data-bs-toggle="collapse" href="#collapse<%=c.getIdcuenta()%>" role="button" aria-expanded="false" aria-controls="collapseExample">
                 ID Cuenta:  <%=c.getIdcuenta()%>
             </a>
 
         </p>
-        <div class="collapse" id="collapseExample">
+        <div class="collapse" id="collapse<%=c.getIdcuenta()%>">
             <div class="card card-body d-flex flex-row align-middle" >
                 <div>
                     <p class="display-5">Saldo disponible:</p>
