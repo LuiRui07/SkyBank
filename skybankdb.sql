@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: skybank
+-- Host: 127.0.0.1    Database: skybank
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -164,8 +164,8 @@ CREATE TABLE `cuenta` (
   KEY `Divisa_idx` (`divisa`),
   CONSTRAINT `Divisa` FOREIGN KEY (`divisa`) REFERENCES `divisa` (`iddivisa`),
   CONSTRAINT `fk_Cuenta_Cliente1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,7 @@ CREATE TABLE `cuenta` (
 
 LOCK TABLES `cuenta` WRITE;
 /*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
-INSERT INTO `cuenta` VALUES (2,NULL,2,0,0,0,1),(3,NULL,3,0,0,0,1),(4,1,NULL,100,0,0,1);
+INSERT INTO `cuenta` VALUES (2,NULL,2,0,1,0,1),(3,NULL,2,12895,1,0,1),(4,1,NULL,100,0,0,1),(12,NULL,9,7156,1,0,0);
 /*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -227,7 +227,7 @@ CREATE TABLE `empresa` (
   `verificado` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idempresa`),
   UNIQUE KEY `CIF_UNIQUE` (`cif`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -236,7 +236,7 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1),(3,'','','','','',0,0,'','','',0,0);
+INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1),(9,'123432341','Apple','apple@apple.us','manzana','poopo',3,32,'NY','US','',43412,1);
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -300,16 +300,17 @@ DROP TABLE IF EXISTS `operacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `operacion` (
-  `idoperación` int NOT NULL AUTO_INCREMENT,
+  `idoperacion` int NOT NULL AUTO_INCREMENT,
   `fecha` date NOT NULL,
   `idgestor` int DEFAULT NULL,
   `tipopperacionid` int NOT NULL,
   `idcuenta2` int DEFAULT NULL,
   `idcuenta` int NOT NULL,
-  `cantidad` int NOT NULL DEFAULT '0',
+  `cantidad` double NOT NULL DEFAULT '0',
   `operacioncol` varchar(45) DEFAULT NULL,
   `divisa` int DEFAULT NULL,
-  PRIMARY KEY (`idoperación`),
+  `concepto` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`idoperacion`),
   KEY `fk_operación_Cuenta2_idx` (`idcuenta2`),
   KEY `fk_Operacion_Gestor1_idx` (`idgestor`) /*!80000 INVISIBLE */,
   KEY `fk_Operacion_Tipo-Operacion1_idx` (`tipopperacionid`),
@@ -318,9 +319,9 @@ CREATE TABLE `operacion` (
   CONSTRAINT `fk_Operacion_Cuenta1` FOREIGN KEY (`idcuenta`) REFERENCES `cuenta` (`idcuenta`),
   CONSTRAINT `fk_operacion_divisa` FOREIGN KEY (`divisa`) REFERENCES `divisa` (`iddivisa`),
   CONSTRAINT `fk_Operacion_Gestor1` FOREIGN KEY (`idgestor`) REFERENCES `gestor` (`idgestor`),
-  CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`tipopperacionid`) REFERENCES `tipo-operacion` (`id`),
+  CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`tipopperacionid`) REFERENCES `tipooperacion` (`id`),
   CONSTRAINT `fk_operación_Cuenta2` FOREIGN KEY (`idcuenta2`) REFERENCES `cuenta` (`idcuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -329,7 +330,7 @@ CREATE TABLE `operacion` (
 
 LOCK TABLES `operacion` WRITE;
 /*!40000 ALTER TABLE `operacion` DISABLE KEYS */;
-INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4,0,NULL,NULL);
+INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4,0,NULL,NULL,NULL),(26,'2023-04-29',NULL,1,12,3,-5,NULL,1,'2asdadsad'),(27,'2023-04-29',NULL,1,12,3,5,NULL,1,'2asdadsad');
 /*!40000 ALTER TABLE `operacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -361,7 +362,7 @@ CREATE TABLE `socio` (
   PRIMARY KEY (`id`),
   KEY `idEmpresa_idx` (`idempresa`),
   CONSTRAINT `idEmpresa` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -370,17 +371,18 @@ CREATE TABLE `socio` (
 
 LOCK TABLES `socio` WRITE;
 /*!40000 ALTER TABLE `socio` DISABLE KEYS */;
+INSERT INTO `socio` VALUES (1,2,'1324324','paco','merte',NULL,'2000-03-12',0,'paco@danone.es','paco','poopo',0,0,'Malaka','Spain',NULL,0),(2,9,'12345X','paquito','paco','','4223-03-12',0,'paco@paco.com','paco','poopo',0,0,'Malaka','spain','',0);
 /*!40000 ALTER TABLE `socio` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `tipo-operacion`
+-- Table structure for table `tipooperacion`
 --
 
-DROP TABLE IF EXISTS `tipo-operacion`;
+DROP TABLE IF EXISTS `tipooperacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tipo-operacion` (
+CREATE TABLE `tipooperacion` (
   `id` int NOT NULL AUTO_INCREMENT COMMENT '1. Transferencia',
   `tipo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -388,13 +390,13 @@ CREATE TABLE `tipo-operacion` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `tipo-operacion`
+-- Dumping data for table `tipooperacion`
 --
 
-LOCK TABLES `tipo-operacion` WRITE;
-/*!40000 ALTER TABLE `tipo-operacion` DISABLE KEYS */;
-INSERT INTO `tipo-operacion` VALUES (1,'Transferencia');
-/*!40000 ALTER TABLE `tipo-operacion` ENABLE KEYS */;
+LOCK TABLES `tipooperacion` WRITE;
+/*!40000 ALTER TABLE `tipooperacion` DISABLE KEYS */;
+INSERT INTO `tipooperacion` VALUES (1,'Transferencia');
+/*!40000 ALTER TABLE `tipooperacion` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -406,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-28 14:53:44
+-- Dump completed on 2023-04-30  0:52:52
