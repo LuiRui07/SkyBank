@@ -18,4 +18,8 @@ public class SocioService {
         return socioRepository.todosDeUnaEmpresa(empresa.getIdempresa());
     }
 
+    public List<SocioEntity> getAllSociosOfEmpresaFiltered(EmpresaEntity empresa, String filtroDatos){
+        return getAllSociosOfEmpresa(empresa).stream().filter(s -> s.getNif().contains(filtroDatos) || (s.getNombre() + " " +s.getApellido1() + " " + s.getApellido2()).contains(filtroDatos)).toList();
+    }
+
 }
