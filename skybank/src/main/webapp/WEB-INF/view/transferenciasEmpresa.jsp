@@ -1,14 +1,12 @@
+<%--
+  @author: José Luis López Ruiz
+--%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.CuentaEntity" %><%--
-  Created by IntelliJ IDEA.
-  User: Pepe
-  Date: 11/04/2023
-  Time: 18:59
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 

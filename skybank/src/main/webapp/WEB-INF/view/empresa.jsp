@@ -1,3 +1,7 @@
+<%--
+  @author: José Luis López Ruiz
+--%>
+
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.util.List" %>

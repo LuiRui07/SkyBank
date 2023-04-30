@@ -1,3 +1,7 @@
+<%--
+  @author: José Luis López Ruiz
+--%>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.entity.SocioEntity" %>

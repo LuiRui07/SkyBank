@@ -1,3 +1,7 @@
+/*
+    @autor: José Luis López Ruiz
+ */
+
 package com.example.skybank.service;
 
 import com.example.skybank.dao.SocioRepository;

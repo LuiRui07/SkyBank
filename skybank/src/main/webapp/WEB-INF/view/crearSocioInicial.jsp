@@ -1,3 +1,7 @@
+<%--
+  @author: José Luis López Ruiz
+--%>
+
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>

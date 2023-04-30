@@ -1,10 +1,7 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: Pepe
-  Date: 28/04/2023
-  Time: 21:24
-  To change this template use File | Settings | File Templates.
+  @author: José Luis López Ruiz
 --%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
