@@ -18,7 +18,7 @@
   <div class="container" style="align-items: center; text-align: center">
     <h1  class="display-4"style="margin-bottom: 10%; margin-top: 5%; "> Modificar Datos </h1>
       <form:form modelAttribute="cliente" action="/cliente/editar" method="post">
-      <form:hidden path="idCliente"></form:hidden>
+      <form:hidden path="idcliente"></form:hidden>
        Nombre: <form:input cssStyle="margin-right: 10%" path="nombre" maxlength="30" size="15"></form:input>
        Primer Apellido: <form:input cssStyle="margin-right: 10%" path="apellido1" maxlength="50" size="15"></form:input>
        Segundo Apellido: <form:input path="apellido2" maxlength="50" size="15"></form:input> <br/> <br/>
