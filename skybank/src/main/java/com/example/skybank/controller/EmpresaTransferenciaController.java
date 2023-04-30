@@ -70,17 +70,18 @@ public class EmpresaTransferenciaController {
 
         model.addAttribute("empresa",origen.getEmpresaByIdempresa());
 
-
+        sesion.setAttribute("success",null);
+        sesion.setAttribute("error",null);
 
 
         if(destino == null) {
-            model.addAttribute("error", "El Id para el destino introducido es incorrecto.");
+            sesion.setAttribute("error", "El Id para el destino introducido es incorrecto.");
         }else if(cantidad < 1) {
-            model.addAttribute("error", "La cantidad introducida es negativa.");
+            sesion.setAttribute("error", "La cantidad introducida es negativa.");
         }else if(cantidad > origen.getSaldo()){
-            model.addAttribute("error", "La cantidad introducida es mayor a la disponible en la cuenta.");
+            sesion.setAttribute("error", "La cantidad introducida es mayor a la disponible en la cuenta.");
         }else if(origen.getDivisaByDivisa().getIddivisa() != destino.getDivisaByDivisa().getIddivisa()){
-            model.addAttribute("error", "La cuenta destino tiene una divisa distinta a la origen (" + destino.getDivisaByDivisa().getNombre() + ") <br> Cambia tu divisa para realizar la operación.");
+            sesion.setAttribute("error", "La cuenta destino tiene una divisa distinta a la origen (" + destino.getDivisaByDivisa().getNombre() + ") <br> Cambia tu divisa para realizar la operación.");
         } else{
 
             TipoOperacionEntity tipo = tipoOperacionRepository.getById(1);
@@ -125,11 +126,12 @@ public class EmpresaTransferenciaController {
             cuentaRepository.save(destino);
 
 
-            model.addAttribute("success","Se ha realizado correctamente la transferencia de " + cantidad + " " + origen.getDivisaByDivisa().getSimbolo() +
+            sesion.setAttribute("success","Se ha realizado correctamente la transferencia de " + cantidad + " " + origen.getDivisaByDivisa().getSimbolo() +
                     " a la cuenta con id: " + idDestino);
         }
         sesion.setAttribute("empresa",origen.getEmpresaByIdempresa());
-        return "redirect:/empresa/transferencias/";
+
+        return  "redirect:/empresa/transferencias/";
 
 
     }

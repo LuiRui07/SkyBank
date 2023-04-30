@@ -25,6 +25,30 @@
 <body>
     <jsp:include page="header.jsp"></jsp:include>
     <div class="container mt-3">
+
+        <%
+            String error = (String) session.getAttribute("error");
+            if (error != null) {
+
+        %>
+        <div class="alert alert-danger container" role="alert">
+            ${error}
+        </div>
+        <%
+            }
+        %>
+
+        <%
+            String success = (String) session.getAttribute("success");
+            if (success != null) {
+
+        %>
+        <div class="alert alert-success container" role="alert">
+            ${success}
+        </div>
+        <%
+            }
+        %>
         <h1 class="display-5">Últimas transferencias:</h1>
 
         <ul class="nav nav-tabs">
@@ -193,29 +217,6 @@
                     <h2 class="display-5 mt-3">Realizar una nueva transferencia</h2>
                 </div>
                 <div class="card-body">
-                    <%
-                        String error = (String) request.getAttribute("error");
-                        if (error != null) {
-
-                    %>
-                    <div class="alert alert-danger container" role="alert">
-                        ${error}
-                    </div>
-                    <%
-                        }
-                    %>
-
-                    <%
-                        String success = (String) request.getAttribute("success");
-                        if (success != null) {
-
-                    %>
-                    <div class="alert alert-success container" role="alert">
-                        ${success}
-                    </div>
-                    <%
-                        }
-                    %>
 
 
                     <form method="post" action="/empresa/transferencias/nueva">
