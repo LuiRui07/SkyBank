@@ -6,10 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
@@ -83,9 +80,9 @@ public class CustomerController {
     }
 
     @GetMapping("/historial")
-    public String verHistorial (Model model, @RequestParam("id") int IdCuenta){
-       CuentaEntity cuenta = cuentaRepository.findById(IdCuenta).orElse(null);
-       //model.addAttribute("operacion",operacion);
+    public String verHistorial (Model model, @RequestParam("id") int id){
+       CuentaEntity cuenta = cuentaRepository.findById(id).orElse(null);
+       List<OperacionEntity> operaciones =  cuenta.getOperacionsByIdcuenta();
        return "historialCliente";
     }
 

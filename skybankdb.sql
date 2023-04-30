@@ -1,4 +1,4 @@
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.30, for macos12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: skybank
 -- ------------------------------------------------------
@@ -64,7 +64,7 @@ CREATE TABLE `autorizado` (
   `bloqueado` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_Socio_Empresa1_idx` (`idempresa`) /*!80000 INVISIBLE */,
-  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`)
+  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idEmpresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -110,7 +110,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-10-31','Marcos Zapata','lui@gmail','lui',3,'Mala','España',0,'Andaluz',29017);
+INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-10-31','Marcos Zapata','lui@gmail','lui',3,'Mala','España',0,'Andaluz',29017),(2,'11445544K','Manuel','Rodriguez','Meh','2002-10-31','Santo Domingo','manu@gmail','manu',2,'Teruel','España',1,'Aragon',11111);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -164,8 +164,8 @@ CREATE TABLE `cuenta` (
   KEY `Divisa_idx` (`divisa`),
   CONSTRAINT `Divisa` FOREIGN KEY (`divisa`) REFERENCES `divisa` (`iddivisa`),
   CONSTRAINT `fk_Cuenta_Cliente1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idEmpresa`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -174,7 +174,7 @@ CREATE TABLE `cuenta` (
 
 LOCK TABLES `cuenta` WRITE;
 /*!40000 ALTER TABLE `cuenta` DISABLE KEYS */;
-INSERT INTO `cuenta` VALUES (2,NULL,2,0,1,0,1),(3,NULL,2,12895,1,0,1),(4,1,NULL,100,0,0,1),(12,NULL,9,7156,1,0,0);
+INSERT INTO `cuenta` VALUES (2,NULL,2,0,1,0,1),(3,NULL,2,12895,1,0,1),(4,1,NULL,100,0,0,1),(12,NULL,9,7156,1,0,0),(13,2,NULL,500,1,0,1);
 /*!40000 ALTER TABLE `cuenta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,7 +321,7 @@ CREATE TABLE `operacion` (
   CONSTRAINT `fk_Operacion_Gestor1` FOREIGN KEY (`idgestor`) REFERENCES `gestor` (`idgestor`),
   CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`tipopperacionid`) REFERENCES `tipooperacion` (`id`),
   CONSTRAINT `fk_operación_Cuenta2` FOREIGN KEY (`idcuenta2`) REFERENCES `cuenta` (`idcuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,7 +330,7 @@ CREATE TABLE `operacion` (
 
 LOCK TABLES `operacion` WRITE;
 /*!40000 ALTER TABLE `operacion` DISABLE KEYS */;
-INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4,0,NULL,NULL,NULL),(26,'2023-04-29',NULL,1,12,3,-5,NULL,1,'2asdadsad'),(27,'2023-04-29',NULL,1,12,3,5,NULL,1,'2asdadsad');
+INSERT INTO `operacion` VALUES (1,'2023-04-25',1,1,2,4,3,NULL,NULL,NULL),(26,'2023-04-29',NULL,1,12,3,-5,NULL,1,'2asdadsad'),(27,'2023-04-29',NULL,1,12,3,5,NULL,1,'2asdadsad'),(28,'2023-04-30',NULL,1,NULL,4,3,NULL,1,NULL),(29,'2023-04-30',NULL,1,13,4,40,NULL,1,NULL);
 /*!40000 ALTER TABLE `operacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-04-30  0:52:52
+-- Dump completed on 2023-04-30 14:45:32

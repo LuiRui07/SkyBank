@@ -12,7 +12,7 @@
 --%>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% OperacionEntity operacion = (OperacionEntity) request.getAttribute("operacion");%>
+<% List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operaciones");%>
 <html>
 <head>
     <title>Historial</title>
@@ -23,18 +23,16 @@
 
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
     <h1>Historial de Operaciones:</h1>
-    <%--
     <%for (OperacionEntity operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
         <h2 style="margin-top: 1%;" class="card-title">Tipo: <%=operacion.getIdoperación()%></h2>
 
-        <a>Gestor: <%=operacion.getGestorByIdGestor().getNombre()%></a>
+        <a>Cantidad: <%=operacion.getCantidad()%></a>
         <a datatype="date"><%=operacion.getFecha()%></a>
-        <a> De la cuenta: <%=operacion.getCuentaByIdCuenta().getIdCuenta()%></a>
-        <a> A la cuent: <%=operacion.getCuentaByIdCuenta2().getIdCuenta()%></a>
+        <a> De la cuenta: <%=operacion.getCuentaByIdcuenta().getIdcuenta()%></a>
+        <a> A la cuent: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%></a>
     </div>
     <%}%>
-    --%>
 </div>
 
 

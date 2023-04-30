@@ -9,7 +9,7 @@ import java.util.Objects;
 public class OperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idoperación", nullable = false)
+    @Column(name = "idoperacion", nullable = false)
     private int idoperación;
     @Basic
     @Column(name = "fecha", nullable = false)
