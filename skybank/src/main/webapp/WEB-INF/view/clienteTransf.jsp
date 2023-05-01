@@ -32,7 +32,7 @@
 
         <select style="margin-left: 52%">
         <% for (CuentaEntity c : cuentas) {%>
-        <option value="seleccionado"> <%=c.getIdCuenta()%></option>
+        <option value="seleccionado"> <%=c.getIdcuenta()%></option>
         <% }%>
         </select>
         <div style="margin-left: 46%; margin-top: 8%">

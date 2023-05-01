@@ -20,6 +20,19 @@ public class OperacionEntity {
     @Basic
     @Column(name = "operacioncol", nullable = true, length = 45)
     private String operacioncol;
+
+    @Basic
+    @Column(name = "concepto", nullable = true, length = 100)
+    private String concepto;
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
     @ManyToOne
     @JoinColumn(name = "idgestor", referencedColumnName = "idgestor")
     private GestorEntity gestorByIdgestor;

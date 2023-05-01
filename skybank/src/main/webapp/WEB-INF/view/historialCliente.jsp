@@ -23,6 +23,7 @@
 
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
     <h1>Historial de Operaciones:</h1>
+    <%if (operaciones != null) { %>
     <%for (OperacionEntity operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
         <h2 style="margin-top: 1%;" class="card-title">Tipo: <%=operacion.getIdoperación()%></h2>
@@ -32,7 +33,7 @@
         <a> De la cuenta: <%=operacion.getCuentaByIdcuenta().getIdcuenta()%></a>
         <a> A la cuent: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%></a>
     </div>
-    <%}%>
+    <%}}%>
 </div>
 
 
