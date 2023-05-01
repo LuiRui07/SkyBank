@@ -303,7 +303,7 @@ CREATE TABLE `operacion` (
   `idoperacion` int NOT NULL AUTO_INCREMENT,
   `fecha` date NOT NULL,
   `idgestor` int DEFAULT NULL,
-  `tipopperacionid` int NOT NULL,
+  `idtipo` int NOT NULL,
   `idcuenta2` int DEFAULT NULL,
   `idcuenta` int NOT NULL,
   `cantidad` double NOT NULL DEFAULT '0',
@@ -313,13 +313,13 @@ CREATE TABLE `operacion` (
   PRIMARY KEY (`idoperacion`),
   KEY `fk_operación_Cuenta2_idx` (`idcuenta2`),
   KEY `fk_Operacion_Gestor1_idx` (`idgestor`) /*!80000 INVISIBLE */,
-  KEY `fk_Operacion_Tipo-Operacion1_idx` (`tipopperacionid`),
+  KEY `fk_Operacion_Tipo-Operacion1_idx` (`idtipo`),
   KEY `fk_Operacion_Cuenta1_idx` (`idcuenta`),
   KEY `Divisa_idx` (`divisa`),
   CONSTRAINT `fk_Operacion_Cuenta1` FOREIGN KEY (`idcuenta`) REFERENCES `cuenta` (`idcuenta`),
   CONSTRAINT `fk_operacion_divisa` FOREIGN KEY (`divisa`) REFERENCES `divisa` (`iddivisa`),
   CONSTRAINT `fk_Operacion_Gestor1` FOREIGN KEY (`idgestor`) REFERENCES `gestor` (`idgestor`),
-  CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`tipopperacionid`) REFERENCES `tipooperacion` (`id`),
+  CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`idtipo`) REFERENCES `tipooperacion` (`idtipo`),
   CONSTRAINT `fk_operación_Cuenta2` FOREIGN KEY (`idcuenta2`) REFERENCES `cuenta` (`idcuenta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -383,9 +383,9 @@ DROP TABLE IF EXISTS `tipooperacion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `tipooperacion` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '1. Transferencia',
+  `idtipo` int NOT NULL AUTO_INCREMENT COMMENT '1. Transferencia',
   `tipo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`idtipo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -408,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-01 13:09:36
+-- Dump completed on 2023-05-01 13:36:33

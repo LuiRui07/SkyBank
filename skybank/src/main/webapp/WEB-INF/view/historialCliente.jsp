@@ -31,9 +31,11 @@
         <a>Cantidad: <%=operacion.getCantidad()%></a>
         <a datatype="date"><%=operacion.getFecha()%></a>
         <a> De la cuenta: <%=operacion.getCuentaByIdcuenta().getIdcuenta()%></a>
-        <a> A la cuent: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%></a>
+        <a> A la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%></a>
     </div>
-    <%}}%>
+    <%}} else { %>
+     MEH
+    <%}%>
 </div>
 
 

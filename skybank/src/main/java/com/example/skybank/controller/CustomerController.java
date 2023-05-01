@@ -83,6 +83,7 @@ public class CustomerController {
     public String verHistorial (Model model, @RequestParam("id") int id){
        CuentaEntity cuenta = cuentaRepository.findById(id).orElse(null);
        List<OperacionEntity> operaciones =  operacionRepository.findAll();
+       model.addAttribute("operaciones",operaciones);
        return "historialCliente";
     }
 

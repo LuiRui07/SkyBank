@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
-@Table(name = "tipo-operacion", schema = "skybank", catalog = "")
+@Table(name = "tipooperacion", schema = "skybank", catalog = "")
 public class TipoOperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "idtipo", nullable = false)
     private int id;
     @Basic
-    @Column(name = "tipo", nullable = true, length = 45)
+    @Column(name = "tipo", length = 45)
     private String tipo;
     @OneToMany(mappedBy = "tipoOperacionByTipopperacionid")
     private List<OperacionEntity> operacionsById;

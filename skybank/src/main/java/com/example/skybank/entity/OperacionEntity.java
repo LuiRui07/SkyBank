@@ -16,28 +16,18 @@ public class OperacionEntity {
     private Date fecha;
     @Basic
     @Column(name = "cantidad", nullable = false)
-    private int cantidad;
+    private double cantidad;
     @Basic
-    @Column(name = "operacioncol", nullable = true, length = 45)
+    @Column(name = "operacioncol", length = 45)
     private String operacioncol;
-
     @Basic
-    @Column(name = "concepto", nullable = true, length = 100)
+    @Column(name = "concepto", length = 100)
     private String concepto;
-
-    public String getConcepto() {
-        return concepto;
-    }
-
-    public void setConcepto(String concepto) {
-        this.concepto = concepto;
-    }
-
     @ManyToOne
     @JoinColumn(name = "idgestor", referencedColumnName = "idgestor")
     private GestorEntity gestorByIdgestor;
     @ManyToOne
-    @JoinColumn(name = "tipopperacionid", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "idtipo", referencedColumnName = "idtipo", nullable = false)
     private TipoOperacionEntity tipoOperacionByTipopperacionid;
     @ManyToOne
     @JoinColumn(name = "idcuenta2", referencedColumnName = "idcuenta")
@@ -48,6 +38,14 @@ public class OperacionEntity {
     @ManyToOne
     @JoinColumn(name = "divisa", referencedColumnName = "iddivisa")
     private DivisaEntity divisaByDivisa;
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
 
     public int getIdoperación() {
         return idoperación;
@@ -65,7 +63,7 @@ public class OperacionEntity {
         this.fecha = fecha;
     }
 
-    public int getCantidad() {
+    public double getCantidad() {
         return cantidad;
     }
 

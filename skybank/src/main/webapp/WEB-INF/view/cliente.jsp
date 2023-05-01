@@ -24,7 +24,7 @@
 <div class="container">
     <br/>
     <h1><%=cliente.getNombre()%>  <%=cliente.getApellido1()%> <%=cliente.getApellido2()%>
-        <a style="margin-left: 60.9%" href="editar?id=${cliente.idcliente}" class="btn btn-outline-primary">Modificar Datos</a>
+        <a style="margin-left: 58%" href="editar?id=${cliente.idcliente}" class="btn btn-outline-primary">Modificar Datos</a>
     </h1>
 
     <% for (CuentaEntity cuenta : cuentas) { %>
