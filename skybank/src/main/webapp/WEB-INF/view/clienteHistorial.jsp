@@ -24,14 +24,18 @@
 </head>
 <body>
 
-<div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
-    <h1>Historial de Operaciones:</h1>
+<div class="container" style="align-items: center; text-align: center; margin-top: 5%;position: relative">
+    <div class="container">
+        <a href="/cliente/" class="btn btn-danger" style="position: absolute; left: 3%; top: 1.5%">Volver</a>
+        <a class="display-3">Historial de Operaciones:</a>
+    </div>
+
     <%if (operaciones != null) { %>
     <%for (OperacionEntity operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
         <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
 
-        <a>Cantidad: <%=operacion.getCantidad()%></a>
+        <a>Cantidad: <%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
         <% SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/YYYY");%>
         <a datatype="date"> Fecha: <%=dt1.format(operacion.getFecha())%></a>
         <% if (operacion.getTipoOperacionByTipopperacionid().getId() == 1){ %>
@@ -45,7 +49,7 @@
         <br/>
 
         <%if (operacion.getConcepto() != null) { %>
-        <a><%=operacion.getConcepto()%></a>
+        Concepto: <a class="lead" style="color: cornflowerblue"><%=operacion.getConcepto()%></a>
         <%}%>
     </div>
     <%}} else { %>

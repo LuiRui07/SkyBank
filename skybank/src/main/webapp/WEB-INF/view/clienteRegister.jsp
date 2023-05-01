@@ -42,6 +42,10 @@
             <span>Email (*):</span>
             <form:input path="email" cssClass="form-control"></form:input>
         </div>
+        <div>
+            <span>Fecha de Nacimiento (*):</span>
+            <form:input path="nacimiento" cssClass="form-control" type="date"></form:input>
+        </div>
 
     </div>
 
@@ -97,15 +101,11 @@
             <span>Contraseña:</span>
                 <form:input type="password" path="password" cssClass="form-control" cssStyle="width: 25%"  ></form:input>
             <br>
-            <div>
-
-
-
-                <form:button style="margin-bottom:10px;" class="btn btn-outline-danger">Registrar</form:button>
+            <div class="container" style="">
+                <form:button class="btn btn-outline-danger">Registrar</form:button>
                 </form:form>
-                <br>
 
-                <a  href="/cliente/logout">¡Ya tengo una cuenta!</a>
+                <a  style=" margin-left: 3%" class="btn btn-outline-success" href="/cliente/logout">Ya tengo una cuenta</a>
             </div>
 
 

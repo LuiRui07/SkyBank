@@ -2,6 +2,7 @@
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
+<%--
 Created by IntelliJ IDEA.
 User: luisruiznunez
 Date: 27/4/23
@@ -34,7 +35,7 @@ To change this template use File | Settings | File Templates.
 
     <% for (CuentaEntity cuenta : cuentas) { %>
         <div class="card" style="margin-bottom: 3%">
-            <p class="display-3 p-3 rounded bg-light"><%=cuenta.getSaldo()%>     <%=cuenta.getDivisaByDivisa().getSimbolo()%></p>
+            <p class="display-3 p-3 rounded bg-light"><%=String.format("%.2f",cuenta.getSaldo())    %>     <%=cuenta.getDivisaByDivisa().getSimbolo()%></p>
             <a href="historial?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Historial</a>
             <% if (cuenta.getActiva() == 1){%>
             <a style="margin-top:1%" href="trans?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Transferencia</a>

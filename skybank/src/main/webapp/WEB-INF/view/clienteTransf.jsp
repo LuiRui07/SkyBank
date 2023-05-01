@@ -11,6 +11,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<CuentaEntity> cuentas = (List<CuentaEntity>) request.getAttribute("cuentas");%>
+<% CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuentaOrigen");%>
 <html>
 <head>
     <title>Realizar Transferencia</title>
@@ -20,7 +21,7 @@
 <body>
 
     <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
-         <h3 class="title">Realizar Transferencia</h3>
+        <h3 class="display-3">Realizar Transferencia</h3>
     </div>
         <div>
             <a class="display-4" style="margin-left: 5%"> Elegir cantidad </a>
@@ -28,17 +29,19 @@
         </div>
 
         <form:form modelAttribute="operacion" method="post" action="/cliente/doTransf">
-        <form:input cssStyle="text-align: center; margin-left: 10%; margin-top: 2%" path="cantidad"></form:input>
-
-        <select style="margin-left: 52%">
-        <% for (CuentaEntity c : cuentas) {%>
-        <option value="seleccionado"> <%=c.getIdcuenta()%></option>
-        <% }%>
-        </select>
-        <div style="margin-left: 46%; margin-top: 8%">
-            <button class="btn btn-primary"> Confirmar </button>
+        <form:hidden path="cuentaByIdcuenta"></form:hidden>
+        <form:hidden path="divisaByDivisa"></form:hidden>
+        <div>
+            <form:input cssStyle="text-align: center; margin-left: 10%; margin-top: 2%" path="cantidad"></form:input> <a style="padding-right: 15%"><%=cuenta.getDivisaByDivisa().getNombre()%></a>
+            <form:select cssStyle="float: right; margin-right: 20%; margin-top: 2%;" path="cuentaByIdcuenta2" items="${cuentas}" ></form:select>
         </div>
 
+        <form:input placeholder="Concepto" cssStyle="margin-top: 3%; margin-left: 6%; text-align: center" path="concepto" size="30"></form:input>
+
+        <div style="margin-left: 44%; margin-top: 8%">
+            <button class="btn btn-primary"> Confirmar </button>
+            <a href="/cliente/" class="btn btn-danger" >Volver</a>
+        </div>
     </form:form>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

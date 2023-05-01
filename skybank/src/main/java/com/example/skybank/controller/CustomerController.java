@@ -121,7 +121,10 @@ public class CustomerController {
     public String doTrans (Model model, @RequestParam("id") int idCuenta){
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
         List<CuentaEntity> cuentas = cuentaRepository.findAll();
+        cuentas.remove(cuenta);
         OperacionEntity operacion = new OperacionEntity();
+        operacion.setCuentaByIdcuenta(cuenta);
+        operacion.setDivisaByDivisa(cuenta.getDivisaByDivisa());
         model.addAttribute("cuentaOrigen",cuenta);
         model.addAttribute("cuentas",cuentas);
         model.addAttribute("operacion",operacion);
@@ -129,10 +132,45 @@ public class CustomerController {
     }
 
     @PostMapping("/doTransf")
-    public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacion, @ModelAttribute("cuentaOrigen") CuentaEntity cuenta){
-        //Not working
-        //TODO
-        return "redirect:/cliente/";
+    public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacionForm){
+        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() == 0.00){
+            return "clienteError";
+        } else {
+            TipoOperacionEntity tipo = tipoOperacionRepository.findById(1).orElse(null);
+            OperacionEntity op = new OperacionEntity();
+            op.setCantidad(operacionForm.getCantidad());
+            op.setConcepto(null);
+            op.setCuentaByIdcuenta(operacionForm.getCuentaByIdcuenta());
+            op.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
+            op.setCuentaByIdcuenta2(operacionForm.getCuentaByIdcuenta2());
+            op.setTipoOperacionByTipopperacionid(tipo);
+            op.setConcepto(operacionForm.getConcepto());
+            op.setFecha(new Date());
+
+            ClienteEntity cliente = operacionForm.getCuentaByIdcuenta2().getClienteByIdcliente();
+            CuentaEntity quitar = operacionForm.getCuentaByIdcuenta();
+            CuentaEntity anadir = tieneDivisa(cliente,operacionForm.getDivisaByDivisa());
+
+            quitar.quitarSaldo(operacionForm.getCantidad());
+            cuentaRepository.save(quitar);
+            Double saldoNuevo = operacionForm.getCantidad();
+            if (anadir != null){
+                anadir.anadirSaldo(saldoNuevo);
+                cuentaRepository.save(anadir);
+            } else {
+                CuentaEntity cuentaNueva = new CuentaEntity();
+                cuentaNueva.setClienteByIdcliente(cliente);
+                cuentaNueva.setSaldo(saldoNuevo);
+                cuentaNueva.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
+                cuentaNueva.setSospechosa(0);
+                cuentaNueva.setActiva(1);
+                op.setCuentaByIdcuenta2(cuentaNueva);
+                    cuentaRepository.save(cuentaNueva);
+            }
+            operacionRepository.save(op);
+            return "redirect:/cliente/login";
+        }
+
     }
 
     @GetMapping("/cambio")
@@ -151,7 +189,11 @@ public class CustomerController {
     @GetMapping("/valorCambio")
     public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") OperacionEntity operacion){
         model.addAttribute("operacion", operacion);
-        return "clienteCambioValor";
+        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() == 0.00){
+            return "clienteError";
+        } else {
+            return "clienteCambioValor";
+        }
     }
 
     @PostMapping("/doDivisa")
@@ -172,14 +214,14 @@ public class CustomerController {
 
         quitar.quitarSaldo(operacionForm.getCantidad());
         cuentaRepository.save(quitar);
-
+        Double saldoNuevo = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
         if ( anadir != null){
-            anadir.anadirSaldo(operacionForm.getCantidad());
+            anadir.anadirSaldo(saldoNuevo);
             cuentaRepository.save(anadir);
         } else {
             CuentaEntity cuentaNueva = new CuentaEntity();
             cuentaNueva.setClienteByIdcliente(cliente);
-            cuentaNueva.setSaldo(operacionForm.getCantidad());
+            cuentaNueva.setSaldo(saldoNuevo);
             cuentaNueva.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
             cuentaNueva.setSospechosa(0);
             cuentaNueva.setActiva(1);
@@ -187,7 +229,7 @@ public class CustomerController {
             cuentaRepository.save(cuentaNueva);
         }
         operacionRepository.save(op);
-        return "redirect:/cliente/";
+            return "redirect:/cliente/login";
     }
 
     private CuentaEntity tieneDivisa (ClienteEntity cliente, DivisaEntity divisa){
