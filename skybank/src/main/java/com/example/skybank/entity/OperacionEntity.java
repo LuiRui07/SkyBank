@@ -67,7 +67,7 @@ public class OperacionEntity {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Double cantidad) {
         this.cantidad = cantidad;
     }
 

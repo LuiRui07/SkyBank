@@ -26,12 +26,16 @@
     <%if (operaciones != null) { %>
     <%for (OperacionEntity operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
-        <h2 style="margin-top: 1%;" class="card-title">Tipo: <%=operacion.getIdoperación()%></h2>
+        <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
 
         <a>Cantidad: <%=operacion.getCantidad()%></a>
-        <a datatype="date"><%=operacion.getFecha()%></a>
+        <a datatype="date"> Fecha: <%=operacion.getFecha()%></a>
         <a> De la cuenta: <%=operacion.getCuentaByIdcuenta().getIdcuenta()%></a>
         <a> A la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%></a>
+        <br/>
+        <%if (operacion.getConcepto() != null) { %>
+        <a><%=operacion.getConcepto()%></a>
+        <%}%>
     </div>
     <%}} else { %>
      MEH

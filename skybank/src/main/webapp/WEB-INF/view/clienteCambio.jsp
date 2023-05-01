@@ -27,7 +27,7 @@
     <form:form  modelAttribute="operacionCambio" >
 
         Cantidad: <form:input cssStyle="text-align: center" path="cantidad"></form:input>
-        Moneda <form:select path="divisa" items="${divisas}" itemLabel="nombre"></form:select>
+        Moneda <form:select path="divisaByDivisa" items="${divisas}" itemLabel="nombre"></form:select>
     </form:form>
 
 </div>

@@ -321,7 +321,7 @@ CREATE TABLE `operacion` (
   CONSTRAINT `fk_Operacion_Gestor1` FOREIGN KEY (`idgestor`) REFERENCES `gestor` (`idgestor`),
   CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`idtipo`) REFERENCES `tipooperacion` (`idtipo`),
   CONSTRAINT `fk_operación_Cuenta2` FOREIGN KEY (`idcuenta2`) REFERENCES `cuenta` (`idcuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -330,7 +330,7 @@ CREATE TABLE `operacion` (
 
 LOCK TABLES `operacion` WRITE;
 /*!40000 ALTER TABLE `operacion` DISABLE KEYS */;
-INSERT INTO `operacion` VALUES (26,'2023-04-29',NULL,1,12,3,-5,NULL,1,'2asdadsad'),(27,'2023-04-29',NULL,1,12,3,5,NULL,1,'2asdadsad');
+INSERT INTO `operacion` VALUES (26,'2023-04-29',NULL,1,12,3,-5,NULL,1,'2asdadsad'),(27,'2023-04-29',NULL,1,12,3,5,NULL,1,'2asdadsad'),(30,'2023-05-01',NULL,1,13,4,20,NULL,1,'Bizum: Cafe'),(31,'2023-05-01',NULL,1,4,13,30,NULL,1,NULL);
 /*!40000 ALTER TABLE `operacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-01 13:36:33
+-- Dump completed on 2023-05-01 13:50:12
