@@ -163,12 +163,43 @@ public class CustomerController {
         op.setCuentaByIdcuenta(operacionForm.getCuentaByIdcuenta());
         op.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
         op.setTipoOperacionByTipopperacionid(tipo);
-        op.setFecha(new Date()); // Nose yo
+        op.setFecha(new Date());
 
 
-        //EL efecto del cambio en el money
+        ClienteEntity cliente = operacionForm.getCuentaByIdcuenta().getClienteByIdcliente();
+        CuentaEntity quitar = operacionForm.getCuentaByIdcuenta();
+        CuentaEntity anadir = tieneDivisa(cliente,operacionForm.getDivisaByDivisa());
+
+        quitar.quitarSaldo(operacionForm.getCantidad());
+        cuentaRepository.save(quitar);
+
+        if ( anadir != null){
+            anadir.anadirSaldo(operacionForm.getCantidad());
+            cuentaRepository.save(anadir);
+        } else {
+            CuentaEntity cuentaNueva = new CuentaEntity();
+            cuentaNueva.setClienteByIdcliente(cliente);
+            cuentaNueva.setSaldo(operacionForm.getCantidad());
+            cuentaNueva.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
+            cuentaNueva.setSospechosa(0);
+            cuentaNueva.setActiva(1);
+            op.setCuentaByIdcuenta2(cuentaNueva);
+            cuentaRepository.save(cuentaNueva);
+        }
         operacionRepository.save(op);
         return "redirect:/cliente/";
+    }
+
+    private CuentaEntity tieneDivisa (ClienteEntity cliente, DivisaEntity divisa){
+        CuentaEntity res = null;
+        List<CuentaEntity> cuentas = cliente.getCuentasByIdcliente();
+        for (CuentaEntity cuenta : cuentas){
+            if (cuenta.getDivisaByDivisa() == divisa){
+                    res = cuenta;
+            }
+        }
+
+        return res;
     }
 
 }

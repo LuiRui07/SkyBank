@@ -118,4 +118,10 @@ public class CuentaEntity {
     public void setOperacionsByIdcuenta_0(List<OperacionEntity> operacionsByIdcuenta_0) {
         this.operacionsByIdcuenta_0 = operacionsByIdcuenta_0;
     }
+
+    public void anadirSaldo(Double s){
+        this.saldo += s;
+    }
+
+    public void quitarSaldo(Double s){ this.saldo -= s;}
 }

@@ -4,7 +4,8 @@
 <%@ page import="java.util.Iterator" %>
 <%@ page import="com.example.skybank.entity.TipoOperacionEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.CuentaEntity" %><%--
+<%@ page import="com.example.skybank.entity.CuentaEntity" %>
+<%@ page import="java.text.SimpleDateFormat" %><%--
   Created by IntelliJ IDEA.
   User: luisruiznunez
   Date: 24/4/23
@@ -31,7 +32,8 @@
         <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
 
         <a>Cantidad: <%=operacion.getCantidad()%></a>
-        <a datatype="date"> Fecha: <%=operacion.getFecha().toLocaleString()%></a>
+        <% SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/YYYY");%>
+        <a datatype="date"> Fecha: <%=dt1.format(operacion.getFecha())%></a>
         <% if (operacion.getTipoOperacionByTipopperacionid().getId() == 1){ %>
         <% if (operacion.getCuentaByIdcuenta().getIdcuenta() == cuenta.getIdcuenta()){ %>
             <a> Transferido a la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%> </a>
