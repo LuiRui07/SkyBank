@@ -110,7 +110,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2002-10-31','Marcos Zapata','lui@gmail','lui',2,'Mala','España',0,'Andaluz',29017),(2,'11445544K','Manuel','Rodriguez','Meh','2002-10-31','Santo Domingo','manu@gmail','manu',2,'Teruel','España',1,'Aragon',11111);
+INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2001-10-18','Marcos Zapata','lui@gmail','lui',2,'Mala','España',1,'Andaluz',29017),(2,'11445544K','Manuel','Rodriguez','Meh','2002-10-31','Santo Domingo','manu@gmail','manu',2,'Teruel','España',1,'Aragon',11111);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -321,7 +321,7 @@ CREATE TABLE `operacion` (
   CONSTRAINT `fk_Operacion_Gestor1` FOREIGN KEY (`idgestor`) REFERENCES `gestor` (`idgestor`),
   CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`idtipo`) REFERENCES `tipooperacion` (`idtipo`),
   CONSTRAINT `fk_operación_Cuenta2` FOREIGN KEY (`idcuenta2`) REFERENCES `cuenta` (`idcuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -386,7 +386,7 @@ CREATE TABLE `tipooperacion` (
   `idtipo` int NOT NULL AUTO_INCREMENT COMMENT '1. Transferencia',
   `tipo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idtipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -395,7 +395,7 @@ CREATE TABLE `tipooperacion` (
 
 LOCK TABLES `tipooperacion` WRITE;
 /*!40000 ALTER TABLE `tipooperacion` DISABLE KEYS */;
-INSERT INTO `tipooperacion` VALUES (1,'Transferencia');
+INSERT INTO `tipooperacion` VALUES (1,'Transferencia'),(2,'Cambio de Divisa');
 /*!40000 ALTER TABLE `tipooperacion` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -408,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-01 13:50:12
+-- Dump completed on 2023-05-01 18:52:08

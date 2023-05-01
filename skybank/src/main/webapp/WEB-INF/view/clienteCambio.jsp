@@ -10,11 +10,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuentaCambio");%>
 <% List<DivisaEntity> divisas = (List<DivisaEntity>) request.getAttribute("divisas");%>
 <% OperacionEntity op = (OperacionEntity) request.getAttribute("operacionCambio");%>
-<% CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuentaCambio");%>
-<% DivisaEntity divisa = new DivisaEntity();%>
-
         <html>
 <head>
     <title>Cambio de divisas</title>
@@ -24,10 +22,11 @@
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
     <h3 class="display-1">Cambio</h3>
 
-    <form:form  modelAttribute="operacionCambio" >
-
+    <form:form  modelAttribute="operacionCambio" method="get" action="/cliente/valorCambio" >
         Cantidad: <form:input cssStyle="text-align: center" path="cantidad"></form:input>
-        Moneda <form:select path="divisaByDivisa" items="${divisas}" itemLabel="nombre"></form:select>
+        Moneda <form:select path="divisaByDivisa" items="${divisas}" itemLabel="nombre"></form:select> <br/>
+        <form:hidden path="cuentaByIdcuenta"></form:hidden>
+       <button class="btn btn-outline-primary" style="margin-top: 6%;"> Continuar </button>
     </form:form>
 
 </div>

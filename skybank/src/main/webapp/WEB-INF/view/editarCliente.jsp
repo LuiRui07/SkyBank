@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="Email" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %><%--
   Created by IntelliJ IDEA.
   User: luisruiznunez
@@ -23,8 +24,8 @@
        Primer Apellido: <form:input cssStyle="margin-right: 10%" path="apellido1" maxlength="50" size="15"></form:input>
        Segundo Apellido: <form:input path="apellido2" maxlength="50" size="15"></form:input> <br/> <br/>
        DNI: <form:input  path="dni" cssStyle="margin-right: 5%" size="15"></form:input>
-          Fecha de Nacimiento:   <input type="date" value="${cliente.nacimiento}" cssStyle="margin-right: 10.5%" size="15"></input>
-       Email: <form:input path="email"  size="15"></form:input>  <br/> <br/>
+       Fecha de Nacimiento: <form:input path="nacimiento" cssStyle="margin-right: 10%" cssClass="datepicker" size="15"></form:input>
+       Email:Email: <form:input path="email"  size="15"></form:input>  <br/> <br/>
        <br/>
           <h3 class=""> Direccion: </h3> <br/>
        Calle:   <form:input path="calle" size="15"></form:input>

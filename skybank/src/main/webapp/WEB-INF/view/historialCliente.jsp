@@ -3,7 +3,8 @@
 <%@ page import="java.util.Set" %>
 <%@ page import="java.util.Iterator" %>
 <%@ page import="com.example.skybank.entity.TipoOperacionEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.skybank.entity.CuentaEntity" %><%--
   Created by IntelliJ IDEA.
   User: luisruiznunez
   Date: 24/4/23
@@ -13,6 +14,7 @@
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operaciones");%>
+<% CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");%>
 <html>
 <head>
     <title>Historial</title>
@@ -29,10 +31,17 @@
         <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
 
         <a>Cantidad: <%=operacion.getCantidad()%></a>
-        <a datatype="date"> Fecha: <%=operacion.getFecha()%></a>
-        <a> De la cuenta: <%=operacion.getCuentaByIdcuenta().getIdcuenta()%></a>
-        <a> A la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%></a>
+        <a datatype="date"> Fecha: <%=operacion.getFecha().toLocaleString()%></a>
+        <% if (operacion.getTipoOperacionByTipopperacionid().getId() == 1){ %>
+        <% if (operacion.getCuentaByIdcuenta().getIdcuenta() == cuenta.getIdcuenta()){ %>
+            <a> Transferido a la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%> </a>
+        <%} else {%>
+            <a> Recibido de la cuenta:  <%=operacion.getCuentaByIdcuenta().getIdcuenta()%> </a>
+        <%}%> <%} else {%>
+            <a> Cambio de Divisas a : <%= operacion.getDivisaByDivisa().getNombre()%></a>
+        <% }%>
         <br/>
+
         <%if (operacion.getConcepto() != null) { %>
         <a><%=operacion.getConcepto()%></a>
         <%}%>

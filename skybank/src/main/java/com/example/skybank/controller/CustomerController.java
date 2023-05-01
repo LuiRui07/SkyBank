@@ -84,6 +84,7 @@ public class CustomerController {
        CuentaEntity cuenta = cuentaRepository.findById(id).orElse(null);
        List<OperacionEntity> operaciones =  operacionRepository.findbyAccount(cuenta.getIdcuenta());
        model.addAttribute("operaciones",operaciones);
+       model.addAttribute("cuenta",cuenta);
        return "historialCliente";
     }
 
@@ -101,14 +102,16 @@ public class CustomerController {
         cliente.setApellido1(clienteForm.getApellido1());
         cliente.setApellido2(clienteForm.getApellido2());
         cliente.setDni(clienteForm.getDni());
+        cliente.setNacimiento(clienteForm.getNacimiento());
+        cliente.setEmail(clienteForm.getEmail());
         cliente.setCalle(clienteForm.getCalle());
         cliente.setNumero(clienteForm.getNumero());
-        cliente.setCiudad(clienteForm.getCiudad());
-        cliente.setPais(clienteForm.getPais());
-        cliente.setRegion(clienteForm.getRegion());
+        cliente.setPlanta(clienteForm.getPlanta());
         cliente.setCp(clienteForm.getCp());
-        //cliente.setNacimiento(clienteForm.getNacimiento()); FALTA
-        cliente.setEmail(clienteForm.getEmail());
+        cliente.setCiudad(clienteForm.getCiudad());
+        cliente.setRegion(clienteForm.getRegion());
+        cliente.setPais(clienteForm.getPais());
+
         customerRepository.save(cliente);
         sesion.setAttribute("cliente",cliente);
         return "redirect:/cliente/";
@@ -128,6 +131,7 @@ public class CustomerController {
     @PostMapping("/realizarTransf")
     public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacion, @ModelAttribute("cuentaOrigen") CuentaEntity cuenta){
         //Not working
+        //TODO
         return "redirect:/cliente/";
     }
 
@@ -135,11 +139,36 @@ public class CustomerController {
     public String mostrarCambio(Model model, @RequestParam("id") int idCuenta){
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
         OperacionEntity operacion = new OperacionEntity();
+        operacion.setCuentaByIdcuenta(cuenta);
         List<DivisaEntity> divisas = (List<DivisaEntity>) divisaRepository.findAll();
+        divisas.remove(cuenta.getDivisaByDivisa());
         model.addAttribute("cuentaCambio",cuenta);
         model.addAttribute("operacionCambio",operacion);
         model.addAttribute("divisas",divisas);
         return "clienteCambio";
+    }
+
+    @GetMapping("/valorCambio")
+    public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") OperacionEntity operacion){
+        model.addAttribute("operacion", operacion);
+        return "clienteCambioValor";
+    }
+
+    @PostMapping("/doDivisa")
+    public String doDivisa (Model model, @ModelAttribute("operacionCambio") OperacionEntity operacionForm){
+        TipoOperacionEntity tipo = tipoOperacionRepository.findById(2).orElse(null);
+        OperacionEntity op = new OperacionEntity();
+        op.setCantidad(operacionForm.getCantidad());
+        op.setConcepto(null);
+        op.setCuentaByIdcuenta(operacionForm.getCuentaByIdcuenta());
+        op.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
+        op.setTipoOperacionByTipopperacionid(tipo);
+        op.setFecha(new Date()); // Nose yo
+
+
+        //EL efecto del cambio en el money
+        operacionRepository.save(op);
+        return "redirect:/cliente/";
     }
 
 }
