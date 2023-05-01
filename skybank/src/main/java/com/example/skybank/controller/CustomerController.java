@@ -44,7 +44,7 @@ public class CustomerController {
 
     @GetMapping("/login")
     public String loginC(){
-        return "loginCliente";
+        return "clienteLogin";
     }
 
     @GetMapping("/logout")
@@ -70,7 +70,7 @@ public class CustomerController {
     @GetMapping("/register")
     public String registrarCliente (Model model){
         model.addAttribute("clienteNuevo",new ClienteEntity());
-        return "registerCliente";
+        return "clienteRegister";
     }
 
     @PostMapping("/crearCliente")
@@ -85,14 +85,14 @@ public class CustomerController {
        List<OperacionEntity> operaciones =  operacionRepository.findbyAccount(cuenta.getIdcuenta());
        model.addAttribute("operaciones",operaciones);
        model.addAttribute("cuenta",cuenta);
-       return "historialCliente";
+       return "clienteHistorial";
     }
 
     @GetMapping("/editar")
     public String mostrarDatos (Model model, @RequestParam("id") int idCliente){
         ClienteEntity cliente = (ClienteEntity) customerRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente",cliente);
-        return "editarCliente";
+        return "clienteEditar";
     }
 
     @PostMapping("/editar")
@@ -128,7 +128,7 @@ public class CustomerController {
         return "clienteTransf";
     }
 
-    @PostMapping("/realizarTransf")
+    @PostMapping("/doTransf")
     public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacion, @ModelAttribute("cuentaOrigen") CuentaEntity cuenta){
         //Not working
         //TODO

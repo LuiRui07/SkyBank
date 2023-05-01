@@ -27,7 +27,7 @@
             <a class="display-4" style="margin-left: 35%">Elegir Destinatario </a>
         </div>
 
-        <form:form modelAttribute="operacion" method="post" action="/cliente/realizarTransf">
+        <form:form modelAttribute="operacion" method="post" action="/cliente/doTransf">
         <form:input cssStyle="text-align: center; margin-left: 10%; margin-top: 2%" path="cantidad"></form:input>
 
         <select style="margin-left: 52%">
