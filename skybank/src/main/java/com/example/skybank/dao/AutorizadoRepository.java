@@ -1,3 +1,7 @@
+/*
+    @autor: José Luis López Ruiz
+ */
+
 package com.example.skybank.dao;
 
 import com.example.skybank.entity.AutorizadoEntity;

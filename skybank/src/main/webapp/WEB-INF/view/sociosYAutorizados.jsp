@@ -1,14 +1,13 @@
+<%--
+  @author: José Luis López Ruiz
+--%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.entity.SocioEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.AutorizadoEntity" %><%--
-  Created by IntelliJ IDEA.
-  User: Pepe
-  Date: 23/04/2023
-  Time: 22:52
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.skybank.entity.AutorizadoEntity" %>
+<%@ page import="com.example.skybank.ui.FiltroSociosAutorizados" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
@@ -21,15 +20,14 @@
 <html>
 <head>
     <title>Socios y Autorizados</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
     <jsp:include page="header.jsp"></jsp:include>
 
     <div class="container">
        <%
-            if (sociosEmpresa.size() == 0) {
+            if (sociosEmpresa.size() == 0 && ((FiltroSociosAutorizados) request.getAttribute("filtro")).isSocios()) {
        %>
 
         <div class="alert alert-danger container mt-4" role="alert">
@@ -43,6 +41,26 @@
         %>
 
         <h2>Socios y autorizados de la empresa:</h2>
+
+        <div>
+            <h5>Filtros:</h5>
+            <form:form modelAttribute="filtro" method="post" action="/empresa/socios/" cssStyle="display: flex; align-items: center; gap: 50px;">
+                <div style="display: flex; align-items: center; gap: 20px;">
+                    <label for="texto">Nombre o DNI: </label>
+                    <form:input path="texto" type="text" cssClass="form-control" cssStyle="max-width: 200px !important;"></form:input>
+                </div>
+                <div class="form-check form-switch">
+                    <form:checkbox path="autorizados" class="form-check-input"  role="switch" id="flexSwitchCheckDefault"/>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Autorizados</label>
+                </div>
+                <div class="form-check form-switch">
+                    <form:checkbox path="socios" class="form-check-input"  role="switch" id="flexSwitchCheckDefault"/>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Socios</label>
+                </div>
+                    <form:button class="btn btn-danger">Filtrar</form:button>
+               </form:form>
+        </div>
+
         <table class="table">
             <tr >
                 <th scope="col">Nombre y Apellidos</th>

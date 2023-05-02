@@ -1,3 +1,7 @@
+<%--
+  @author: José Luis López Ruiz
+--%>
+
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.util.List" %>
@@ -55,12 +59,12 @@
         %>
         <p>
 
-            <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            <a class="btn btn-success" data-bs-toggle="collapse" href="#collapse<%=c.getIdcuenta()%>" role="button" aria-expanded="false" aria-controls="collapseExample">
                 ID Cuenta:  <%=c.getIdcuenta()%>
             </a>
 
         </p>
-        <div class="collapse" id="collapseExample">
+        <div class="collapse" id="collapse<%=c.getIdcuenta()%>">
             <div class="card card-body d-flex flex-row align-middle" >
                 <div>
                     <p class="display-5">Saldo disponible:</p>
@@ -72,12 +76,12 @@
                 </div>
 
                 <div class="ml-auto mt-5">
-                    <button type="button" class="btn btn-success" style="background: url('https://img.freepik.com/vector-gratis/servicio-cambio-moneda-transferencia-monetaria-cambio-dolar-euro-compra-venta-moneda-extranjera-monedas-oro-simbolos-moneda-ue-ee-uu-ilustracion-metafora-concepto-aislado-vector_335657-2818.jpg?w=180'); width: 180px;height: 180px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    <button type="button" class="btn btn-success" style="background: url('https://img.freepik.com/vector-gratis/servicio-cambio-moneda-transferencia-monetaria-cambio-dolar-euro-compra-venta-moneda-extranjera-monedas-oro-simbolos-moneda-ue-ee-uu-ilustracion-metafora-concepto-aislado-vector_335657-2818.jpg?w=180'); width: 180px;height: 180px;" data-bs-toggle="modal" data-bs-target="#staticBackdrop<%=c.getIdcuenta()%>">
 
                     </button>
 
                     <!-- Modal -->
-                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal fade" id="staticBackdrop<%=c.getIdcuenta()%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <form method="post" action="/empresa/cambioDivisa?id=<%=c.getIdcuenta()%>">
                             <div class="modal-content">

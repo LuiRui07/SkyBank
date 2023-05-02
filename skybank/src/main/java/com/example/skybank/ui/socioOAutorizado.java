@@ -1,3 +1,7 @@
+/*
+    @autor: José Luis López Ruiz
+ */
+
 package com.example.skybank.ui;
 
 import javax.persistence.Basic;
