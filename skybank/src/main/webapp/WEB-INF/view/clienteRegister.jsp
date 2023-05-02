@@ -1,11 +1,7 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
-  Created by IntelliJ IDEA.
-  User: luisruiznunez
-  Date: 24/4/23
-  Time: 13:39
-  To change this template use File | Settings | File Templates.
+  @author: Luis Ruiz Nuñez
 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -21,16 +17,16 @@
         <h2> Datos del Cliente</h2>
         <div style="display: flex; gap: 10px;">
             <span>DNI(*):</span>
-            <form:input path="dni" cssClass="form-control " cssStyle="width: 20%"></form:input>
+            <form:input path="dni" cssClass="form-control " cssStyle="width: 20%" required="required"></form:input>
         </div>
         <div style="display: flex; gap: 10px; margin-top: 2%">
             <span>Nombre (*):</span>
-            <form:input path="nombre" cssClass="form-control" cssStyle="width: 20%"></form:input>
+            <form:input path="nombre" cssClass="form-control" cssStyle="width: 20%" required="required"></form:input>
         </div>
 
         <div style="display: flex; gap: 10px;margin-top: 2%">
             <span>Primer Apellido (*):</span>
-            <form:input path="apellido1" cssClass="form-control" cssStyle="width: 20%"></form:input>
+            <form:input path="apellido1" cssClass="form-control" cssStyle="width: 20%" required="required"></form:input>
         </div>
 
         <div style="display: flex; gap: 10px;margin-top: 2%">
@@ -40,11 +36,11 @@
 
         <div style="display: flex; gap: 10px;margin-top: 2%">
             <span>Email (*):</span>
-            <form:input path="email" cssClass="form-control" cssStyle="width: 20%"></form:input>
+            <form:input path="email" cssClass="form-control" cssStyle="width: 20%" required="required"></form:input>
         </div>
         <div style="display: flex; gap: 10px;margin-top: 2%">
             <span>Fecha de Nacimiento (*):</span>
-            <form:input path="nacimiento" cssClass="form-control" cssStyle="width: 20%" type="date"></form:input>
+            <form:input path="nacimiento" cssClass="form-control" cssStyle="width: 20%" type="date" required="required"></form:input>
         </div>
 
     </div>
@@ -57,24 +53,24 @@
         <div style="display: flex; gap: 10px;">
             <div>
                 <span>Calle(*):</span>
-                <form:input path="calle" cssClass="form-control"></form:input>
+                <form:input path="calle" cssClass="form-control" required="required"></form:input>
             </div>
 
             <div>
                 <span>Número(*):</span>
-                <form:input type="number" path="numero" cssClass="form-control"></form:input>
+                <form:input type="number" path="numero" cssClass="form-control" required="required"></form:input>
 
             </div>
         </div>
         <div>
-            <span>Planta/Puerta/Ofcina (*):</span>
+            <span>Planta/Puerta/Oficina:</span>
             <form:input type="number" path="planta" cssClass="form-control" cssStyle="width: 41%"></form:input>
         </div>
 
         <div style="display: flex; gap: 10px;">
             <div>
                 <span>Ciudad(*):</span>
-                <form:input path="ciudad" cssClass="form-control"></form:input>
+                <form:input path="ciudad" cssClass="form-control" required="required"></form:input>
             </div>
 
             <div>
@@ -87,19 +83,19 @@
         <div style="display: flex; gap: 10px;">
             <div>
                 <span>País(*):</span>
-                <form:input path="pais" cssClass="form-control"></form:input>
+                <form:input path="pais" cssClass="form-control" required="required"></form:input>
             </div>
 
             <div>
                 <span>C.P.(*):</span>
-                <form:input path="cp" cssClass="form-control" ></form:input>
+                <form:input path="cp" cssClass="form-control" required="required" ></form:input>
 
             </div>
         </div>
 
         <div style="margin-top: 10px; align-items: center">
-            <span>Contraseña:</span>
-                <form:input type="password" path="password" cssClass="form-control" cssStyle="width: 25%"  ></form:input>
+            <span>Contraseña(*):</span>
+                <form:input type="password" path="password" cssClass="form-control" cssStyle="width: 25%" required="required"  ></form:input>
             <br>
             <div class="container" style="">
                 <form:button class="btn btn-outline-danger">Registrar</form:button>

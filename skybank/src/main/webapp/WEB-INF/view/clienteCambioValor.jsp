@@ -1,14 +1,10 @@
+<%--
+  @author: Luis Ruiz Nuñez
+--%>
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="com.example.skybank.entity.DivisaEntity" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: luisruiznunez
-  Date: 1/5/23
-  Time: 17:14
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% OperacionEntity operacion = (OperacionEntity) request.getAttribute("operacion");%>
 
