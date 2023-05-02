@@ -9,10 +9,10 @@ import java.util.Objects;
 public class TipoOperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id", nullable = false)
+    @Column(name = "idtipo", nullable = false)
     private int id;
     @Basic
-    @Column(name = "tipo", nullable = true, length = 45)
+    @Column(name = "tipo", length = 45)
     private String tipo;
     @OneToMany(mappedBy = "tipoOperacionByTipopperacionid")
     private List<OperacionEntity> operacionsById;

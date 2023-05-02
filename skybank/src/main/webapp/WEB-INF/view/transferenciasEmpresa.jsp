@@ -125,7 +125,7 @@
                     %>
 
                     <td>
-                        <%=transferencia.getFecha().toLocalDate()%>
+                        <%=transferencia.getFecha().toLocaleString()%>
                     </td>
                 </tr>
 
@@ -189,7 +189,7 @@
                 %>
 
                 <td>
-                    <%=transferencia.getFecha().toLocalDate()%>
+                    <%=transferencia.getFecha().toLocaleString()%>
                 </td>
             </tr>
 
