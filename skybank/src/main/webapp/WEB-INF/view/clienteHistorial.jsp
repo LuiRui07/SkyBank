@@ -5,7 +5,8 @@
 <%@ page import="com.example.skybank.entity.TipoOperacionEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
-<%@ page import="java.text.SimpleDateFormat" %><%--
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="com.example.skybank.ui.FiltroOperaciones" %><%--
   Created by IntelliJ IDEA.
   User: luisruiznunez
   Date: 24/4/23
@@ -16,6 +17,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operaciones");%>
 <% CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");%>
+<% FiltroOperaciones filtro = (FiltroOperaciones) request.getAttribute("filtro");%>
 <html>
 <head>
     <title>Historial</title>
@@ -29,12 +31,19 @@
         <a href="/cliente/" class="btn btn-danger" style="position: absolute; left: 3%; top: 1.5%">Volver</a>
         <a class="display-3">Historial de Operaciones:</a>
     </div>
+    <form:form modelAttribute="filtro" method="post" action="/cliente/filtrar">
+        <%--<form:input path="desde" cssStyle="margin-right: 10%" type="date"  size="15"></form:input>
+        <form:input path="hasta" cssStyle="margin-right: 10%" type="date"  size="15"></form:input>--%>
+        <form:select path="tipo" items="${tipos}" itemLabel="tipo" cssStyle="margin-right: 10%"></form:select>
+        <form:input path="min" placeholder="Minimo"></form:input>
+        <form:input path="max" placeholder="Maximo"></form:input>
+        <button style="margin-right: 1%" class="btn btn-info">Filtrar</button>
+    </form:form>
 
     <%if (operaciones != null) { %>
     <%for (OperacionEntity operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
         <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
-
         <a>Cantidad: <%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
         <% SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/YYYY");%>
         <a datatype="date"> Fecha: <%=dt1.format(operacion.getFecha())%></a>
@@ -52,9 +61,7 @@
         Concepto: <a class="lead" style="color: cornflowerblue"><%=operacion.getConcepto()%></a>
         <%}%>
     </div>
-    <%}} else { %>
-     MEH
-    <%}%>
+    <%}}%>
 </div>
 
 

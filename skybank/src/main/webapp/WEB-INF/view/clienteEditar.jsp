@@ -29,16 +29,18 @@
        Email: <form:input path="email"  size="15"></form:input>  <br/> <br/>
        <br/>
           <h3 class=""> Direccion: </h3> <br/>
-       Calle:   <form:input path="calle" size="15"></form:input>
-       Numero: <form:input path="numero" size="15"></form:input>
-       Planta: <form:input path="planta" size="15"></form:input>
-       CP:   <form:input path="cp" size="15"></form:input>  <br/> <br/>
-       Ciudad: <form:input path="ciudad" size="15"></form:input>
-       Region:<form:input path="region" size="15"></form:input>
-       Pais:<form:input path="pais" size="15"></form:input> <br/>
+       Calle:   <form:input cssStyle="margin-right: 2%" path="calle" size="15"></form:input>
+       Numero: <form:input cssStyle="margin-right: 2%" path="numero" size="5"></form:input>
+       Planta: <form:input cssStyle="margin-right: 2%" path="planta" size="5"></form:input>
+       CP:   <form:input  cssStyle="margin-right: 2%" path="cp" size="15"></form:input>  <br/> <br/>
+       Ciudad: <form:input cssStyle="margin-right: 2%" path="ciudad" size="15"></form:input>
+       Region:<form:input cssStyle="margin-right: 2%" path="region" size="15"></form:input>
+       Pais:<form:input cssStyle="margin-right: 2%" path="pais" size="15"></form:input> <br/>
 
-          <button class="btn btn-success" style="margin-top: 2%;"   > Guardar
-          </button>
+      <div class="container" style="margin-top: 4%">
+          <button class="btn btn-success" style="margin-right:  2%;"   > Guardar</button>
+          <a href="/cliente/" class="btn btn-danger" style="" >Volver</a>
+      </div>
       </form:form>
   </div>
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

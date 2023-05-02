@@ -1,6 +1,7 @@
 package com.example.skybank.controller;
 import com.example.skybank.dao.*;
 import com.example.skybank.entity.*;
+import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -83,9 +84,20 @@ public class CustomerController {
     public String verHistorial (Model model, @RequestParam("id") int id){
        CuentaEntity cuenta = cuentaRepository.findById(id).orElse(null);
        List<OperacionEntity> operaciones =  operacionRepository.findbyAccount(cuenta.getIdcuenta());
+       FiltroOperaciones filtro = new FiltroOperaciones();
+       List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+       model.addAttribute("tipos",tipos);
+       model.addAttribute("filtro",filtro);
        model.addAttribute("operaciones",operaciones);
        model.addAttribute("cuenta",cuenta);
        return "clienteHistorial";
+    }
+
+    @PostMapping ("/filtrar")
+    public String doFiltrar(Model model, @ModelAttribute("filtro") FiltroOperaciones filtro){
+        List<OperacionEntity> operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo());
+        model.addAttribute("operaciones", operaciones);
+        return "clienteHistorial";
     }
 
     @GetMapping("/editar")
