@@ -37,7 +37,7 @@ public class CustomerController {
             return "redirect:/cliente/login";
         } else {
             model.addAttribute("cliente",cliente);
-            List<CuentaEntity> cuentas = cliente.getCuentasByIdcliente();
+            List<CuentaEntity> cuentas = cuentaRepository.findByCliente(cliente.getIdcliente());
             model.addAttribute("cuentas",cuentas);
             return "cliente";
         }
@@ -131,13 +131,13 @@ public class CustomerController {
 
     @GetMapping("/trans")
     public String doTrans (Model model, @RequestParam("id") int idCuenta){
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
-        List<CuentaEntity> cuentas = cuentaRepository.findAll();
-        cuentas.remove(cuenta);
+        CuentaEntity cuentaOrigen = cuentaRepository.findById(idCuenta).orElse(null);
+        List<CuentaEntity> cuentas = cuentaRepository.findByDivisa(cuentaOrigen.getDivisaByDivisa().getIddivisa());
+        cuentas.remove(cuentaOrigen);
         OperacionEntity operacion = new OperacionEntity();
-        operacion.setCuentaByIdcuenta(cuenta);
-        operacion.setDivisaByDivisa(cuenta.getDivisaByDivisa());
-        model.addAttribute("cuentaOrigen",cuenta);
+        operacion.setCuentaByIdcuenta(cuentaOrigen);
+        operacion.setDivisaByDivisa(cuentaOrigen.getDivisaByDivisa());
+        model.addAttribute("cuentaOrigen",cuentaOrigen);
         model.addAttribute("cuentas",cuentas);
         model.addAttribute("operacion",operacion);
         return "clienteTransf";
@@ -161,26 +161,14 @@ public class CustomerController {
 
             ClienteEntity cliente = operacionForm.getCuentaByIdcuenta2().getClienteByIdcliente();
             CuentaEntity quitar = operacionForm.getCuentaByIdcuenta();
-            CuentaEntity anadir = tieneDivisa(cliente,operacionForm.getDivisaByDivisa());
+            CuentaEntity anadir = operacionForm.getCuentaByIdcuenta2();
 
             quitar.quitarSaldo(operacionForm.getCantidad());
             cuentaRepository.save(quitar);
-            Double saldoNuevo = operacionForm.getCantidad();
-            if (anadir != null){
-                anadir.anadirSaldo(saldoNuevo);
-                cuentaRepository.save(anadir);
-            } else {
-                CuentaEntity cuentaNueva = new CuentaEntity();
-                cuentaNueva.setClienteByIdcliente(cliente);
-                cuentaNueva.setSaldo(saldoNuevo);
-                cuentaNueva.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
-                cuentaNueva.setSospechosa(0);
-                cuentaNueva.setActiva(1);
-                op.setCuentaByIdcuenta2(cuentaNueva);
-                    cuentaRepository.save(cuentaNueva);
-            }
-            operacionRepository.save(op);
-            return "redirect:/cliente/login";
+            anadir.anadirSaldo(operacionForm.getCantidad());
+            cuentaRepository.save(anadir);
+                operacionRepository.save(op);
+            return "redirect:/cliente/";
         }
 
     }
@@ -241,7 +229,7 @@ public class CustomerController {
             cuentaRepository.save(cuentaNueva);
         }
         operacionRepository.save(op);
-            return "redirect:/cliente/login";
+            return "redirect:/cliente/";
     }
 
     private CuentaEntity tieneDivisa (ClienteEntity cliente, DivisaEntity divisa){

@@ -22,11 +22,13 @@
 <body>
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
     <h3 class="display-2" style="margin-bottom: 3%">Cambio de Divisa</h3>
-
+    <div>
     <form:form  modelAttribute="operacionCambio" method="get" action="/cliente/valorCambio" >
     Cantidad: <form:input cssStyle="text-align: center;" path="cantidad" size="15"></form:input> <a style="padding-right: 15%"><%=cuenta.getDivisaByDivisa().getNombre()%></a>
         Moneda <form:select path="divisaByDivisa" items="${divisas}" itemLabel="nombre"></form:select> <br/>
         <form:hidden path="cuentaByIdcuenta"></form:hidden>
+    </div>
+    <footer style="margin-left: -25%; margin-top: -1%;" class="blockquote-footer">Disponible <%=String.format("%.2f",cuenta.getSaldo())%> <%=cuenta.getDivisaByDivisa().getNombre()%> </footer>
         <div class="container">
         <button class="btn btn-primary" style="margin-top: 6%;"> Continuar </button>
     </form:form>

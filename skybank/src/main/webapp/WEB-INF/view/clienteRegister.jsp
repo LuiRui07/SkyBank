@@ -19,32 +19,32 @@
     <form:form method="post" action="/cliente/crearCliente" modelAttribute="clienteNuevo"  cssStyle="display: flex; flex-direction: column;" cssClass="form-group">
     <div>
         <h2> Datos del Cliente</h2>
-        <div>
+        <div style="display: flex; gap: 10px;">
             <span>DNI(*):</span>
-            <form:input path="dni" cssClass="form-control"></form:input>
+            <form:input path="dni" cssClass="form-control " cssStyle="width: 20%"></form:input>
         </div>
-        <div>
+        <div style="display: flex; gap: 10px; margin-top: 2%">
             <span>Nombre (*):</span>
-            <form:input path="nombre" cssClass="form-control"></form:input>
+            <form:input path="nombre" cssClass="form-control" cssStyle="width: 20%"></form:input>
         </div>
 
-        <div>
+        <div style="display: flex; gap: 10px;margin-top: 2%">
             <span>Primer Apellido (*):</span>
-            <form:input path="apellido1" cssClass="form-control"></form:input>
+            <form:input path="apellido1" cssClass="form-control" cssStyle="width: 20%"></form:input>
         </div>
 
-        <div>
+        <div style="display: flex; gap: 10px;margin-top: 2%">
             <span>Segundo Apellido :</span>
-            <form:input path="apellido2" cssClass="form-control"></form:input>
+            <form:input path="apellido2" cssClass="form-control" cssStyle="width: 20%"></form:input>
         </div>
 
-        <div>
+        <div style="display: flex; gap: 10px;margin-top: 2%">
             <span>Email (*):</span>
-            <form:input path="email" cssClass="form-control"></form:input>
+            <form:input path="email" cssClass="form-control" cssStyle="width: 20%"></form:input>
         </div>
-        <div>
+        <div style="display: flex; gap: 10px;margin-top: 2%">
             <span>Fecha de Nacimiento (*):</span>
-            <form:input path="nacimiento" cssClass="form-control" type="date"></form:input>
+            <form:input path="nacimiento" cssClass="form-control" cssStyle="width: 20%" type="date"></form:input>
         </div>
 
     </div>
@@ -110,8 +110,8 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 
 </body>
 </html>

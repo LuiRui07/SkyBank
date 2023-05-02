@@ -44,13 +44,18 @@
     <%for (OperacionEntity operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
         <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
-        <a>Cantidad: <%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
         <% SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/YYYY");%>
         <a datatype="date"> Fecha: <%=dt1.format(operacion.getFecha())%></a>
         <% if (operacion.getTipoOperacionByTipopperacionid().getId() == 1){ %>
         <% if (operacion.getCuentaByIdcuenta().getIdcuenta() == cuenta.getIdcuenta()){ %>
+            <div>
+                Cantidad: <a style="color: red"> -<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+            </div>
             <a> Transferido a la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%> </a>
         <%} else {%>
+            <div>
+            Cantidad: <a style="color: green"> +<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+            </div>
             <a> Recibido de la cuenta:  <%=operacion.getCuentaByIdcuenta().getIdcuenta()%> </a>
         <%}%> <%} else {%>
             <a> Cambio de Divisas a : <%= operacion.getDivisaByDivisa().getNombre()%></a>

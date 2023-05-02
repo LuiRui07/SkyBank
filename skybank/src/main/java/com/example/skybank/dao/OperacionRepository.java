@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface OperacionRepository extends JpaRepository<OperacionEntity,Integer> {
-    @Query("select o from OperacionEntity o where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id )")
+    @Query("select o from OperacionEntity o where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc ")
     List<OperacionEntity> findbyAccount(@Param("id") int id);
 
     @Query("select o from OperacionEntity o where o.tipoOperacionByTipopperacionid.id = :tipo")
