@@ -30,7 +30,7 @@
 
   <form method="post" action="/gestor/login" class="mt-3">
     <div class="mb-3">
-      <label for="DNI" class="form-label">DNI o Email de Usuario:</label>
+      <label for="DNI" class="form-label">DNI:</label>
       <input type="text" class="form-control" id="DNI" name="DNI" required>
     </div>
     <div class="mb-3">
