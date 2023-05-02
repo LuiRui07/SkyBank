@@ -9,9 +9,13 @@ import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.DivisaRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
+import com.example.skybank.dto.Empresa;
 import com.example.skybank.entity.*;
+import com.example.skybank.service.DivisaService;
+import com.example.skybank.service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,47 +38,37 @@ public class EmpresaController {
     @Autowired
     private DivisaRepository divisaRepository;
 
+    @Autowired
+    private EmpresaService empresaService;
+
+    @Autowired
+    private DivisaService divisaService;
+
     @GetMapping("/")
     public String mostrarEmpresa(Model model,HttpSession sesion){
-        EmpresaEntity empresa = (EmpresaEntity) sesion.getAttribute("empresa");
+        Empresa empresa = (Empresa) sesion.getAttribute("empresa");
         if(empresa == null){
             return "redirect:/empresa/login";
         }else{
             model.addAttribute("empresa",empresa);
-            model.addAttribute("divisas", divisaRepository.findAll());
+            model.addAttribute("divisas", divisaService.obtenerTodasLasDivisas());
             return "empresa";
         }
     }
 
     @GetMapping("/register")
     public String registrarEmpresa(Model model){
-        model.addAttribute("empresa" , new EmpresaEntity());
+        model.addAttribute("empresa" , new Empresa());
         return "registerEmpresa";
     }
 
     @PostMapping("/crearEmpresa")
-    public String registrarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa, Model model){
+    public String registrarEmpresa(@ModelAttribute("empresa") Empresa empresa, Model model){
 
-        empresaRepository.save(empresa);
-
-        EmpresaEntity e = empresaRepository.getById(empresa.getIdempresa());
-
-        CuentaEntity c = new CuentaEntity();
-        DivisaEntity d = divisaRepository.getById(1);
-
-        c.setDivisaByDivisa(d);
-        c.setEmpresaByIdempresa(e);
-        cuentaRepository.save(c);
-
-        ArrayList<CuentaEntity> cuentas = new ArrayList<>();
-        cuentas.add(c);
-
-        empresa.setCuentasByIdempresa(cuentas);
-
-        empresaRepository.save(e);
+        empresaService.guardarEmpresa(empresa);
 
         model.addAttribute("socio",new SocioEntity());
-        model.addAttribute("empresa",e);
+        model.addAttribute("empresa",empresa);
         return "crearSocioInicial";
     }
 

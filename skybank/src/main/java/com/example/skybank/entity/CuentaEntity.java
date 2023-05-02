@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.Cuenta;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -117,5 +119,16 @@ public class CuentaEntity {
 
     public void setOperacionsByIdcuenta_0(List<OperacionEntity> operacionsByIdcuenta_0) {
         this.operacionsByIdcuenta_0 = operacionsByIdcuenta_0;
+    }
+
+
+    public Cuenta toDTO(){
+        Cuenta cuenta = new Cuenta();
+        cuenta.setIdcuenta(this.idcuenta);
+        cuenta.setSaldo(this.saldo);
+        cuenta.setSospechosa(this.sospechosa);
+        cuenta.setActiva(this.activa);
+
+        return cuenta;
     }
 }
