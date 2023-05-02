@@ -90,13 +90,13 @@ CREATE TABLE `cliente` (
   `nombre` varchar(45) NOT NULL,
   `apellido1` varchar(100) NOT NULL,
   `apellido2` varchar(100) DEFAULT NULL,
-  `nacimiento` date DEFAULT NULL,
+  `nacimiento` date NOT NULL,
   `calle` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(45) NOT NULL,
-  `numero` int DEFAULT NULL,
-  `ciudad` varchar(100) DEFAULT NULL,
-  `pais` varchar(100) DEFAULT NULL,
+  `numero` int NOT NULL,
+  `ciudad` varchar(100) NOT NULL,
+  `pais` varchar(100) NOT NULL,
   `planta` int DEFAULT NULL,
   `region` varchar(100) DEFAULT NULL,
   `cp` int NOT NULL,
@@ -408,4 +408,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-01 18:52:08
+-- Dump completed on 2023-05-02 20:44:57

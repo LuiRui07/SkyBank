@@ -1,7 +1,6 @@
 /*
-    @autor: José Luis López Ruiz
- */
-
+@author: Luis Ruiz Nuñez
+*/
 package com.example.skybank.dao;
 
 import com.example.skybank.entity.ClienteEntity;

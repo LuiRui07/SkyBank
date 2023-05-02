@@ -1,3 +1,6 @@
+<%--
+  @author: Luis Ruiz Nuñez
+--%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="java.util.Set" %>
@@ -6,13 +9,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%@ page import="com.example.skybank.ui.FiltroOperaciones" %><%--
-  Created by IntelliJ IDEA.
-  User: luisruiznunez
-  Date: 24/4/23
-  Time: 21:42
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.skybank.ui.FiltroOperaciones" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operaciones");%>
@@ -44,13 +41,18 @@
     <%for (OperacionEntity operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
         <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
-        <a>Cantidad: <%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
         <% SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/YYYY");%>
         <a datatype="date"> Fecha: <%=dt1.format(operacion.getFecha())%></a>
         <% if (operacion.getTipoOperacionByTipopperacionid().getId() == 1){ %>
         <% if (operacion.getCuentaByIdcuenta().getIdcuenta() == cuenta.getIdcuenta()){ %>
+            <div>
+                Cantidad: <a style="color: red"> -<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+            </div>
             <a> Transferido a la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%> </a>
         <%} else {%>
+            <div>
+            Cantidad: <a style="color: green"> +<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+            </div>
             <a> Recibido de la cuenta:  <%=operacion.getCuentaByIdcuenta().getIdcuenta()%> </a>
         <%}%> <%} else {%>
             <a> Cambio de Divisas a : <%= operacion.getDivisaByDivisa().getNombre()%></a>

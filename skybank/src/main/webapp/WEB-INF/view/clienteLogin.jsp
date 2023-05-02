@@ -1,12 +1,8 @@
+<%--
+  @author: Luis Ruiz Nuñez
+--%>
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: luisruiznunez
-  Date: 20/2/23
-  Time: 13:16
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <html>
