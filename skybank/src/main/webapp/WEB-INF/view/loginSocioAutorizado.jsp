@@ -9,16 +9,16 @@
 
 <html>
 <head>
-    <title>Inicio Sesión de Empresa</title>
+    <title>Inicia Sesión como Socio o Autorizado</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
 </head>
 <body>
 
-    <div class="container">
+    <div class="container mt-3">
 
 
-        <h1>Inicio Sesión de Empresa:</h1>
+        <h1>Inicia Sesión como Socio o Autorizado:</h1>
 
 
         <%
@@ -35,9 +35,10 @@
             }
         %>
 
-        <form method="post" action="/empresa/login" style="display: flex; flex-direction: column;" class="form-group">
-            <label for="nombre">Nombre de la Empresa:</label>
-            <input id="nombre" name="nombre" class="form-control" required/>
+        <form method="post" action="/empresa/socios/login" style="display: flex; flex-direction: column;" class="form-group">
+
+            <label for="nie">NIF:</label>
+            <input id="nie" type="text" name="nif" class="form-control" required/>
             <br>
 
             <label for="password">Contraseña:</label>
@@ -47,11 +48,7 @@
             <input type="submit" class="btn btn-outline-danger" value="Iniciar Sesión"/>
         </form>
 
-        <div style="display: flex; justify-content: space-between;">
-            <a href="/empresa/register">¡Registrate como empresa!</a>
-            <a href="/empresa/socios/login">¡Soy Socio o Autorizado!</a>
-        </div>
-
+        <a href="/empresa/login">¡Inicia Sesión como Empresa!</a>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

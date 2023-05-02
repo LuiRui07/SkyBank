@@ -1,8 +1,9 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "empresa", schema = "skybank", catalog = "")
@@ -10,7 +11,7 @@ public class EmpresaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idempresa", nullable = false)
-    private int idEmpresa;
+    private int idempresa;
     @Basic
     @Column(name = "cif", nullable = false, length = 100)
     private String cif;
@@ -19,10 +20,10 @@ public class EmpresaEntity {
     private String nombre;
     @Basic
     @Column(name = "emailcorporativo", nullable = false, length = 100)
-    private String emailCorporativo;
+    private String emailcorporativo;
     @Basic
     @Column(name = "passwordempresa", nullable = false, length = 100)
-    private String passwordEmpresa;
+    private String passwordempresa;
     @Basic
     @Column(name = "calle", nullable = false, length = 100)
     private String calle;
@@ -47,19 +48,19 @@ public class EmpresaEntity {
     @Basic
     @Column(name = "verificado", nullable = false)
     private int verificado;
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
-    private Set<AutorizadoEntity> autorizadosByIdEmpresa;
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
-    private Set<CuentaEntity> cuentasByIdEmpresa;
-    @OneToMany(mappedBy = "empresaByIdEmpresa", fetch = FetchType.EAGER)
-    private Set<SocioEntity> sociosByIdEmpresa;
+    @OneToMany(mappedBy = "empresaByIdempresa")
+    private List<AutorizadoEntity> autorizadosByIdempresa;
+    @OneToMany(mappedBy = "empresaByIdempresa")
+    private List<CuentaEntity> cuentasByIdempresa;
+    @OneToMany(mappedBy = "empresaByIdempresa")
+    private List<SocioEntity> sociosByIdempresa;
 
-    public int getIdEmpresa() {
-        return idEmpresa;
+    public int getIdempresa() {
+        return idempresa;
     }
 
-    public void setIdEmpresa(int idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setIdempresa(int idempresa) {
+        this.idempresa = idempresa;
     }
 
     public String getCif() {
@@ -78,20 +79,20 @@ public class EmpresaEntity {
         this.nombre = nombre;
     }
 
-    public String getEmailCorporativo() {
-        return emailCorporativo;
+    public String getEmailcorporativo() {
+        return emailcorporativo;
     }
 
-    public void setEmailCorporativo(String emailCorporativo) {
-        this.emailCorporativo = emailCorporativo;
+    public void setEmailcorporativo(String emailcorporativo) {
+        this.emailcorporativo = emailcorporativo;
     }
 
-    public String getPasswordEmpresa() {
-        return passwordEmpresa;
+    public String getPasswordempresa() {
+        return passwordempresa;
     }
 
-    public void setPasswordEmpresa(String passwordEmpresa) {
-        this.passwordEmpresa = passwordEmpresa;
+    public void setPasswordempresa(String passwordempresa) {
+        this.passwordempresa = passwordempresa;
     }
 
     public String getCalle() {
@@ -163,35 +164,36 @@ public class EmpresaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         EmpresaEntity empresa = (EmpresaEntity) o;
-        return idEmpresa == empresa.idEmpresa && numero == empresa.numero && planta == empresa.planta && cp == empresa.cp && verificado == empresa.verificado && Objects.equals(cif, empresa.cif) && Objects.equals(nombre, empresa.nombre) && Objects.equals(emailCorporativo, empresa.emailCorporativo) && Objects.equals(passwordEmpresa, empresa.passwordEmpresa) && Objects.equals(calle, empresa.calle) && Objects.equals(ciudad, empresa.ciudad) && Objects.equals(pais, empresa.pais) && Objects.equals(region, empresa.region);
+        return idempresa == empresa.idempresa && numero == empresa.numero && planta == empresa.planta && cp == empresa.cp && verificado == empresa.verificado && Objects.equals(cif, empresa.cif) && Objects.equals(nombre, empresa.nombre) && Objects.equals(emailcorporativo, empresa.emailcorporativo) && Objects.equals(passwordempresa, empresa.passwordempresa) && Objects.equals(calle, empresa.calle) && Objects.equals(ciudad, empresa.ciudad) && Objects.equals(pais, empresa.pais) && Objects.equals(region, empresa.region);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idEmpresa, cif, nombre, emailCorporativo, passwordEmpresa, calle, numero, planta, ciudad, pais, region, cp, verificado);
+        return Objects.hash(idempresa, cif, nombre, emailcorporativo, passwordempresa, calle, numero, planta, ciudad, pais, region, cp, verificado);
     }
 
-    public Set<AutorizadoEntity> getAutorizadosByIdEmpresa() {
-        return autorizadosByIdEmpresa;
+    public List<AutorizadoEntity> getAutorizadosByIdempresa() {
+        return autorizadosByIdempresa;
     }
 
-    public void setAutorizadosByIdEmpresa(Set<AutorizadoEntity> autorizadosByIdEmpresa) {
-        this.autorizadosByIdEmpresa = autorizadosByIdEmpresa;
+    public void setAutorizadosByIdempresa(List<AutorizadoEntity> autorizadosByIdempresa) {
+        this.autorizadosByIdempresa = autorizadosByIdempresa;
     }
 
-    public Set<CuentaEntity> getCuentasByIdEmpresa() {
-        return cuentasByIdEmpresa;
+    public List<CuentaEntity> getCuentasByIdempresa() {
+        return cuentasByIdempresa;
     }
 
-    public void setCuentasByIdEmpresa(Set<CuentaEntity> cuentasByIdEmpresa) {
-        this.cuentasByIdEmpresa = cuentasByIdEmpresa;
+    public void setCuentasByIdempresa(List<CuentaEntity> cuentasByIdempresa) {
+        this.cuentasByIdempresa = cuentasByIdempresa;
     }
 
-    public Set<SocioEntity> getSociosByIdEmpresa() {
-        return sociosByIdEmpresa;
+    public List<SocioEntity> getSociosByIdempresa() {
+        return sociosByIdempresa;
     }
 
-    public void setSociosByIdEmpresa(Set<SocioEntity> sociosByIdEmpresa) {
-        this.sociosByIdEmpresa = sociosByIdEmpresa;
+    public void setSociosByIdempresa(List<SocioEntity> sociosByIdempresa) {
+        this.sociosByIdempresa = sociosByIdempresa;
     }
+
 }

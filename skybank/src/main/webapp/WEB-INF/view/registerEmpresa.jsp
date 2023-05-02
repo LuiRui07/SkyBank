@@ -1,3 +1,7 @@
+<%--
+  @author: José Luis López Ruiz
+--%>
+
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -17,17 +21,17 @@
                 <h2> Datos de la empresa</h2>
                 <div>
                     <span>CIF (*):</span>
-                    <form:input path="cif" cssClass="form-control"></form:input>
+                    <form:input path="cif" cssClass="form-control" required="required"></form:input>
                 </div>
 
                 <div>
                     <span>Nombre de la Empresa (*):</span>
-                    <form:input path="nombre" cssClass="form-control"></form:input>
+                    <form:input path="nombre" cssClass="form-control" required="required"></form:input>
                 </div>
 
                 <div>
                     <span>Email Corporativo:</span>
-                    <form:input path="emailCorporativo" cssClass="form-control"></form:input>
+                    <form:input path="emailcorporativo" cssClass="form-control" required="required"></form:input>
                 </div>
 
             </div>
@@ -40,24 +44,24 @@
                 <div style="display: flex; gap: 10px;">
                     <div>
                         <span>Calle(*):</span>
-                        <form:input path="calle" cssClass="form-control"></form:input>
+                        <form:input path="calle" cssClass="form-control" required="required"></form:input>
                     </div>
 
                     <div>
                         <span>Número(*):</span>
-                        <form:input type="number" path="numero" cssClass="form-control"></form:input>
+                        <form:input type="number" path="numero" cssClass="form-control" required="required"></form:input>
 
                     </div>
                 </div>
                 <div>
-                    <span>Planta/Puerta/Ofcina (*):</span>
-                    <form:input type="number" path="planta" cssClass="form-control"></form:input>
+                    <span>Planta/Puerta/Oficina (*):</span>
+                    <form:input type="number" path="planta" cssClass="form-control" required="required"></form:input>
                 </div>
 
                 <div style="display: flex; gap: 10px;">
                     <div>
                         <span>Ciudad(*):</span>
-                        <form:input path="ciudad" cssClass="form-control"></form:input>
+                        <form:input path="ciudad" cssClass="form-control" required="required"></form:input>
                     </div>
 
                     <div>
@@ -70,19 +74,19 @@
                 <div style="display: flex; gap: 10px;">
                     <div>
                         <span>País(*):</span>
-                        <form:input path="pais" cssClass="form-control"></form:input>
+                        <form:input path="pais" cssClass="form-control" required="required"></form:input>
                     </div>
 
                     <div>
                         <span>C.P.(*):</span>
-                        <form:input path="cp" cssClass="form-control" ></form:input>
+                        <form:input path="cp" cssClass="form-control" required="required"></form:input>
 
                     </div>
                 </div>
 
             <div style="margin-top: 10px; align-items: center">
                 <span>Contraseña:</span>
-                <form:input type="password" path="passwordEmpresa" cssClass="form-control"></form:input>
+                <form:input type="password" path="passwordempresa" cssClass="form-control" required="required"></form:input>
                 <br>
             <div>
 

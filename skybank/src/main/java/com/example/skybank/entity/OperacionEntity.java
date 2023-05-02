@@ -1,7 +1,7 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -9,23 +9,43 @@ import java.util.Objects;
 public class OperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idoperación", nullable = false)
+    @Column(name = "idoperacion", nullable = false)
     private int idoperación;
     @Basic
     @Column(name = "fecha", nullable = false)
     private Date fecha;
+    @Basic
+    @Column(name = "cantidad", nullable = false)
+    private double cantidad;
+    @Basic
+    @Column(name = "operacioncol", length = 45)
+    private String operacioncol;
+    @Basic
+    @Column(name = "concepto", length = 100)
+    private String concepto;
     @ManyToOne
-    @JoinColumn(name = "idGestor", referencedColumnName = "idGestor")
-    private GestorEntity gestorByIdGestor;
+    @JoinColumn(name = "idgestor", referencedColumnName = "idgestor")
+    private GestorEntity gestorByIdgestor;
     @ManyToOne
-    @JoinColumn(name = "TipoOperacionId", referencedColumnName = "id", nullable = false)
-    private TipoOperacionEntity tipoOperacionByTipoOperacionId;
+    @JoinColumn(name = "idtipo", referencedColumnName = "idtipo", nullable = false)
+    private TipoOperacionEntity tipoOperacionByTipopperacionid;
     @ManyToOne
-    @JoinColumn(name = "idCuenta2", referencedColumnName = "idCuenta")
-    private CuentaEntity cuentaByIdCuenta2;
+    @JoinColumn(name = "idcuenta2", referencedColumnName = "idcuenta")
+    private CuentaEntity cuentaByIdcuenta2;
     @ManyToOne
-    @JoinColumn(name = "idCuenta", referencedColumnName = "idCuenta", nullable = false)
-    private CuentaEntity cuentaByIdCuenta;
+    @JoinColumn(name = "idcuenta", referencedColumnName = "idcuenta", nullable = false)
+    private CuentaEntity cuentaByIdcuenta;
+    @ManyToOne
+    @JoinColumn(name = "divisa", referencedColumnName = "iddivisa")
+    private DivisaEntity divisaByDivisa;
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
 
     public int getIdoperación() {
         return idoperación;
@@ -43,48 +63,72 @@ public class OperacionEntity {
         this.fecha = fecha;
     }
 
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Double cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public String getOperacioncol() {
+        return operacioncol;
+    }
+
+    public void setOperacioncol(String operacioncol) {
+        this.operacioncol = operacioncol;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OperacionEntity that = (OperacionEntity) o;
-        return idoperación == that.idoperación && Objects.equals(fecha, that.fecha);
+        return idoperación == that.idoperación && cantidad == that.cantidad && Objects.equals(fecha, that.fecha) && Objects.equals(operacioncol, that.operacioncol);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idoperación, fecha);
+        return Objects.hash(idoperación, fecha, cantidad, operacioncol);
     }
 
-    public GestorEntity getGestorByIdGestor() {
-        return gestorByIdGestor;
+    public GestorEntity getGestorByIdgestor() {
+        return gestorByIdgestor;
     }
 
-    public void setGestorByIdGestor(GestorEntity gestorByIdGestor) {
-        this.gestorByIdGestor = gestorByIdGestor;
+    public void setGestorByIdgestor(GestorEntity gestorByIdgestor) {
+        this.gestorByIdgestor = gestorByIdgestor;
     }
 
-    public TipoOperacionEntity getTipoOperacionByTipoOperacionId() {
-        return tipoOperacionByTipoOperacionId;
+    public TipoOperacionEntity getTipoOperacionByTipopperacionid() {
+        return tipoOperacionByTipopperacionid;
     }
 
-    public void setTipoOperacionByTipoOperacionId(TipoOperacionEntity tipoOperacionByTipoOperacionId) {
-        this.tipoOperacionByTipoOperacionId = tipoOperacionByTipoOperacionId;
+    public void setTipoOperacionByTipopperacionid(TipoOperacionEntity tipoOperacionByTipopperacionid) {
+        this.tipoOperacionByTipopperacionid = tipoOperacionByTipopperacionid;
     }
 
-    public CuentaEntity getCuentaByIdCuenta2() {
-        return cuentaByIdCuenta2;
+    public CuentaEntity getCuentaByIdcuenta2() {
+        return cuentaByIdcuenta2;
     }
 
-    public void setCuentaByIdCuenta2(CuentaEntity cuentaByIdCuenta2) {
-        this.cuentaByIdCuenta2 = cuentaByIdCuenta2;
+    public void setCuentaByIdcuenta2(CuentaEntity cuentaByIdcuenta2) {
+        this.cuentaByIdcuenta2 = cuentaByIdcuenta2;
     }
 
-    public CuentaEntity getCuentaByIdCuenta() {
-        return cuentaByIdCuenta;
+    public CuentaEntity getCuentaByIdcuenta() {
+        return cuentaByIdcuenta;
     }
 
-    public void setCuentaByIdCuenta(CuentaEntity cuentaByIdCuenta) {
-        this.cuentaByIdCuenta = cuentaByIdCuenta;
+    public void setCuentaByIdcuenta(CuentaEntity cuentaByIdcuenta) {
+        this.cuentaByIdcuenta = cuentaByIdcuenta;
+    }
+
+    public DivisaEntity getDivisaByDivisa() {
+        return divisaByDivisa;
+    }
+
+    public void setDivisaByDivisa(DivisaEntity divisaByDivisa) {
+        this.divisaByDivisa = divisaByDivisa;
     }
 }

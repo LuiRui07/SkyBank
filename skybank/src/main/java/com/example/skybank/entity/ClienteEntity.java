@@ -1,8 +1,9 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "cliente", schema = "skybank", catalog = "")
@@ -10,7 +11,7 @@ public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idcliente", nullable = false)
-    private int idCliente;
+    private int idcliente;
     @Basic
     @Column(name = "dni", nullable = false, length = 45)
     private String dni;
@@ -18,31 +19,52 @@ public class ClienteEntity {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @Basic
-    @Column(name = "apellidos", nullable = false, length = 100)
-    private String apellidos;
+    @Column(name = "apellido1", nullable = false, length = 100)
+    private String apellido1;
     @Basic
-    @Column(name = "edad", nullable = false)
-    private int edad;
+    @Column(name = "apellido2", nullable = true, length = 100)
+    private String apellido2;
     @Basic
-    @Column(name = "direccion", nullable = false, length = 100)
-    private String direccion;
+    @Column(name = "nacimiento", nullable = true)
+    private Date nacimiento;
+    @Basic
+    @Column(name = "calle", nullable = false, length = 100)
+    private String calle;
     @Basic
     @Column(name = "email", nullable = false, length = 100)
     private String email;
     @Basic
     @Column(name = "password", nullable = false, length = 45)
     private String password;
-    @OneToMany(mappedBy = "clienteByIdCliente")
-    private Set<ConversacionEntity> conversacionsByIdCliente;
-    @OneToMany(mappedBy = "clienteByIdCliente")
-    private Set<CuentaEntity> cuentasByIdCliente;
+    @Basic
+    @Column(name = "numero", nullable = true)
+    private Integer numero;
+    @Basic
+    @Column(name = "ciudad", nullable = true, length = 100)
+    private String ciudad;
+    @Basic
+    @Column(name = "pais", nullable = true, length = 100)
+    private String pais;
+    @Basic
+    @Column(name = "planta", nullable = true)
+    private Integer planta;
+    @Basic
+    @Column(name = "region", nullable = true, length = 100)
+    private String region;
+    @Basic
+    @Column(name = "cp", nullable = false)
+    private int cp;
+    @OneToMany(mappedBy = "clienteByIdcliente")
+    private List<ConversacionEntity> conversacionsByIdcliente;
+    @OneToMany(mappedBy = "clienteByIdcliente")
+    private List<CuentaEntity> cuentasByIdcliente;
 
-    public int getIdCliente() {
-        return idCliente;
+    public int getIdcliente() {
+        return idcliente;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setIdcliente(int idcliente) {
+        this.idcliente = idcliente;
     }
 
     public String getDni() {
@@ -61,28 +83,36 @@ public class ClienteEntity {
         this.nombre = nombre;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public String getApellido1() {
+        return apellido1;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellido1(String apellido1) {
+        this.apellido1 = apellido1;
     }
 
-    public int getEdad() {
-        return edad;
+    public String getApellido2() {
+        return apellido2;
     }
 
-    public void setEdad(int edad) {
-        this.edad = edad;
+    public void setApellido2(String apellido2) {
+        this.apellido2 = apellido2;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public Date getNacimiento() {
+        return nacimiento;
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public void setNacimiento(Date nacimiento) {
+        this.nacimiento = nacimiento;
+    }
+
+    public String getCalle() {
+        return calle;
+    }
+
+    public void setCalle(String calle) {
+        this.calle = calle;
     }
 
     public String getEmail() {
@@ -101,32 +131,80 @@ public class ClienteEntity {
         this.password = password;
     }
 
+    public Integer getNumero() {
+        return numero;
+    }
+
+    public void setNumero(Integer numero) {
+        this.numero = numero;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public Integer getPlanta() {
+        return planta;
+    }
+
+    public void setPlanta(Integer planta) {
+        this.planta = planta;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public int getCp() {
+        return cp;
+    }
+
+    public void setCp(int cp) {
+        this.cp = cp;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ClienteEntity that = (ClienteEntity) o;
-        return idCliente == that.idCliente && edad == that.edad && Objects.equals(dni, that.dni) && Objects.equals(nombre, that.nombre) && Objects.equals(apellidos, that.apellidos) && Objects.equals(direccion, that.direccion) && Objects.equals(email, that.email) && Objects.equals(password, that.password);
+        return idcliente == that.idcliente && cp == that.cp && Objects.equals(dni, that.dni) && Objects.equals(nombre, that.nombre) && Objects.equals(apellido1, that.apellido1) && Objects.equals(apellido2, that.apellido2) && Objects.equals(nacimiento, that.nacimiento) && Objects.equals(calle, that.calle) && Objects.equals(email, that.email) && Objects.equals(password, that.password) && Objects.equals(numero, that.numero) && Objects.equals(ciudad, that.ciudad) && Objects.equals(pais, that.pais) && Objects.equals(planta, that.planta) && Objects.equals(region, that.region);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCliente, dni, nombre, apellidos, edad, direccion, email, password);
+        return Objects.hash(idcliente, dni, nombre, apellido1, apellido2, nacimiento, calle, email, password, numero, ciudad, pais, planta, region, cp);
     }
 
-    public Set<ConversacionEntity> getConversacionsByIdCliente() {
-        return conversacionsByIdCliente;
+    public List<ConversacionEntity> getConversacionsByIdcliente() {
+        return conversacionsByIdcliente;
     }
 
-    public void setConversacionsByIdCliente(Set<ConversacionEntity> conversacionsByIdCliente) {
-        this.conversacionsByIdCliente = conversacionsByIdCliente;
+    public void setConversacionsByIdcliente(List<ConversacionEntity> conversacionsByIdcliente) {
+        this.conversacionsByIdcliente = conversacionsByIdcliente;
     }
 
-    public Set<CuentaEntity> getCuentasByIdCliente() {
-        return cuentasByIdCliente;
+    public List<CuentaEntity> getCuentasByIdcliente() {
+        return cuentasByIdcliente;
     }
 
-    public void setCuentasByIdCliente(Set<CuentaEntity> cuentasByIdCliente) {
-        this.cuentasByIdCliente = cuentasByIdCliente;
+    public void setCuentasByIdcliente(List<CuentaEntity> cuentasByIdcliente) {
+        this.cuentasByIdcliente = cuentasByIdcliente;
     }
 }

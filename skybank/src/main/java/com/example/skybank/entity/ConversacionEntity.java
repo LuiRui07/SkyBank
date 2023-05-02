@@ -1,34 +1,34 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "conversacion", schema = "skybank", catalog = "")
 public class ConversacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idConversacion", nullable = false)
-    private int idConversacion;
+    @Column(name = "idconversacion", nullable = false)
+    private int idconversacion;
     @Basic
-    @Column(name = "Cerrada", nullable = false)
+    @Column(name = "cerrada", nullable = false)
     private int cerrada;
     @ManyToOne
-    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", nullable = false)
-    private ClienteEntity clienteByIdCliente;
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
+    private ClienteEntity clienteByIdcliente;
     @ManyToOne
-    @JoinColumn(name = "idAsistente", referencedColumnName = "idAsistente", nullable = false)
-    private AsistenteEntity asistenteByIdAsistente;
-    @OneToMany(mappedBy = "conversacionByIdConversacion")
-    private Set<MensajeEntity> mensajesByIdConversacion;
+    @JoinColumn(name = "idasistente", referencedColumnName = "idasistente", nullable = false)
+    private AsistenteEntity asistenteByIdasistente;
+    @OneToMany(mappedBy = "conversacionByIdconversacion")
+    private List<MensajeEntity> mensajesByIdconversacion;
 
-    public int getIdConversacion() {
-        return idConversacion;
+    public int getIdconversacion() {
+        return idconversacion;
     }
 
-    public void setIdConversacion(int idConversacion) {
-        this.idConversacion = idConversacion;
+    public void setIdconversacion(int idconversacion) {
+        this.idconversacion = idconversacion;
     }
 
     public int getCerrada() {
@@ -44,35 +44,35 @@ public class ConversacionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ConversacionEntity that = (ConversacionEntity) o;
-        return idConversacion == that.idConversacion && cerrada == that.cerrada;
+        return idconversacion == that.idconversacion && cerrada == that.cerrada;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idConversacion, cerrada);
+        return Objects.hash(idconversacion, cerrada);
     }
 
-    public ClienteEntity getClienteByIdCliente() {
-        return clienteByIdCliente;
+    public ClienteEntity getClienteByIdcliente() {
+        return clienteByIdcliente;
     }
 
-    public void setClienteByIdCliente(ClienteEntity clienteByIdCliente) {
-        this.clienteByIdCliente = clienteByIdCliente;
+    public void setClienteByIdcliente(ClienteEntity clienteByIdcliente) {
+        this.clienteByIdcliente = clienteByIdcliente;
     }
 
-    public AsistenteEntity getAsistenteByIdAsistente() {
-        return asistenteByIdAsistente;
+    public AsistenteEntity getAsistenteByIdasistente() {
+        return asistenteByIdasistente;
     }
 
-    public void setAsistenteByIdAsistente(AsistenteEntity asistenteByIdAsistente) {
-        this.asistenteByIdAsistente = asistenteByIdAsistente;
+    public void setAsistenteByIdasistente(AsistenteEntity asistenteByIdasistente) {
+        this.asistenteByIdasistente = asistenteByIdasistente;
     }
 
-    public Set<MensajeEntity> getMensajesByIdConversacion() {
-        return mensajesByIdConversacion;
+    public List<MensajeEntity> getMensajesByIdconversacion() {
+        return mensajesByIdconversacion;
     }
 
-    public void setMensajesByIdConversacion(Set<MensajeEntity> mensajesByIdConversacion) {
-        this.mensajesByIdConversacion = mensajesByIdConversacion;
+    public void setMensajesByIdconversacion(List<MensajeEntity> mensajesByIdconversacion) {
+        this.mensajesByIdconversacion = mensajesByIdconversacion;
     }
 }

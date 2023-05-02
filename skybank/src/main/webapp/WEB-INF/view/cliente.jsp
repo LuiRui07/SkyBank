@@ -1,14 +1,16 @@
+<%--
+  @author: Luis Ruiz Nuñez
+--%>
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="java.util.Set" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
     ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
+    List<CuentaEntity> cuentas = (List<CuentaEntity>) request.getAttribute("cuentas");
 %>
 
 <html>
@@ -20,13 +22,43 @@
 </head>
 <body>
 
-<div class="hidden">
-
-</div>
-
 <div class="container">
-    <h1><%=cliente.getNombre()%>  <%=cliente.getApellidos()%></h1>
+    <br/>
+    <script>
+        function CerrarSesion() {
+        var result = confirm("¿Seguro que quieres cerrar sesión?");
+        if (result == true) {
+            window.location = "/cliente/logout"
+        }
+        }
+    </script>
 
+    <p class="h1"><%=cliente.getNombre()%>  <%=cliente.getApellido1()%> <%=cliente.getApellido2()%>
+        <div>
+            <a href="editar?id=${cliente.idcliente}" class="btn btn-outline-primary">Modificar Datos</a>
+            <a onclick="CerrarSesion()" style="float:right" class="btn btn-outline-info"> Cerrar Sesión </a>
+        </div>
+    </p>
+
+    <% for (CuentaEntity cuenta : cuentas) { %>
+        <%if (!((cuenta.getSaldo() - 0.01) < 0 )){%>
+        <div class="card" style="margin-bottom: 3%">
+            <p class="display-3 p-3 rounded bg-light"><%=String.format("%.2f",cuenta.getSaldo())    %>     <%=cuenta.getDivisaByDivisa().getSimbolo()%>
+            <%if (cuenta.getDivisaByDivisa().getSimbolo().contains("$")){ %>
+            <a class="h5 text-muted"> <%=cuenta.getDivisaByDivisa().getNombre()%></a>
+            <%}%>
+            <a class="text-muted" style="float: right;font-size: 20%"> IBAN: <%=cuenta.getIdcuenta()%></a>
+            </p>
+            <a href="historial?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Historial</a>
+            <% if (cuenta.getActiva() == 1){%>
+            <a style="margin-top:1%" href="trans?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Transferencia</a>
+            <a style="margin-top:1%" href="cambio?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
+            <a style="margin-top:1%" class="btn btn-outline-danger">Solicitar Desactivacion</a>
+        </div>
+    <%} else {%>
+    <a style="margin-top:1%" class="btn btn-outline-success">Solicitar Activacion</a> <br/>
+
+    <%}}}%>
 </div>
 
 
