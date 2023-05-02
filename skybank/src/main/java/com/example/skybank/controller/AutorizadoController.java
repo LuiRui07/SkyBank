@@ -1,3 +1,8 @@
+/*
+    @autor: José Luis López Ruiz
+ */
+
+
 package com.example.skybank.controller;
 
 
@@ -11,6 +16,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+
+
 
 @Controller
 @RequestMapping("/empresa/autorizados/")

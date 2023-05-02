@@ -1,3 +1,7 @@
+/*
+    @autor: José Luis López Ruiz
+ */
+
 package com.example.skybank.controller;
 
 import com.example.skybank.dao.AutorizadoRepository;
@@ -8,14 +12,17 @@ import com.example.skybank.entity.EmpresaEntity;
 import com.example.skybank.entity.SocioEntity;
 import com.example.skybank.service.AutorizadoService;
 import com.example.skybank.service.SocioService;
+import com.example.skybank.ui.FiltroSociosAutorizados;
 import com.example.skybank.ui.TipoPersonaEmpresa;
 import com.example.skybank.ui.socioOAutorizado;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -45,17 +52,52 @@ public class SocioController {
         if(empresa == null){
             return "redirect:/empresa/login";
         }else{
-            model.addAttribute("empresa", empresa);
-
-            List<SocioEntity> socios = socioService.getAllSociosOfEmpresa(empresa);
-            model.addAttribute("socios", socios);
-            List<AutorizadoEntity> autorizados = autorizadoService.getAllAutorizadosOfEmpresa(empresa);
-            model.addAttribute("autorizados", autorizados);
-
-            model.addAttribute("NuevoSocioOAutorizado", new socioOAutorizado(null));
-
-            return "sociosYAutorizados";
+            return filtrarSociosYAutorizados(null,empresa,model);
         }
+
+    }
+
+    @PostMapping("/")
+    public String doFiltrarSociosYAutorizados(@ModelAttribute("filtro") FiltroSociosAutorizados filtro, HttpSession session, Model model){
+        return filtrarSociosYAutorizados(filtro,(EmpresaEntity) session.getAttribute("empresa"),model);
+    }
+
+    private String filtrarSociosYAutorizados(FiltroSociosAutorizados filtro, EmpresaEntity empresa, Model model){
+        model.addAttribute("empresa", empresa);
+        model.addAttribute("NuevoSocioOAutorizado", new socioOAutorizado(null));
+
+        List<SocioEntity> socios = new ArrayList<>();
+        List<AutorizadoEntity> autorizados = new ArrayList<>();
+
+        if(filtro == null || (filtro != null && filtro.getTexto().isEmpty() && filtro.isSocios() && filtro.isAutorizados())){
+            FiltroSociosAutorizados f = new FiltroSociosAutorizados();
+            f.setAutorizados(true);
+            f.setSocios(true);
+
+            model.addAttribute("filtro",f);
+
+
+            socios = socioService.getAllSociosOfEmpresa(empresa);
+            autorizados = autorizadoService.getAllAutorizadosOfEmpresa(empresa);
+
+        }else if(filtro != null){
+            System.out.println(filtro.getTexto() + " a: " + filtro.isAutorizados() + " s: " + filtro.isSocios());
+
+            model.addAttribute("filtro",filtro);
+
+            if(filtro.isAutorizados() && filtro.isSocios()){
+                socios = socioService.getAllSociosOfEmpresaFiltered(empresa,filtro.getTexto());
+                autorizados = autorizadoService.getAllAutorizadosOfEmpresaFiltered(empresa,filtro.getTexto());
+            }else if(filtro.isAutorizados() && !filtro.isSocios()){
+                autorizados = autorizadoService.getAllAutorizadosOfEmpresaFiltered(empresa,filtro.getTexto());
+            }else if(!filtro.isAutorizados() && filtro.isSocios()){
+                socios = socioService.getAllSociosOfEmpresaFiltered(empresa,filtro.getTexto());
+            }
+        }
+
+        model.addAttribute("socios", socios);
+        model.addAttribute("autorizados", autorizados);
+        return "sociosYAutorizados";
 
     }
 
@@ -162,9 +204,10 @@ public class SocioController {
 
         Object cuenta = autorizado != null ? autorizado : socioRepository.autenticar(nif,password);
 
-        if(cuenta == null){
-            modelo.addAttribute("error", "Empresa no encontrada");
+        if(cuenta == null) {
+            modelo.addAttribute("error", "Usuario no encontrado");
             urlTo = "loginSocioAutorizado";
+
         }else{
             EmpresaEntity empresa;
             String tipoCuenta = "";
@@ -177,16 +220,19 @@ public class SocioController {
 
             }
 
-            System.out.println(cuenta.toString());
-
-            if(empresa.getVerificado() == 1){
-                sesion.setAttribute("empresa",empresa);
-                sesion.setAttribute("cuenta", cuenta);
-                sesion.setAttribute("tipoCuenta",tipoCuenta);
-
-            }else{
-                modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+            if((tipoCuenta.equals("Autorizado") && ((AutorizadoEntity) cuenta).getBloqueado() == 1) || (tipoCuenta.equals("Socio") && ((SocioEntity) cuenta).getBloqueado() == 1)) {
+                modelo.addAttribute("error", String.format("Esta cuenta ha sido bloqueada, solicite el desbloqueo entrando en el siguiente enlace: <br><a href='/empresa/socios/solicitarDesbloqueo?%s'>Solicitar desbloqueo.</a>",cuenta.getClass() == AutorizadoEntity.class ? "id=" + ((AutorizadoEntity) cuenta).getId()  + "&tipo=Autorizado" : "id=" + ((SocioEntity) cuenta).getId() + "&tipo=Socio"));
                 urlTo = "loginSocioAutorizado";
+            }else{
+                if(empresa.getVerificado() == 1){
+                    sesion.setAttribute("empresa",empresa);
+                    sesion.setAttribute("cuenta", cuenta);
+                    sesion.setAttribute("tipoCuenta",tipoCuenta);
+
+                }else{
+                    modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+                    urlTo = "loginSocioAutorizado";
+                }
             }
 
         }
@@ -218,6 +264,22 @@ public class SocioController {
         socioRepository.save(socio);
 
         return "redirect:/empresa/autorizados/" + socio.getId();
+    }
+
+    @GetMapping("/solicitarDesbloqueo")
+    public String solicitarDesbloqueo(@RequestParam("id") Integer idCuenta,@RequestParam("tipo") String tipoCuenta){
+
+        if(tipoCuenta.equals("Socio")){
+
+
+        }else if(tipoCuenta.equals("Autorizado")){
+
+
+
+        }
+
+        return "solicitarDesbloqueo";
+
     }
 
 }

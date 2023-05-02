@@ -196,6 +196,4 @@ public class EmpresaEntity {
         this.sociosByIdempresa = sociosByIdempresa;
     }
 
-    public void setCuentasByIdEmpresa(ArrayList<Object> objects) {
-    }
 }
