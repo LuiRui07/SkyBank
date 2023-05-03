@@ -80,8 +80,15 @@ public class AutorizadoService {
         s.setEmail(autorizado.getEmail());
         s.setPais(autorizado.getPais());
         s.setPassword(autorizado.getPassword());
+        s.setSolicituddesbloqueo(autorizado.getSolicituddesbloqueo());
         autorizadoRepository.save(s);
 
+    }
+
+    public void solicitarDesbloqueo(Integer idAutorizado){
+        AutorizadoEntity a = autorizadoRepository.getById(idAutorizado);
+        a.setSolicituddesbloqueo(1);
+        autorizadoRepository.save(a);
     }
 
 }

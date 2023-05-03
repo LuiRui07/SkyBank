@@ -62,6 +62,10 @@ public class SocioEntity {
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
     private EmpresaEntity empresaByIdempresa;
 
+    @Basic
+    @Column(name = "solicituddesbloqueo", nullable = false)
+    private int solicituddesbloqueo;
+
     public int getId() {
         return id;
     }
@@ -211,6 +215,14 @@ public class SocioEntity {
         this.empresaByIdempresa = empresaByIdempresa;
     }
 
+    public int getSolicituddesbloqueo() {
+        return solicituddesbloqueo;
+    }
+
+    public void setSolicituddesbloqueo(int solicituddesbloqueo) {
+        this.solicituddesbloqueo = solicituddesbloqueo;
+    }
+
     public Socio toDTO(){
         Socio socio = new Socio();
         socio.setId(id);
@@ -230,6 +242,7 @@ public class SocioEntity {
         socio.setRegion(region);
         socio.setCp(cp);
         socio.setEmpresa(empresaByIdempresa.toDTO());
+        socio.setSolicituddesbloqueo(solicituddesbloqueo);
 
         return socio;
 

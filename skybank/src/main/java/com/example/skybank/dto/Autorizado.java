@@ -25,6 +25,16 @@ public class Autorizado {
     private String region;
     private int cp;
 
+    private int solicituddesbloqueo;
+
+    public int getSolicituddesbloqueo() {
+        return solicituddesbloqueo;
+    }
+
+    public void setSolicituddesbloqueo(int solicituddesbloqueo) {
+        this.solicituddesbloqueo = solicituddesbloqueo;
+    }
+
     private Empresa empresa;
 
     public Empresa getEmpresa() {
