@@ -24,17 +24,23 @@
 <body>
 
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;position: relative">
-    <div class="container">
+    <div class="container" style="margin-bottom: 4%">
         <a href="/cliente/" class="btn btn-danger" style="position: absolute; left: 3%; top: 1.5%">Volver</a>
         <a class="display-3">Historial de Operaciones:</a>
     </div>
     <form:form modelAttribute="filtro" method="post" action="/cliente/filtrar">
-        <%--<form:input path="desde" cssStyle="margin-right: 10%" type="date"  size="15"></form:input>
-        <form:input path="hasta" cssStyle="margin-right: 10%" type="date"  size="15"></form:input>--%>
-        <form:select path="tipo" items="${tipos}" itemLabel="tipo" cssStyle="margin-right: 10%"></form:select>
-        <form:input path="min" placeholder="Minimo"></form:input>
-        <form:input path="max" placeholder="Maximo"></form:input>
-        <button style="margin-right: 1%" class="btn btn-info">Filtrar</button>
+        <form:select multiple="false" path="tipo" cssStyle="margin-right: 2%;">
+            <form:option value="" label="Todos" />
+            <form:options items="${tipos}" itemLabel="tipo" itemValue="tipo"/>
+        </form:select>
+        <form:hidden path="idCuenta"></form:hidden>
+        Desde:<form:input type="date" path="desde"  size="15"></form:input>
+        Hasta: <form:input type="date" path="hasta" cssStyle="margin-right: 3%" size="15"></form:input>
+
+
+        <form:input path="min" placeholder="Minima cantidad"></form:input>
+        <form:input path="max" placeholder="Maxima cantidad"></form:input>
+        <button style="margin-left: 2%" class="btn btn-info">Filtrar</button>
     </form:form>
 
     <%if (operaciones != null) { %>
@@ -46,15 +52,22 @@
         <% if (operacion.getTipoOperacionByTipopperacionid().getId() == 1){ %>
         <% if (operacion.getCuentaByIdcuenta().getIdcuenta() == cuenta.getIdcuenta()){ %>
             <div>
-                Cantidad: <a style="color: red"> -<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+                Cantidad: <a style="color: crimson"> -<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
             </div>
             <a> Transferido a la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%> </a>
         <%} else {%>
             <div>
-            Cantidad: <a style="color: green"> +<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+            Cantidad: <a style="color: forestgreen"> +<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
             </div>
             <a> Recibido de la cuenta:  <%=operacion.getCuentaByIdcuenta().getIdcuenta()%> </a>
         <%}%> <%} else {%>
+            <%if (operacion.getDivisaByDivisa() == cuenta.getDivisaByDivisa()){ %>
+            <div>
+            Cantidad: <a style="color: forestgreen"> +<%=operacion.getCantidad()%> <%=cuenta.getDivisaByDivisa().getSimbolo()%></a>
+            </div>
+            <%} else { %>
+            Cantidad: <a style="color: crimson"> -<%=operacion.getCantidad()%> <%=cuenta.getDivisaByDivisa().getSimbolo()%></a>
+            <%}%>
             <a> Cambio de Divisas a : <%= operacion.getDivisaByDivisa().getNombre()%></a>
         <% }%>
         <br/>

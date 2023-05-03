@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -79,7 +80,7 @@ public class CustomerController {
     }
 
     @PostMapping("/crearCliente")
-    public String registarClient (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
+    public String registarCliente (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
         customerRepository.save(cliente);
         return "redirect:/cliente/login";
     }
@@ -90,17 +91,50 @@ public class CustomerController {
        List<OperacionEntity> operaciones =  operacionRepository.findbyAccount(cuenta.getIdcuenta());
        FiltroOperaciones filtro = new FiltroOperaciones();
        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+       filtro.setIdCuenta(cuenta.getIdcuenta());
+       model.addAttribute("operaciones",operaciones);
        model.addAttribute("tipos",tipos);
        model.addAttribute("filtro",filtro);
-       model.addAttribute("operaciones",operaciones);
        model.addAttribute("cuenta",cuenta);
        return "clienteHistorial";
     }
+    @PostMapping("/filtrar")
+    public String doFiltrar (@ModelAttribute("filtro") FiltroOperaciones filtro,
+                             Model model, HttpSession session) {
+        return this.procesarFiltrado(filtro,model, session);
+    }
 
-    @PostMapping ("/filtrar")
-    public String doFiltrar(Model model, @ModelAttribute("filtro") FiltroOperaciones filtro){
-        List<OperacionEntity> operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo());
-        model.addAttribute("operaciones", operaciones);
+    protected String procesarFiltrado (FiltroOperaciones filtro,
+                                       Model model, HttpSession session) {
+        CuentaEntity cuenta = cuentaRepository.findById(filtro.getIdCuenta()).orElse(null);
+        List<OperacionEntity> operaciones = operacionRepository.findbyAccount(filtro.getIdCuenta());
+        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+        model.addAttribute("tipos",tipos);
+
+        if(filtro.getTipo() != ""){
+            operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo(),filtro.getIdCuenta());
+        }
+        if(filtro.getMax() != null){
+            List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones2);
+        }
+        if (filtro.getMin() != null){
+            List<OperacionEntity> operaciones3 = operacionRepository.filtrarMin(filtro.getMin(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones3);
+        }
+        if (filtro.getDesde() != null){
+            List<OperacionEntity> operaciones4 = operacionRepository.filtrarDesde(filtro.getDesde(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones4);
+        }
+        if (filtro.getHasta() != null){
+            List<OperacionEntity> operaciones5 = operacionRepository.filtrarHasta(filtro.getHasta(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones5);
+        }
+
+        model.addAttribute("operaciones",operaciones);
+        model.addAttribute("filtro",filtro);
+        model.addAttribute("tipos",tipos);
+        model.addAttribute("cuenta",cuenta);
         return "clienteHistorial";
     }
 
@@ -149,7 +183,7 @@ public class CustomerController {
 
     @PostMapping("/doTransf")
     public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacionForm){
-        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() == 0.00){
+        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() <= 0.00){
             return "clienteError";
         } else {
             TipoOperacionEntity tipo = tipoOperacionRepository.findById(1).orElse(null);
@@ -193,7 +227,7 @@ public class CustomerController {
     @GetMapping("/valorCambio")
     public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") OperacionEntity operacion){
         model.addAttribute("operacion", operacion);
-        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() == 0.00){
+        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() <= 0.00){
             return "clienteError";
         } else {
             return "clienteCambioValor";
@@ -218,9 +252,14 @@ public class CustomerController {
 
         quitar.quitarSaldo(operacionForm.getCantidad());
         cuentaRepository.save(quitar);
-        Double saldoNuevo = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
+        Double saldoN = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
+        DecimalFormat formato = new DecimalFormat("#.##");
+        String aproximado = formato.format(saldoN);
+        aproximado = aproximado.replace(',', '.');
+        Double saldoNuevo = Double.parseDouble(aproximado);
         if ( anadir != null){
             anadir.anadirSaldo(saldoNuevo);
+            op.setCuentaByIdcuenta2(anadir);
             cuentaRepository.save(anadir);
         } else {
             CuentaEntity cuentaNueva = new CuentaEntity();

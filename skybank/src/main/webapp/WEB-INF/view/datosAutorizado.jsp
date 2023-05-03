@@ -17,15 +17,14 @@
 <jsp:include page="header.jsp"></jsp:include>
 
 <div class="container mt-3">
-  <form:form modelAttribute="autorizado" cssClass="rounded bg-light p-4" action="/empresa/autorizados/edit?eId=${autorizado.empresaByIdempresa.idempresa}" method="post">
+  <form:form modelAttribute="autorizado" cssClass="rounded bg-light p-4" action="/empresa/autorizados/edit?eId=${autorizado.empresa.idempresa}" method="post">
 
   <h1>Tipo de cuenta: <strong style="color: darkred;">Autorizado</strong></h1>
-  <h3>Autorizado en la empresa: <span style="color: darkred">${autorizado.empresaByIdempresa.nombre}</span></h3>
+  <h3>Autorizado en la empresa: <span style="color: darkred">${autorizado.empresa.nombre}</span></h3>
 
   <hr>
   <h2>Mis Datos:</h2>
   <form:hidden path="id"></form:hidden>
-  <form:hidden path="empresaByIdempresa"></form:hidden>
   <div>
     <span>NIF (*):</span>
     <form:input path="nif" cssClass="form-control" required="required"></form:input>

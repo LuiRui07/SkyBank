@@ -32,7 +32,7 @@
             <form:input cssStyle="text-align: center; margin-left: 10%; margin-top: 2%" path="cantidad"></form:input> <a style="padding-right: 15%"><%=cuenta.getDivisaByDivisa().getNombre()%></a>
             <form:select cssStyle="float: right; margin-right: 20%; margin-top: 2%;" path="cuentaByIdcuenta2" items="${cuentas}" ></form:select>
         </div>
-        <footer style="margin-left: 10%" class="blockquote-footer">Disponible <%=String.format("%.2f",cuenta.getSaldo())%> <%=cuenta.getDivisaByDivisa().getNombre()%> </footer>
+        <footer style="margin-left: 10%" class="blockquote-footer">Disponible <%=cuenta.getSaldo()%> <%=cuenta.getDivisaByDivisa().getNombre()%> </footer>
 
 
         <form:input placeholder="Concepto" cssStyle="margin-top: 3%; margin-left: 6%; text-align: center" path="concepto" size="30"></form:input>

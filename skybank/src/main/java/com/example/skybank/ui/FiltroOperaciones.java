@@ -1,19 +1,33 @@
 package com.example.skybank.ui;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class FiltroOperaciones {
-    private int tipo;
+    private String tipo;
 
     private Double Max;
 
     private Double Min;
 
+    private int idCuenta;
+
+    public int getIdCuenta() {
+        return idCuenta;
+    }
+
+    public void setIdCuenta(int idCuenta) {
+        this.idCuenta = idCuenta;
+    }
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date desde;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date Hasta;
 
-    public FiltroOperaciones(int tipo, Double max, Double min, Date desde, Date hasta) {
+    public FiltroOperaciones(String tipo, Double max, Double min, Date desde, Date hasta) {
         this.tipo = tipo;
         Max = max;
         Min = min;
@@ -22,14 +36,18 @@ public class FiltroOperaciones {
     }
 
     public FiltroOperaciones() {
-        tipo = 0;
+        tipo = "";
+        Max = null;
+        Min = null;
+        desde = null;
+        Hasta = null;
     }
 
-    public int getTipo(){
+    public String getTipo(){
         return this.tipo;
     }
 
-    public void setTipo(int tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 

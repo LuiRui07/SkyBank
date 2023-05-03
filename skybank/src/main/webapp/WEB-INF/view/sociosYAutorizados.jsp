@@ -8,12 +8,15 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.AutorizadoEntity" %>
 <%@ page import="com.example.skybank.ui.FiltroSociosAutorizados" %>
+<%@ page import="com.example.skybank.dto.Empresa" %>
+<%@ page import="com.example.skybank.dto.Socio" %>
+<%@ page import="com.example.skybank.dto.Autorizado" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-        EmpresaEntity empresa = (EmpresaEntity) request.getAttribute("empresa");
-        List<SocioEntity> sociosEmpresa = (List<SocioEntity>) request.getAttribute("socios");
-        List<AutorizadoEntity> autorizadosEmpresa = (List<AutorizadoEntity>) request.getAttribute("autorizados");
+        Empresa empresa = (Empresa) request.getAttribute("empresa");
+        List<Socio> sociosEmpresa = (List<Socio>) request.getAttribute("socios");
+        List<Autorizado> autorizadosEmpresa = (List<Autorizado>) request.getAttribute("autorizados");
 
 %>
 
@@ -70,7 +73,7 @@
                 <th scope="col"></th>
             </tr>
         <%
-            for (SocioEntity s : sociosEmpresa){
+            for (Socio s : sociosEmpresa){
         %>
             <tr >
                 <td><%=s.getNombre()%> <%=s.getApellido1()%> <%=s.getApellido2() == null ? "" : s.getApellido2()%></td>
@@ -84,7 +87,7 @@
         %>
 
         <%
-            for (AutorizadoEntity a : autorizadosEmpresa){
+            for (Autorizado a : autorizadosEmpresa){
         %>
         <tr>
             <td><%=a.getNombre()%></td>
