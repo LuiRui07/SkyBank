@@ -64,7 +64,7 @@ CREATE TABLE `autorizado` (
   `bloqueado` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_Socio_Empresa1_idx` (`idempresa`) /*!80000 INVISIBLE */,
-  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idEmpresa`)
+  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -125,12 +125,12 @@ CREATE TABLE `conversacion` (
   `idconversacion` int NOT NULL AUTO_INCREMENT,
   `idcliente` int NOT NULL,
   `cerrada` int NOT NULL,
-  `idasistente` int NOT NULL,
+  `idasis` int NOT NULL,
   PRIMARY KEY (`idconversacion`),
   KEY `fk_Asistente_has_Cliente_Cliente1_idx` (`idcliente`),
-  KEY `fk_Conversacion_Asistente1_idx` (`idasistente`),
+  KEY `fk_Conversacion_Asistente1_idx` (`idasis`),
   CONSTRAINT `fk_Asistente_has_Cliente_Cliente1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  CONSTRAINT `fk_Conversacion_Asistente1` FOREIGN KEY (`idasistente`) REFERENCES `asistente` (`idasistente`)
+  CONSTRAINT `fk_Conversacion_Asistente1` FOREIGN KEY (`idasis`) REFERENCES `asistente` (`idasistente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -164,7 +164,7 @@ CREATE TABLE `cuenta` (
   KEY `Divisa_idx` (`divisa`),
   CONSTRAINT `Divisa` FOREIGN KEY (`divisa`) REFERENCES `divisa` (`iddivisa`),
   CONSTRAINT `fk_Cuenta_Cliente1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idEmpresa`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -250,6 +250,8 @@ DROP TABLE IF EXISTS `gestor`;
 CREATE TABLE `gestor` (
   `idgestor` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
+  `DNI` varchar(9) NOT NULL,
+  `password` varchar(45) NOT NULL,
   PRIMARY KEY (`idgestor`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -260,7 +262,7 @@ CREATE TABLE `gestor` (
 
 LOCK TABLES `gestor` WRITE;
 /*!40000 ALTER TABLE `gestor` DISABLE KEYS */;
-INSERT INTO `gestor` VALUES (1,'Manuel');
+INSERT INTO `gestor` VALUES (1,'Rafael','12345678A','1234');
 /*!40000 ALTER TABLE `gestor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,4 +410,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-02 20:44:57
+-- Dump completed on 2023-05-03 19:46:09

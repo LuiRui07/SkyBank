@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.Divisa;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -84,5 +86,14 @@ public class DivisaEntity {
 
     public void setOperacionsByIddivisa(List<OperacionEntity> operacionsByIddivisa) {
         this.operacionsByIddivisa = operacionsByIddivisa;
+    }
+
+    public Divisa toDTO(){
+        Divisa divisa = new Divisa();
+        divisa.setIddivisa(this.iddivisa);
+        divisa.setNombre(this.nombre);
+        divisa.setSimbolo(this.simbolo);
+        divisa.setValor(this.valor);
+        return divisa;
     }
 }

@@ -19,6 +19,7 @@
     <h1>Datos de mi empresa:</h1>
     <form:form method="post" action="/empresa/editarEmpresa" modelAttribute="empresa"  cssStyle="display: flex; flex-direction: column;" cssClass="form-group">
     <form:hidden path="idempresa"></form:hidden>
+    <form:hidden path="verificado"></form:hidden>
     <div>
         <div>
             <span>CIF (*):</span>

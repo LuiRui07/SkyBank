@@ -3,9 +3,8 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
-<%@ page import="com.example.skybank.entity.SocioEntity" %>
-<%@ page import="com.example.skybank.entity.AutorizadoEntity" %>
+<%@ page import="com.example.skybank.dto.Autorizado" %>
+<%@ page import="com.example.skybank.dto.Socio" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -26,7 +25,7 @@
         <div>
             <a class="navbar-brand" href="/empresa/">Bienvenido a SkyBank: <strong>${empresa.getNombre()}</strong> </a>
             <% if (cuenta != null) { %>
-            <p> NIF <%=tipoCuenta.equals("Autorizado") ? " Autorizado: " + ((AutorizadoEntity) cuenta).getNif() : " Socio: " + ((SocioEntity) cuenta).getNif()%></p>
+            <p> NIF <%=tipoCuenta.equals("Autorizado") ? " Autorizado: " + ((Autorizado) cuenta).getNif() : " Socio: " + ((Socio) cuenta).getNif()%></p>
             <% } %>
         </div>
         <ul style="float: right;margin: 0;padding: 0;list-style: none; display: flex; gap: 15px; align-items: center">
@@ -64,7 +63,7 @@
                 if((cuenta != null && tipoCuenta != null && tipoCuenta.equals("Autorizado"))){
             %>
             <li>
-                <a  class="navbar-text" href="/empresa/autorizados/<%=((AutorizadoEntity)cuenta).getId()%>">Mis datos</a>
+                <a  class="navbar-text" href="/empresa/autorizados/<%=((Autorizado)cuenta).getId()%>">Mis datos</a>
             </li>
             <%
                 }
@@ -74,7 +73,7 @@
                 if((cuenta != null && tipoCuenta != null && !tipoCuenta.equals("Autorizado"))){
             %>
             <li>
-                <a  class="navbar-text" href="/empresa/socios/<%=((SocioEntity)cuenta).getId()%>">Mis datos</a>
+                <a  class="navbar-text" href="/empresa/socios/<%=((Socio)cuenta).getId()%>">Mis datos</a>
             </li>
             <%
                 }

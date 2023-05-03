@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.Empresa;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -194,6 +196,26 @@ public class EmpresaEntity {
 
     public void setSociosByIdempresa(List<SocioEntity> sociosByIdempresa) {
         this.sociosByIdempresa = sociosByIdempresa;
+    }
+
+    public Empresa toDTO(){
+        Empresa empresa = new Empresa();
+        empresa.setIdempresa(this.idempresa);
+        empresa.setCif(this.cif);
+        empresa.setNombre(this.nombre);
+        empresa.setEmailcorporativo(this.emailcorporativo);
+        empresa.setPasswordempresa(this.passwordempresa);
+        empresa.setCalle(this.calle);
+        empresa.setNumero(this.numero);
+        empresa.setPlanta(this.planta);
+        empresa.setCiudad(this.ciudad);
+        empresa.setPais(this.pais);
+        empresa.setRegion(this.region);
+        empresa.setCp(this.cp);
+        empresa.setVerificado(this.verificado);
+
+        return empresa;
+
     }
 
 }

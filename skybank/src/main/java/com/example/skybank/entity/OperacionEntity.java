@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.Operacion;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
@@ -131,4 +133,18 @@ public class OperacionEntity {
     public void setDivisaByDivisa(DivisaEntity divisaByDivisa) {
         this.divisaByDivisa = divisaByDivisa;
     }
+
+    public Operacion toDTO(){
+        Operacion op = new Operacion();
+        op.setIdoperacion(idoperación);
+        op.setFecha(fecha);
+        op.setCantidad(cantidad);
+        op.setConcepto(concepto);
+        op.setTipoOperacion(this.getTipoOperacionByTipopperacionid().toDTO());
+        op.setDivisa(this.getDivisaByDivisa().toDTO());
+        op.setCuentaOrigen(this.cuentaByIdcuenta.toDTO());
+        op.setCuentaDestino(this.cuentaByIdcuenta2.toDTO());
+        return op;
+    }
+
 }

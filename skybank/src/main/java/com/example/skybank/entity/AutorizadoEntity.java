@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.Autorizado;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
@@ -207,5 +209,29 @@ public class AutorizadoEntity {
 
     public void setEmpresaByIdempresa(EmpresaEntity empresaByIdempresa) {
         this.empresaByIdempresa = empresaByIdempresa;
+    }
+
+    public Autorizado toDTO(){
+        Autorizado autorizado = new Autorizado();
+        autorizado.setId(id);
+        autorizado.setNif(nif);
+        autorizado.setNombre(nombre);
+        autorizado.setApellido1(apellido1);
+        autorizado.setApellido2(apellido2);
+        autorizado.setFechanacimiento(fechanacimiento);
+        autorizado.setBloqueado(bloqueado);
+        autorizado.setEmail(email);
+        autorizado.setPassword(password);
+        autorizado.setCalle(calle);
+        autorizado.setNumero(numero);
+        autorizado.setPlanta(planta);
+        autorizado.setCiudad(ciudad);
+        autorizado.setPais(pais);
+        autorizado.setRegion(region);
+        autorizado.setCp(cp);
+        autorizado.setEmpresa(empresaByIdempresa.toDTO());
+
+        return autorizado;
+
     }
 }

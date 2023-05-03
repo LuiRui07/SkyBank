@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.TipoOperacion;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -53,4 +55,12 @@ public class TipoOperacionEntity {
     public void setOperacionsById(List<OperacionEntity> operacionsById) {
         this.operacionsById = operacionsById;
     }
+
+    public TipoOperacion toDTO(){
+        TipoOperacion tipoOperacion = new TipoOperacion();
+        tipoOperacion.setId(id);
+        tipoOperacion.setTipo(tipo);
+        return tipoOperacion;
+    }
+
 }

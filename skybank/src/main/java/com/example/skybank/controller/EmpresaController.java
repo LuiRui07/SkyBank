@@ -9,9 +9,15 @@ import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.DivisaRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
+import com.example.skybank.dto.Empresa;
+import com.example.skybank.dto.Socio;
 import com.example.skybank.entity.*;
+import com.example.skybank.service.CuentaService;
+import com.example.skybank.service.DivisaService;
+import com.example.skybank.service.EmpresaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,55 +31,40 @@ import java.util.List;
 public class EmpresaController {
 
     @Autowired
-    private EmpresaRepository empresaRepository;
-
-
-    @Autowired
-    private CuentaRepository cuentaRepository;
+    private EmpresaService empresaService;
 
     @Autowired
-    private DivisaRepository divisaRepository;
+    private DivisaService divisaService;
+
+    @Autowired
+    private CuentaService cuentaService;
 
     @GetMapping("/")
     public String mostrarEmpresa(Model model,HttpSession sesion){
-        EmpresaEntity empresa = (EmpresaEntity) sesion.getAttribute("empresa");
+        Empresa empresa = (Empresa) sesion.getAttribute("empresa");
         if(empresa == null){
             return "redirect:/empresa/login";
         }else{
             model.addAttribute("empresa",empresa);
-            model.addAttribute("divisas", divisaRepository.findAll());
+            model.addAttribute("divisas", divisaService.obtenerTodasLasDivisas());
+            model.addAttribute("cuentasEmpresa", empresaService.obtenerCuentasDeEmpresa(empresa));
+
             return "empresa";
         }
     }
 
     @GetMapping("/register")
     public String registrarEmpresa(Model model){
-        model.addAttribute("empresa" , new EmpresaEntity());
+        model.addAttribute("empresa" , new Empresa());
         return "registerEmpresa";
     }
 
     @PostMapping("/crearEmpresa")
-    public String registrarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa, Model model){
+    public String registrarEmpresa(@ModelAttribute("empresa") Empresa empresa, Model model){
 
-        empresaRepository.save(empresa);
+        Empresa e = empresaService.guardarEmpresa(empresa);
 
-        EmpresaEntity e = empresaRepository.getById(empresa.getIdempresa());
-
-        CuentaEntity c = new CuentaEntity();
-        DivisaEntity d = divisaRepository.getById(1);
-
-        c.setDivisaByDivisa(d);
-        c.setEmpresaByIdempresa(e);
-        cuentaRepository.save(c);
-
-        ArrayList<CuentaEntity> cuentas = new ArrayList<>();
-        cuentas.add(c);
-
-        empresa.setCuentasByIdempresa(cuentas);
-
-        empresaRepository.save(e);
-
-        model.addAttribute("socio",new SocioEntity());
+        model.addAttribute("socio",new Socio());
         model.addAttribute("empresa",e);
         return "crearSocioInicial";
     }
@@ -90,7 +81,8 @@ public class EmpresaController {
 
         String urlTo = "redirect:/empresa/";
 
-        EmpresaEntity empresa = (EmpresaEntity) empresaRepository.autenticar(user,password);
+
+        Empresa empresa = empresaService.autenticarEmpresa(user,password);
 
         if(empresa == null){
             modelo.addAttribute("error", "Empresa no encontrada");
@@ -120,7 +112,7 @@ public class EmpresaController {
 
     @GetMapping("/datos")
     public String mostrarDatos(Model model, HttpSession session){
-        EmpresaEntity empresa = (EmpresaEntity) session.getAttribute("empresa");
+        Empresa empresa = (Empresa) session.getAttribute("empresa");
 
         if(empresa == null){
             return "redirect:/empresa/login";
@@ -131,8 +123,8 @@ public class EmpresaController {
     }
 
     @PostMapping("/editarEmpresa")
-    public String editarEmpresa(@ModelAttribute("empresa") EmpresaEntity empresa, HttpSession sesion){
-        empresaRepository.save(empresa);
+    public String editarEmpresa(@ModelAttribute("empresa") Empresa empresa, HttpSession sesion){
+        empresaService.editarEmpresa(empresa);
         sesion.setAttribute("empresa",empresa);
 
         return "redirect:/empresa/datos";
@@ -140,26 +132,13 @@ public class EmpresaController {
 
     @PostMapping("/cambioDivisa")
     public String realizarCambioDivisa(@RequestParam("id") Integer idCuenta,@RequestParam("divisa") Integer idDivisa, HttpSession sesion){
-        DivisaEntity d = divisaRepository.getById(idDivisa);
-        CuentaEntity c = cuentaRepository.getById(idCuenta);
 
-        Double saldo = c.getSaldo();
-        Double nuevoSaldo;
-        if(c.getDivisaByDivisa().getIddivisa() == 1){
-            nuevoSaldo = Math.ceil((double) saldo * d.getValor());
+        cuentaService.cambiarDivisa(idCuenta,idDivisa);
 
-        }else{
-            nuevoSaldo = Math.ceil((double) saldo / c.getDivisaByDivisa().getValor());
-        }
 
-        c.setSaldo(nuevoSaldo);
-        c.setDivisaByDivisa(d);
-        cuentaRepository.save(c);
-
-        sesion.setAttribute("empresa",c.getEmpresaByIdempresa());
+        sesion.setAttribute("empresa",empresaService.obtenerEmpresaPorIdCuenta(idCuenta));
 
         return "redirect:/empresa/";
     }
-
 
 }
