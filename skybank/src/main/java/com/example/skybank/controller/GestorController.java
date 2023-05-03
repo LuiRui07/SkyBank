@@ -1,8 +1,15 @@
 package com.example.skybank.controller;
 
+/*
+ * @author Rafael Ceballos
+ */
+
 import com.example.skybank.dao.CustomerRepository;
+import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.GestorRepository;
 import com.example.skybank.entity.ClienteEntity;
+import com.example.skybank.entity.CuentaEntity;
+import com.example.skybank.entity.EmpresaEntity;
 import com.example.skybank.entity.GestorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Controller
 @RequestMapping("/gestor")
@@ -21,8 +29,26 @@ public class GestorController {
     @Autowired
     private GestorRepository gestorRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
+    @Autowired
+    private EmpresaRepository empresaRepository;
+
     @GetMapping("/")
-    public String getListadoCuentas(){
+    public String getListadoCuentas(HttpSession session, Model model){
+        GestorEntity gestor = (GestorEntity) session.getAttribute("gestor");
+
+        if (gestor == null){
+            return "redirect:/cliente/login";
+        }else{
+            List<ClienteEntity> listaClientes = customerRepository.findAll();
+            List<EmpresaEntity> listaEmpresas = empresaRepository.findAll();
+
+            model.addAttribute("listaEmpresas",listaEmpresas);
+            model.addAttribute("listaClientes",listaClientes);
+            model.addAttribute("gestor",gestor);
+        }
         return "listadoClientes";
     }
 
