@@ -27,7 +27,7 @@
         for(ClienteEntity c : listaClientes){
     %>
     <tr>
-        <td> <%=c.getNombre()%> </td>
+        <td> <a href="/"><%=c.getNombre()%></a>   </td>
     </tr>
     <% } %>
     <th>EMPRESAS</th>
@@ -35,7 +35,7 @@
         for(EmpresaEntity e : listaEmpresas){
     %>
     <tr>
-        <td> <%=e.getNombre()%> </td>
+        <td> <a><%=e.getNombre()%></a>  </td>
     </tr>
     <% } %>
 </table>
