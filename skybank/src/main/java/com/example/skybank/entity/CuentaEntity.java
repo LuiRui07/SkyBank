@@ -128,6 +128,7 @@ public class CuentaEntity {
         cuenta.setSaldo(this.saldo);
         cuenta.setSospechosa(this.sospechosa);
         cuenta.setActiva(this.activa);
+        cuenta.setDivisa(divisaByDivisa.toDTO());
 
         return cuenta;
     }

@@ -7,12 +7,17 @@
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
+<%@ page import="com.example.skybank.dto.Empresa" %>
+<%@ page import="com.example.skybank.dto.Operacion" %>
+<%@ page import="com.example.skybank.dto.Cuenta" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 
-    EmpresaEntity empresa = (EmpresaEntity) request.getAttribute("empresa");
-    List<List<OperacionEntity>> transferenciasRecibidas = (List<List<OperacionEntity>>) request.getAttribute("transferenciasEnviadas");
-    List<List<OperacionEntity>> transferenciasEnviadas = (List<List<OperacionEntity>>) request.getAttribute("transferenciasRecibidas");
+    Empresa empresa = (Empresa) request.getAttribute("empresa");
+    List<Cuenta> cuentasEmpresa = (List<Cuenta>) request.getAttribute("cuentasEmpresa");
+
+    List<List<Operacion>> transferenciasRecibidas = (List<List<Operacion>>) request.getAttribute("transferenciasEnviadas");
+    List<List<Operacion>> transferenciasEnviadas = (List<List<Operacion>>) request.getAttribute("transferenciasRecibidas");
 
 %>
 
@@ -94,22 +99,22 @@
             </tr>
 
             <%
-                    for(List<OperacionEntity> cuenta : transferenciasRecibidas){
-                        for(OperacionEntity transferencia : cuenta){
+                    for(List<Operacion> cuenta : transferenciasRecibidas){
+                        for(Operacion transferencia : cuenta){
             %>
 
                 <tr>
                     <td>
-                        <%=transferencia.getCuentaByIdcuenta().getIdcuenta()%>
+                        <%=transferencia.getCuentaOrigen().getIdcuenta()%>
                     </td>
                     <td>
-                        <%=transferencia.getCuentaByIdcuenta2().getIdcuenta()%>
+                        <%=transferencia.getCuentaDestino().getIdcuenta()%>
                     </td>
                     <td>
                         <%=transferencia.getConcepto()%>
                     </td>
 
-                    <% String cantidadTransferida = transferencia.getCantidad() + "" + transferencia.getDivisaByDivisa().getSimbolo();
+                    <% String cantidadTransferida = transferencia.getCantidad() + "" + transferencia.getDivisa().getSimbolo();
                         if(cantidadTransferida.contains("-")){
 
                     %>
@@ -158,22 +163,22 @@
             </tr>
 
             <%
-                for(List<OperacionEntity> cuenta : transferenciasEnviadas){
-                    for(OperacionEntity transferencia : cuenta){
+                for(List<Operacion> cuenta : transferenciasEnviadas){
+                    for(Operacion transferencia : cuenta){
             %>
 
             <tr>
                 <td>
-                    <%=transferencia.getCuentaByIdcuenta().getIdcuenta()%>
+                    <%=transferencia.getCuentaOrigen().getIdcuenta()%>
                 </td>
                 <td>
-                    <%=transferencia.getCuentaByIdcuenta2().getIdcuenta()%>
+                    <%=transferencia.getCuentaDestino().getIdcuenta()%>
                 </td>
                 <td>
                     <%=transferencia.getConcepto()%>
                 </td>
 
-                <% String cantidadTransferida = transferencia.getCantidad() + "" + transferencia.getDivisaByDivisa().getSimbolo();
+                <% String cantidadTransferida = transferencia.getCantidad() + "" + transferencia.getDivisa().getSimbolo();
                     if(cantidadTransferida.contains("-")){
 
                 %>
@@ -234,9 +239,9 @@
                                 <label for="idCuenta">Cuenta Origen: </label>
                                 <select name="IdOrigen" id="idCuenta" class="custom-select" required>
                                     <%
-                                        for(CuentaEntity c : empresa.getCuentasByIdempresa()){
+                                        for(Cuenta c : cuentasEmpresa){
                                     %>
-                                    <option  value="<%=c.getIdcuenta()%>"><%=c.getIdcuenta()%> (<%=c.getSaldo()%> <%=c.getDivisaByDivisa().getSimbolo()%>)</option>
+                                    <option  value="<%=c.getIdcuenta()%>"><%=c.getIdcuenta()%> (<%=c.getSaldo()%> <%=c.getDivisa().getSimbolo()%>)</option>
                                     <%
                                         }
                                     %>

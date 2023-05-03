@@ -1,3 +1,7 @@
+/*
+    @autor: José Luis López Ruiz
+ */
+
 package com.example.skybank.dto;
 
 import java.util.Objects;
@@ -7,6 +11,16 @@ public class Cuenta {
     private double saldo;
     private int sospechosa;
     private int activa;
+
+    private Divisa divisa;
+
+    public Divisa getDivisa() {
+        return divisa;
+    }
+
+    public void setDivisa(Divisa divisa) {
+        this.divisa = divisa;
+    }
 
     @Override
     public boolean equals(Object o) {

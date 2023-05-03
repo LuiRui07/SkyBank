@@ -3,6 +3,7 @@
 --%>
 
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
+<%@ page import="com.example.skybank.dto.Empresa" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -15,7 +16,7 @@
 <body>
 
 <%
-  EmpresaEntity empresa = (EmpresaEntity) request.getAttribute("empresa");
+  Empresa empresa = (Empresa) request.getAttribute("empresa");
 %>
 
 <div class="container">
