@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.ChatDTO;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +13,9 @@ public class ConversacionEntity {
     @Id
     @Column(name = "idconversacion", nullable = false)
     private int idconversacion;
+    @Basic
+    @Column(name = "idasis",nullable = false)
+    private int idasistente;
     @Basic
     @Column(name = "cerrada", nullable = false)
     private int cerrada;
@@ -29,6 +34,14 @@ public class ConversacionEntity {
 
     public void setIdconversacion(int idconversacion) {
         this.idconversacion = idconversacion;
+    }
+
+    public int getIdasistente() {
+        return idconversacion;
+    }
+
+    public void setIdasistente(int idasistente) {
+        this.idasistente = idasistente;
     }
 
     public int getCerrada() {
@@ -74,5 +87,15 @@ public class ConversacionEntity {
 
     public void setMensajesByIdconversacion(List<MensajeEntity> mensajesByIdconversacion) {
         this.mensajesByIdconversacion = mensajesByIdconversacion;
+    }
+    public ChatDTO toDTO() {
+        ChatDTO chatDTO = new ChatDTO();
+        chatDTO.setIdConversacion(this.idconversacion);
+        chatDTO.setCerrado(this.cerrada);
+
+        chatDTO.setNombreUsuario(clienteByIdcliente.getNombre() + " " + clienteByIdcliente.getApellido1());
+        chatDTO.setNombreAsistente(clienteByIdcliente.getNombre() + " " + clienteByIdcliente.getApellido1());
+        chatDTO.setDniUsuario(clienteByIdcliente.getDni());
+        return chatDTO;
     }
 }

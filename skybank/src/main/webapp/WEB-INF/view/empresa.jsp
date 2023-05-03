@@ -7,15 +7,16 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Set" %>
 <%@ page import="com.example.skybank.entity.DivisaEntity" %>
+<%@ page import="com.example.skybank.dto.Empresa" %>
+<%@ page import="com.example.skybank.dto.Divisa" %>
+<%@ page import="com.example.skybank.dto.Cuenta" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    EmpresaEntity empresa = (EmpresaEntity) request.getAttribute("empresa");
-    List<DivisaEntity> divisas = (List<DivisaEntity>) request.getAttribute("divisas");
-
-    List<CuentaEntity> cuentas = empresa.getCuentasByIdempresa();
+    List<Divisa> divisas = (List<Divisa>) request.getAttribute("divisas");
+    List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentasEmpresa");
 %>
 
 <html>
@@ -31,22 +32,6 @@
 
 
     <div class="container">
-        <%
-            System.out.println(empresa.getSociosByIdempresa());
-
-            if (empresa.getSociosByIdempresa().size() == 0) {
-
-        %>
-
-        <div class="alert alert-danger container mt-4" role="alert">
-            La empresa no tiene ningun socio.
-            <br>
-            <a href="/empresa/socios/#addSocio" style="color: darkred; font-weight: bold;">[+] Añadir nuevo socio</a>
-        </div>
-
-        <%
-            }
-        %>
         <h1> Datos de tus cuentas: </h1>
 
 
@@ -54,7 +39,7 @@
         <p class="lead"> Tienes un total de <%=cuentas.size()%> cuentas.</p>
 
         <%
-            for(CuentaEntity c : cuentas){
+            for(Cuenta c : cuentas){
 
         %>
         <p>
@@ -68,10 +53,10 @@
             <div class="card card-body d-flex flex-row align-middle" >
                 <div>
                     <p class="display-5">Saldo disponible:</p>
-                    <p class="display-1 p-3 rounded bg-light"><%=c.getSaldo()%> <%=c.getDivisaByDivisa().getSimbolo()%></p>
+                    <p class="display-1 p-3 rounded bg-light"><%=c.getSaldo()%> <%=c.getDivisa().getSimbolo()%></p>
                 </div>
                 <div class="ml-5 mt-5">
-                    <p class="display-4">Divisa: <%=c.getDivisaByDivisa().getNombre()%></p>
+                    <p class="display-4">Divisa: <%=c.getDivisa().getNombre()%></p>
                     <p>Cuenta Sospechosa: <%=c.getSospechosa() == 1 ? "Si" : "No" %></p>
                 </div>
 
@@ -90,12 +75,12 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <h3>Tu divisa actual es: <%=c.getDivisaByDivisa().getNombre()%></h3>
+                                    <h3>Tu divisa actual es: <%=c.getDivisa().getNombre()%></h3>
                                     <span>Divisa a la que vas a cambiar:</span>
                                         <select name="divisa" class="form-bod" class="custom-select" >
                                             <%
-                                                for(DivisaEntity d : divisas){
-                                                    if(d.getIddivisa() != c.getDivisaByDivisa().getIddivisa()){
+                                                for(Divisa d : divisas){
+                                                    if(d.getIddivisa() != c.getDivisa().getIddivisa()){
                                             %>
 
 

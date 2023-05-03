@@ -25,7 +25,7 @@
         Moneda <form:select path="divisaByDivisa" items="${divisas}" itemLabel="nombre"></form:select> <br/>
         <form:hidden path="cuentaByIdcuenta"></form:hidden>
     </div>
-    <footer style="margin-left: -25%; margin-top: -1%;" class="blockquote-footer">Disponible <%=String.format("%.2f",cuenta.getSaldo())%> <%=cuenta.getDivisaByDivisa().getNombre()%> </footer>
+    <footer style="margin-left: -25%; margin-top: -1%;" class="blockquote-footer">Disponible <%=cuenta.getSaldo()%> <%=cuenta.getDivisaByDivisa().getNombre()%> </footer>
         <div class="container">
         <button class="btn btn-primary" style="margin-top: 6%;"> Continuar </button>
     </form:form>

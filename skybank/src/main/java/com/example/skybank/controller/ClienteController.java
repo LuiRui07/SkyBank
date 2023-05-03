@@ -11,16 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cliente")
-public class CustomerController {
+public class ClienteController {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ClienteRepository clienteRepository;
 
     @Autowired
     private CuentaRepository cuentaRepository;
@@ -35,7 +36,7 @@ public class CustomerController {
     private DivisaRepository divisaRepository;
 
     @GetMapping("/")
-    public String getCustomers(Model model, HttpSession session){
+    public String getClientes(Model model, HttpSession session){
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("cliente");
         if (cliente == null){
             return "redirect:/cliente/login";
@@ -62,7 +63,7 @@ public class CustomerController {
     public String logear(@RequestParam("DNI") String user, @RequestParam("password") String contra,
                          HttpSession sesion, Model model){
         String urlTo = "redirect:/cliente/";
-        ClienteEntity cliente = (ClienteEntity) customerRepository.autenticar(user,contra);
+        ClienteEntity cliente = (ClienteEntity) clienteRepository.autenticar(user,contra);
         if(cliente == null){
             model.addAttribute("error", "Usuario no encontrado");
             urlTo = "loginCliente";
@@ -79,8 +80,8 @@ public class CustomerController {
     }
 
     @PostMapping("/crearCliente")
-    public String registarClient (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
-        customerRepository.save(cliente);
+    public String registarCliente (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
+        clienteRepository.save(cliente);
         return "redirect:/cliente/login";
     }
 
@@ -90,30 +91,63 @@ public class CustomerController {
        List<OperacionEntity> operaciones =  operacionRepository.findbyAccount(cuenta.getIdcuenta());
        FiltroOperaciones filtro = new FiltroOperaciones();
        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+       filtro.setIdCuenta(cuenta.getIdcuenta());
+       model.addAttribute("operaciones",operaciones);
        model.addAttribute("tipos",tipos);
        model.addAttribute("filtro",filtro);
-       model.addAttribute("operaciones",operaciones);
        model.addAttribute("cuenta",cuenta);
        return "clienteHistorial";
     }
+    @PostMapping("/filtrar")
+    public String doFiltrar (@ModelAttribute("filtro") FiltroOperaciones filtro,
+                             Model model, HttpSession session) {
+        return this.procesarFiltrado(filtro,model, session);
+    }
 
-    @PostMapping ("/filtrar")
-    public String doFiltrar(Model model, @ModelAttribute("filtro") FiltroOperaciones filtro){
-        List<OperacionEntity> operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo());
-        model.addAttribute("operaciones", operaciones);
+    protected String procesarFiltrado (FiltroOperaciones filtro,
+                                       Model model, HttpSession session) {
+        CuentaEntity cuenta = cuentaRepository.findById(filtro.getIdCuenta()).orElse(null);
+        List<OperacionEntity> operaciones = operacionRepository.findbyAccount(filtro.getIdCuenta());
+        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+        model.addAttribute("tipos",tipos);
+
+        if(filtro.getTipo() != ""){
+            operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo(),filtro.getIdCuenta());
+        }
+        if(filtro.getMax() != null){
+            List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones2);
+        }
+        if (filtro.getMin() != null){
+            List<OperacionEntity> operaciones3 = operacionRepository.filtrarMin(filtro.getMin(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones3);
+        }
+        if (filtro.getDesde() != null){
+            List<OperacionEntity> operaciones4 = operacionRepository.filtrarDesde(filtro.getDesde(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones4);
+        }
+        if (filtro.getHasta() != null){
+            List<OperacionEntity> operaciones5 = operacionRepository.filtrarHasta(filtro.getHasta(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones5);
+        }
+
+        model.addAttribute("operaciones",operaciones);
+        model.addAttribute("filtro",filtro);
+        model.addAttribute("tipos",tipos);
+        model.addAttribute("cuenta",cuenta);
         return "clienteHistorial";
     }
 
     @GetMapping("/editar")
     public String mostrarDatos (Model model, @RequestParam("id") int idCliente){
-        ClienteEntity cliente = (ClienteEntity) customerRepository.findById(idCliente).orElse(null);
+        ClienteEntity cliente = (ClienteEntity) clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente",cliente);
         return "clienteEditar";
     }
 
     @PostMapping("/editar")
     public String doEditar (Model model, @ModelAttribute("cliente") ClienteEntity clienteForm, HttpSession sesion){
-        ClienteEntity cliente = customerRepository.findById(clienteForm.getIdcliente()).orElse(null);
+        ClienteEntity cliente = clienteRepository.findById(clienteForm.getIdcliente()).orElse(null);
         cliente.setNombre(clienteForm.getNombre());
         cliente.setApellido1(clienteForm.getApellido1());
         cliente.setApellido2(clienteForm.getApellido2());
@@ -128,7 +162,7 @@ public class CustomerController {
         cliente.setRegion(clienteForm.getRegion());
         cliente.setPais(clienteForm.getPais());
 
-        customerRepository.save(cliente);
+        clienteRepository.save(cliente);
         sesion.setAttribute("cliente",cliente);
         return "redirect:/cliente/";
     }
@@ -149,7 +183,7 @@ public class CustomerController {
 
     @PostMapping("/doTransf")
     public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacionForm){
-        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() == 0.00){
+        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() <= 0.00){
             return "clienteError";
         } else {
             TipoOperacionEntity tipo = tipoOperacionRepository.findById(1).orElse(null);
@@ -193,7 +227,7 @@ public class CustomerController {
     @GetMapping("/valorCambio")
     public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") OperacionEntity operacion){
         model.addAttribute("operacion", operacion);
-        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() == 0.00){
+        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() <= 0.00){
             return "clienteError";
         } else {
             return "clienteCambioValor";
@@ -218,9 +252,14 @@ public class CustomerController {
 
         quitar.quitarSaldo(operacionForm.getCantidad());
         cuentaRepository.save(quitar);
-        Double saldoNuevo = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
+        Double saldoN = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
+        DecimalFormat formato = new DecimalFormat("#.##");
+        String aproximado = formato.format(saldoN);
+        aproximado = aproximado.replace(',', '.');
+        Double saldoNuevo = Double.parseDouble(aproximado);
         if ( anadir != null){
             anadir.anadirSaldo(saldoNuevo);
+            op.setCuentaByIdcuenta2(anadir);
             cuentaRepository.save(anadir);
         } else {
             CuentaEntity cuentaNueva = new CuentaEntity();
