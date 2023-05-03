@@ -91,17 +91,50 @@ public class CustomerController {
        List<OperacionEntity> operaciones =  operacionRepository.findbyAccount(cuenta.getIdcuenta());
        FiltroOperaciones filtro = new FiltroOperaciones();
        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+       filtro.setIdCuenta(cuenta.getIdcuenta());
+       model.addAttribute("operaciones",operaciones);
        model.addAttribute("tipos",tipos);
        model.addAttribute("filtro",filtro);
-       model.addAttribute("operaciones",operaciones);
        model.addAttribute("cuenta",cuenta);
        return "clienteHistorial";
     }
+    @PostMapping("/filtrar")
+    public String doFiltrar (@ModelAttribute("filtro") FiltroOperaciones filtro,
+                             Model model, HttpSession session) {
+        return this.procesarFiltrado(filtro,model, session);
+    }
 
-    @PostMapping ("/filtrar")
-    public String doFiltrar(Model model, @ModelAttribute("filtro") FiltroOperaciones filtro){
-        List<OperacionEntity> operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo());
-        model.addAttribute("operaciones", operaciones);
+    protected String procesarFiltrado (FiltroOperaciones filtro,
+                                       Model model, HttpSession session) {
+        CuentaEntity cuenta = cuentaRepository.findById(filtro.getIdCuenta()).orElse(null);
+        List<OperacionEntity> operaciones = operacionRepository.findbyAccount(filtro.getIdCuenta());
+        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+        model.addAttribute("tipos",tipos);
+
+        if(filtro.getTipo() != ""){
+            operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo(),filtro.getIdCuenta());
+        }
+        if(filtro.getMax() != null){
+            List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones2);
+        }
+        if (filtro.getMin() != null){
+            List<OperacionEntity> operaciones3 = operacionRepository.filtrarMin(filtro.getMin(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones3);
+        }
+        if (filtro.getDesde() != null){
+            List<OperacionEntity> operaciones4 = operacionRepository.filtrarDesde(filtro.getDesde(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones4);
+        }
+        if (filtro.getHasta() != null){
+            List<OperacionEntity> operaciones5 = operacionRepository.filtrarHasta(filtro.getHasta(), filtro.getIdCuenta());
+            operaciones.retainAll(operaciones5);
+        }
+
+        model.addAttribute("operaciones",operaciones);
+        model.addAttribute("filtro",filtro);
+        model.addAttribute("tipos",tipos);
+        model.addAttribute("cuenta",cuenta);
         return "clienteHistorial";
     }
 

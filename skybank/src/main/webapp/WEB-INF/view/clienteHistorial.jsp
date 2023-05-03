@@ -29,11 +29,16 @@
         <a class="display-3">Historial de Operaciones:</a>
     </div>
     <form:form modelAttribute="filtro" method="post" action="/cliente/filtrar">
-        <%--<form:input path="desde" cssStyle="margin-right: 10%" type="date"  size="15"></form:input>
-        <form:input path="hasta" cssStyle="margin-right: 10%" type="date"  size="15"></form:input>--%>
-        <form:select path="tipo" items="${tipos}" itemLabel="tipo" cssStyle="margin-right: 10%"></form:select>
-        <form:input path="min" placeholder="Minimo"></form:input>
-        <form:input path="max" placeholder="Maximo"></form:input>
+        <form:hidden path="idCuenta"></form:hidden>
+        Desde:<form:input type="date" path="desde"  size="15"></form:input>
+        Hasta: <form:input type="date" path="hasta" cssStyle="margin-right: 3%" size="15"></form:input>
+        <form:select multiple="false" path="tipo" cssStyle="margin-right: 2%;">
+            <form:option value="" label="Todos" />
+            <form:options items="${tipos}" itemLabel="tipo" itemValue="tipo"/>
+        </form:select>
+
+        <form:input path="min" placeholder="Minima cantidad"></form:input>
+        <form:input path="max" placeholder="Maxima cantidad"></form:input>
         <button style="margin-right: 1%" class="btn btn-info">Filtrar</button>
     </form:form>
 
