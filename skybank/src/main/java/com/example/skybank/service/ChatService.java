@@ -20,8 +20,8 @@ public class ChatService {
     @Autowired
     ChatRepository chatRepository;
 
-    @Autowired
-    UsuarioRepository usuarioRepository;
+    //@Autowired
+    //UsuarioRepository usuarioRepository;
 
     @Autowired
     MensajeRepository mensajeRepository;
@@ -44,7 +44,7 @@ public class ChatService {
         mensajeEntity.setConversacionByIdconversacion(chat);
         mensajeEntity.setTexto(mensaje);
         ClienteEntity cliente;
-        cliente = this.usuarioRepository.findById(idUsuario).orElse(null);
+        //cliente = this.usuarioRepository.findById(idUsuario).orElse(null);
         mensajeEntity.setFecha(new Date(System.currentTimeMillis()));
         mensajeEntity.setHora(new Timestamp(System.currentTimeMillis()));
         this.mensajeRepository.save(mensajeEntity);

@@ -22,6 +22,14 @@ public class CuentaEntity {
     @Basic
     @Column(name = "activa", nullable = false)
     private int activa;
+
+    @Basic
+    @Column(name = "solicitado", nullable = false)
+    private int solicitado;
+
+    @Basic
+    @Column(name = "aceptado", nullable = false)
+    private int aceptado;
     @ManyToOne
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente")
     private ClienteEntity clienteByIdcliente;
@@ -66,6 +74,22 @@ public class CuentaEntity {
 
     public void setActiva(int activa) {
         this.activa = activa;
+    }
+
+    public int getSolicitado() {
+        return solicitado;
+    }
+
+    public void setSolicitado(int solicitado) {
+        this.solicitado = solicitado;
+    }
+
+    public int getAceptado() {
+        return aceptado;
+    }
+
+    public void setAceptado(int aceptado) {
+        this.aceptado = aceptado;
     }
 
     @Override

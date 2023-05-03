@@ -22,23 +22,40 @@
 <body>
 <h1>LISTADO CLIENTES</h1>
 <table border="1">
-    <th>CLIENTES</th>
-    <%
-        for(ClienteEntity c : listaClientes){
-    %>
+    <thead>
+        <td>CLIENTES</td>
+        <td>EMPRESAS</td>
+    </thead>
     <tr>
-        <td> <a href="/"><%=c.getNombre()%></a>   </td>
+        <td>
+            <table>
+                <%
+                    for(ClienteEntity c : listaClientes){
+                %>
+                <tr>
+                    <td> <a href="/gestor/gestionarCliente?postId="<%=c.getIdcliente()%>"><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></a></td>
+
+                </tr>
+                <% } %>
+            </table>
+        </td>
+        <td>
+            <table>
+                <%
+                    for(EmpresaEntity e : listaEmpresas){
+                %>
+                <tr>
+                    <td> <a href="/gestor/gestionarEmpresa?postId="<%=e.getIdempresa()%>"><%=e.getNombre()%></a>  </td>
+                </tr>
+                <% } %>
+            </table>
+        </td>
+
     </tr>
-    <% } %>
-    <th>EMPRESAS</th>
-    <%
-        for(EmpresaEntity e : listaEmpresas){
-    %>
-    <tr>
-        <td> <a><%=e.getNombre()%></a>  </td>
-    </tr>
-    <% } %>
 </table>
 
+<a class="btn btn-primary" href="solicitudes"> Ver Solicitudes </a>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>

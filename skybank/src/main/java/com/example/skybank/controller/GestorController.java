@@ -4,6 +4,7 @@ package com.example.skybank.controller;
  * @author Rafael Ceballos
  */
 
+import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.CustomerRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.GestorRepository;
@@ -34,6 +35,9 @@ public class GestorController {
 
     @Autowired
     private EmpresaRepository empresaRepository;
+
+    @Autowired
+    private CuentaRepository cuentaRepository;
 
     @GetMapping("/")
     public String getListadoCuentas(HttpSession session, Model model){
@@ -77,4 +81,40 @@ public class GestorController {
         sesion.invalidate();
         return "redirect:/gestor/login";
     }
+
+    @GetMapping("/solicitudes")
+    public String mostrarSolicitudes(Model model, HttpSession session){
+        GestorEntity gestor = (GestorEntity) session.getAttribute("gestor");
+
+        if (gestor == null){
+            return "redirect:/cliente/login";
+        }else{
+            List<CuentaEntity> solicitadas = cuentaRepository.findSolicitadas();
+            model.addAttribute("solicitadas",solicitadas);
+        }
+
+        return "solicitudes";
+    }
+
+    @GetMapping("/aceptar")
+    public String aceptarCuenta(Model model, @RequestParam("postId") int idCuenta){
+
+        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+
+        cuenta.setAceptado(1);
+        cuenta.setSolicitado(0);
+        cuentaRepository.save(cuenta);
+
+        return "redirect:/gestor/solicitudes";
+    }
+
+    @GetMapping("/rechazar")
+    public String rechazarCuenta(Model model, @RequestParam("postId") int idCuenta){
+        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+
+
+        return "redirect:/gestor/solicitudes";
+    }
+
+    @GetMapping("/")
 }
