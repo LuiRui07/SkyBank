@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 import javax.servlet.http.HttpSession;
@@ -79,7 +80,7 @@ public class CustomerController {
     }
 
     @PostMapping("/crearCliente")
-    public String registarClient (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
+    public String registarCliente (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
         customerRepository.save(cliente);
         return "redirect:/cliente/login";
     }
@@ -149,7 +150,7 @@ public class CustomerController {
 
     @PostMapping("/doTransf")
     public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacionForm){
-        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() == 0.00){
+        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() <= 0.00){
             return "clienteError";
         } else {
             TipoOperacionEntity tipo = tipoOperacionRepository.findById(1).orElse(null);
@@ -193,7 +194,7 @@ public class CustomerController {
     @GetMapping("/valorCambio")
     public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") OperacionEntity operacion){
         model.addAttribute("operacion", operacion);
-        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() == 0.00){
+        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() <= 0.00){
             return "clienteError";
         } else {
             return "clienteCambioValor";
@@ -218,7 +219,10 @@ public class CustomerController {
 
         quitar.quitarSaldo(operacionForm.getCantidad());
         cuentaRepository.save(quitar);
-        Double saldoNuevo = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
+        Double saldoN = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
+        DecimalFormat formato = new DecimalFormat("#.##");
+        String aproximado = formato.format(saldoN);
+        Double saldoNuevo = Double.parseDouble(aproximado);
         if ( anadir != null){
             anadir.anadirSaldo(saldoNuevo);
             cuentaRepository.save(anadir);

@@ -4,6 +4,7 @@
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="com.example.skybank.entity.DivisaEntity" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% OperacionEntity operacion = (OperacionEntity) request.getAttribute("operacion");%>
@@ -17,10 +18,12 @@
 
 </head>
 <body>
-<% Double cambio = (operacion.getCantidad()/operacion.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacion.getDivisaByDivisa().getValor();%>
+<% Double cambioD = (operacion.getCantidad()/operacion.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacion.getDivisaByDivisa().getValor();
+    DecimalFormat formato = new DecimalFormat("#.##");
+    String cambio = formato.format(cambioD);%>
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;>
     <h1 style="text-align: center> Valor estimado: </h1> <br/>
-    <a style="text-align: center"><%=String.format("%.2f",cambio)%> <%=operacion.getDivisaByDivisa().getSimbolo()%>
+    <a style="text-align: center"><%=cambio%> <%=operacion.getDivisaByDivisa().getSimbolo()%>
         <% if (operacion.getDivisaByDivisa().getSimbolo().contains("$")){ %>
         (<%=operacion.getDivisaByDivisa().getNombre()%>)
         <%} %>

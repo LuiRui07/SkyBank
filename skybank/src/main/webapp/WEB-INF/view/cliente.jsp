@@ -27,9 +27,9 @@
     <script>
         function CerrarSesion() {
         var result = confirm("¿Seguro que quieres cerrar sesión?");
-        if (result == true) {
+            if (result == true) {
             window.location = "/cliente/logout"
-        }
+            }
         }
     </script>
 
@@ -43,7 +43,7 @@
     <% for (CuentaEntity cuenta : cuentas) { %>
         <%if (!((cuenta.getSaldo() - 0.01) < 0 )){%>
         <div class="card" style="margin-bottom: 3%">
-            <p class="display-3 p-3 rounded bg-light"><%=String.format("%.2f",cuenta.getSaldo())    %>     <%=cuenta.getDivisaByDivisa().getSimbolo()%>
+            <p class="display-3 p-3 rounded bg-light"><%=cuenta.getSaldo()%>     <%=cuenta.getDivisaByDivisa().getSimbolo()%>
             <%if (cuenta.getDivisaByDivisa().getSimbolo().contains("$")){ %>
             <a class="h5 text-muted"> <%=cuenta.getDivisaByDivisa().getNombre()%></a>
             <%}%>

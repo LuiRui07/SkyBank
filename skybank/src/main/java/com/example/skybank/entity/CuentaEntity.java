@@ -1,6 +1,7 @@
 package com.example.skybank.entity;
 
 import javax.persistence.*;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 
@@ -121,7 +122,16 @@ public class CuentaEntity {
 
     public void anadirSaldo(Double s){
         this.saldo += s;
+        DecimalFormat formato = new DecimalFormat("#.##");
+        formato.format(this.saldo);
+        String aprox = formato.format(this.saldo);
+        this.saldo = Double.parseDouble(aprox);
     }
 
-    public void quitarSaldo(Double s){ this.saldo -= s;}
+    public void quitarSaldo(Double s){
+        this.saldo -= s;
+        DecimalFormat formato = new DecimalFormat("#.##");
+        String aprox = formato.format(this.saldo);
+        this.saldo = Double.parseDouble(aprox);
+    }
 }
