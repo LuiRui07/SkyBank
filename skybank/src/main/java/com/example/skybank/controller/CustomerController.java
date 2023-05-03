@@ -255,9 +255,11 @@ public class CustomerController {
         Double saldoN = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
         DecimalFormat formato = new DecimalFormat("#.##");
         String aproximado = formato.format(saldoN);
+        aproximado = aproximado.replace(',', '.');
         Double saldoNuevo = Double.parseDouble(aproximado);
         if ( anadir != null){
             anadir.anadirSaldo(saldoNuevo);
+            op.setCuentaByIdcuenta2(anadir);
             cuentaRepository.save(anadir);
         } else {
             CuentaEntity cuentaNueva = new CuentaEntity();

@@ -125,6 +125,7 @@ public class CuentaEntity {
         DecimalFormat formato = new DecimalFormat("#.##");
         formato.format(this.saldo);
         String aprox = formato.format(this.saldo);
+        aprox = aprox.replace(',', '.');
         this.saldo = Double.parseDouble(aprox);
     }
 
@@ -132,6 +133,7 @@ public class CuentaEntity {
         this.saldo -= s;
         DecimalFormat formato = new DecimalFormat("#.##");
         String aprox = formato.format(this.saldo);
+        aprox = aprox.replace(',', '.');
         this.saldo = Double.parseDouble(aprox);
     }
 }
