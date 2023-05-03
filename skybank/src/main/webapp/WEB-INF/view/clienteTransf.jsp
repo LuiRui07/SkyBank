@@ -18,11 +18,11 @@
 <body>
 
     <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
-        <h3 class="display-3">Realizar Transferencia</h3>
+        <h3 class="display-3">Transferencia</h3>
     </div>
         <div>
-            <a class="display-4" style="margin-left: 5%"> Elegir cantidad </a>
-            <a class="display-4" style="margin-left: 35%">Elegir Destinatario </a>
+            <a class="display-4" style="margin-left: 6%"> Elegir cantidad </a>
+            <a class="display-4" style="float:right; margin-right: 6%">Elegir Destinatario </a>
         </div>
 
         <form:form modelAttribute="operacion" method="post" action="/cliente/doTransf">
