@@ -1,5 +1,6 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.Cuenta;
 import javax.persistence.*;
 import java.text.DecimalFormat;
 import java.util.List;
@@ -135,5 +136,16 @@ public class CuentaEntity {
         String aprox = formato.format(this.saldo);
         aprox = aprox.replace(',', '.');
         this.saldo = Double.parseDouble(aprox);
+    }
+
+    public Cuenta toDTO(){
+        Cuenta cuenta = new Cuenta();
+        cuenta.setIdcuenta(this.idcuenta);
+        cuenta.setSaldo(this.saldo);
+        cuenta.setSospechosa(this.sospechosa);
+        cuenta.setActiva(this.activa);
+        cuenta.setDivisa(divisaByDivisa.toDTO());
+
+        return cuenta;
     }
 }
