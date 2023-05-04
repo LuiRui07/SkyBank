@@ -28,16 +28,26 @@
     </thead>
     <%
         if(!clientesObsoletos.isEmpty()){
-        for (ClienteEntity c : clientesObsoletos){ %>
+        for (ClienteEntity c : clientesObsoletos){
+            if(c.getBloqueado() == 0){
+    %>
     <tr>
         <td>Cliente</td>
         <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
         <td><%=c.getDni()%></td>
         <td><a href="bloquearCliente?postId=<%=c.getIdcliente()%>">BLOQUEAR</a></td>
     </tr>
-    <% }}
+    <% } else { %>
+    <tr>
+        <td>Cliente</td>
+        <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
+        <td><%=c.getDni()%></td>
+        <td><a href="desbloquearCliente?postId=<%=c.getIdcliente()%>">DESBLOQUEAR</a></td>
+    </tr>
+    <% }}}
     if(!empresasObsoletas.isEmpty()){
         for(EmpresaEntity e : empresasObsoletas){
+            if(e.getBloqueada() == 0){
     %>
     <tr>
         <td>Empresa</td>
@@ -45,7 +55,15 @@
         <td><%=e.getCif()%></td>
         <td><a href="bloquearEmpresa?postId=<%=e.getIdempresa()%>">BLOQUEAR</a></td>
     </tr>
-    <% }} %>
+    <% } else { %>
+    <tr>
+        <td>Empresa</td>
+        <td><%=e.getNombre()%></td>
+        <td><%=e.getCif()%></td>
+        <td><a href="desbloquearEmpresa?postId=<%=e.getIdempresa()%>">DESBLOQUEAR</a></td>
+    </tr>
+    <%}}} %>
 </table>
+<a href="/gestor/">VOLVER</a>
 </body>
 </html>

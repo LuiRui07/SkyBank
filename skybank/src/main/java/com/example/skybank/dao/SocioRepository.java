@@ -20,4 +20,7 @@ public interface SocioRepository extends JpaRepository<SocioEntity,Integer> {
 
     @Query("SELECT s from SocioEntity s where s.empresaByIdempresa.idempresa = :id")
     List<SocioEntity> todosDeUnaEmpresa(@Param("id") Integer id);
+
+    @Query("select s from SocioEntity s where s.solicituddesbloqueo = 1")
+    List<SocioEntity> getSolicitudDesbloqueo();
 }

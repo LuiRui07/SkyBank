@@ -21,5 +21,4 @@ public interface EmpresaRepository extends JpaRepository<EmpresaEntity,Integer> 
     @Query("select e from EmpresaEntity e where e.verificado = 0")
     List<EmpresaEntity> getPendientesVerificar();
 
-
 }

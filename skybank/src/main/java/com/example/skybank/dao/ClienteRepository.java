@@ -18,4 +18,8 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>
 
     @Query("select c from ClienteEntity c where c.verificado = 0")
     List<ClienteEntity> getPendientesDeVerificar();
+
+    @Query("select c from ClienteEntity c where c.solicitudactivacion = 1")
+    List<ClienteEntity> getSolicitudesReactivacion();
+
 }
