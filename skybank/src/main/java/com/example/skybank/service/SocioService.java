@@ -60,6 +60,7 @@ public class SocioService {
         socioEnt.setPais(socio.getPais());
         socioEnt.setRegion(socio.getRegion());
         socioEnt.setCp(socio.getCp());
+        socioEnt.setSolicituddesbloqueo(0);
 
         socioEnt.setEmpresaByIdempresa(e);
 
@@ -87,6 +88,7 @@ public class SocioService {
             s.setEmail(persona.getEmail());
             s.setPais(persona.getPais());
             s.setPassword(persona.getPassword());
+            s.setSolicituddesbloqueo(0);
             socioRepository.save(s);
 
             empresa.getSociosByIdempresa().add(s);
@@ -105,6 +107,7 @@ public class SocioService {
             a.setEmail(persona.getEmail());
             a.setPais(persona.getPais());
             a.setPassword(persona.getPassword());
+            a.setSolicituddesbloqueo(0);
 
             autorizadoRepository.save(a);
 
@@ -155,6 +158,7 @@ public class SocioService {
         s.setEmail(socio.getEmail());
         s.setPais(socio.getPais());
         s.setPassword(socio.getPassword());
+        s.setSolicituddesbloqueo(socio.getSolicituddesbloqueo());
         socioRepository.save(s);
 
     }
@@ -163,5 +167,9 @@ public class SocioService {
         this.socioRepository.deleteById(idSocio);
     }
 
-
+    public void solicitarDesbloqueo(Integer idSocio){
+        SocioEntity a = socioRepository.getById(idSocio);
+        a.setSolicituddesbloqueo(1);
+        socioRepository.save(a);
+    }
 }

@@ -58,9 +58,22 @@ public class AutorizadoEntity {
     @Basic
     @Column(name = "bloqueado", nullable = false)
     private int bloqueado;
+
+    @Basic
+    @Column(name = "solicituddesbloqueo", nullable = false)
+    private int solicituddesbloqueo;
+
     @ManyToOne
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa", nullable = false)
     private EmpresaEntity empresaByIdempresa;
+
+    public int getSolicituddesbloqueo() {
+        return solicituddesbloqueo;
+    }
+
+    public void setSolicituddesbloqueo(int solicituddesbloqueo) {
+        this.solicituddesbloqueo = solicituddesbloqueo;
+    }
 
     public int getId() {
         return id;
@@ -230,6 +243,7 @@ public class AutorizadoEntity {
         autorizado.setRegion(region);
         autorizado.setCp(cp);
         autorizado.setEmpresa(empresaByIdempresa.toDTO());
+        autorizado.setSolicituddesbloqueo(solicituddesbloqueo);
 
         return autorizado;
 

@@ -207,9 +207,9 @@ public class SocioController {
     public String solicitarDesbloqueo(@RequestParam("id") Integer idCuenta,@RequestParam("tipo") String tipoCuenta){
 
         if(tipoCuenta.equals("Socio")){
-
+            socioService.solicitarDesbloqueo(idCuenta);
         }else if(tipoCuenta.equals("Autorizado")){
-
+            autorizadoService.solicitarDesbloqueo(idCuenta);
         }
         return "solicitarDesbloqueo";
 

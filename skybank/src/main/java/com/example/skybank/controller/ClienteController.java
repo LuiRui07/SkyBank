@@ -18,10 +18,10 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cliente")
-public class CustomerController {
+public class ClienteController {
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ClienteRepository clienteRepository;
 
     @Autowired
     private CuentaRepository cuentaRepository;
@@ -36,7 +36,7 @@ public class CustomerController {
     private DivisaRepository divisaRepository;
 
     @GetMapping("/")
-    public String getCustomers(Model model, HttpSession session){
+    public String getClientes(Model model, HttpSession session){
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("cliente");
         if (cliente == null){
             return "redirect:/cliente/login";
@@ -63,7 +63,7 @@ public class CustomerController {
     public String logear(@RequestParam("DNI") String user, @RequestParam("password") String contra,
                          HttpSession sesion, Model model){
         String urlTo = "redirect:/cliente/";
-        ClienteEntity cliente = (ClienteEntity) customerRepository.autenticar(user,contra);
+        ClienteEntity cliente = (ClienteEntity) clienteRepository.autenticar(user,contra);
         if(cliente == null){
             model.addAttribute("error", "Usuario no encontrado");
             urlTo = "loginCliente";
@@ -81,7 +81,7 @@ public class CustomerController {
 
     @PostMapping("/crearCliente")
     public String registarCliente (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
-        customerRepository.save(cliente);
+        clienteRepository.save(cliente);
         return "redirect:/cliente/login";
     }
 
@@ -140,14 +140,14 @@ public class CustomerController {
 
     @GetMapping("/editar")
     public String mostrarDatos (Model model, @RequestParam("id") int idCliente){
-        ClienteEntity cliente = (ClienteEntity) customerRepository.findById(idCliente).orElse(null);
+        ClienteEntity cliente = (ClienteEntity) clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente",cliente);
         return "clienteEditar";
     }
 
     @PostMapping("/editar")
     public String doEditar (Model model, @ModelAttribute("cliente") ClienteEntity clienteForm, HttpSession sesion){
-        ClienteEntity cliente = customerRepository.findById(clienteForm.getIdcliente()).orElse(null);
+        ClienteEntity cliente = clienteRepository.findById(clienteForm.getIdcliente()).orElse(null);
         cliente.setNombre(clienteForm.getNombre());
         cliente.setApellido1(clienteForm.getApellido1());
         cliente.setApellido2(clienteForm.getApellido2());
@@ -162,7 +162,7 @@ public class CustomerController {
         cliente.setRegion(clienteForm.getRegion());
         cliente.setPais(clienteForm.getPais());
 
-        customerRepository.save(cliente);
+        clienteRepository.save(cliente);
         sesion.setAttribute("cliente",cliente);
         return "redirect:/cliente/";
     }
