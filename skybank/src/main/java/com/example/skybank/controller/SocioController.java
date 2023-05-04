@@ -162,21 +162,26 @@ public class SocioController {
 
             }
 
-            if((tipoCuenta.equals("Autorizado") && ((Autorizado) cuenta).getBloqueado() == 1) || (tipoCuenta.equals("Socio") && ((Socio) cuenta).getBloqueado() == 1)) {
-                modelo.addAttribute("error", String.format("Esta cuenta ha sido bloqueada, solicite el desbloqueo entrando en el siguiente enlace: <br><a href='/empresa/socios/solicitarDesbloqueo?%s'>Solicitar desbloqueo.</a>",cuenta.getClass() == Autorizado.class ? "id=" + ((Autorizado) cuenta).getId()  + "&tipo=Autorizado" : "id=" + ((Socio) cuenta).getId() + "&tipo=Socio"));
+            if(empresa.getBloqueada() == 1){
+                modelo.addAttribute("error", "Esta empresa ha sido bloqueada por un gestor.");
                 urlTo = "loginSocioAutorizado";
-            }else{
-                if(empresa.getVerificado() == 1){
-                    sesion.setAttribute("empresa",empresa);
-                    sesion.setAttribute("cuenta", cuenta);
-                    sesion.setAttribute("tipoCuenta",tipoCuenta);
-
-                }else{
-                    modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+            }else {
+                if((tipoCuenta.equals("Autorizado") && ((Autorizado) cuenta).getBloqueado() == 1) || (tipoCuenta.equals("Socio") && ((Socio) cuenta).getBloqueado() == 1)) {
+                    modelo.addAttribute("error", String.format("Esta cuenta ha sido bloqueada, solicite el desbloqueo entrando en el siguiente enlace: <br><a href='/empresa/socios/solicitarDesbloqueo?%s'>Solicitar desbloqueo.</a>",cuenta.getClass() == Autorizado.class ? "id=" + ((Autorizado) cuenta).getId()  + "&tipo=Autorizado" : "id=" + ((Socio) cuenta).getId() + "&tipo=Socio"));
                     urlTo = "loginSocioAutorizado";
+                }else{
+
+                    if(empresa.getVerificado() == 1){
+                        sesion.setAttribute("empresa",empresa);
+                        sesion.setAttribute("cuenta", cuenta);
+                        sesion.setAttribute("tipoCuenta",tipoCuenta);
+
+                    }else{
+                        modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
+                        urlTo = "loginSocioAutorizado";
+                    }
                 }
             }
-
         }
 
         return urlTo;

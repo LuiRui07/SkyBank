@@ -22,6 +22,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,11 +90,14 @@ public class EmpresaController {
             urlTo = "loginEmpresa";
         }else{
 
-            if(empresa.getVerificado() == 1){
-                sesion.setAttribute("empresa",empresa);
-            }else{
+            if(empresa.getBloqueada() == 1){
+                modelo.addAttribute("error", "Esta empresa ha sido bloqueada por un gestor.");
+                urlTo = "loginEmpresa";
+            }else if(empresa.getBloqueada() == 0 && empresa.getVerificado() == 0){
                 modelo.addAttribute("error", "Empresa no verificada por un Gestor, espere a que sea verificada por favor.");
                 urlTo = "loginEmpresa";
+            }else if(empresa.getVerificado() == 1) {
+                sesion.setAttribute("empresa", empresa);
             }
 
         }

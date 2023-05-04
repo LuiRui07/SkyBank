@@ -21,6 +21,16 @@ public class Empresa {
     private int cp;
     private int verificado;
 
+    private int bloqueada;
+
+    public int getBloqueada() {
+        return bloqueada;
+    }
+
+    public void setBloqueada(int bloquada) {
+        this.bloqueada = bloquada;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

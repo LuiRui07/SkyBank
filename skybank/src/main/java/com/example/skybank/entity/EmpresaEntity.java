@@ -50,6 +50,19 @@ public class EmpresaEntity {
     @Basic
     @Column(name = "verificado", nullable = false)
     private int verificado;
+
+    @Basic
+    @Column(name = "bloqueada", nullable = false)
+    private int bloqueada;
+
+    public int getBloqueada() {
+        return bloqueada;
+    }
+
+    public void setBloqueada(int bloqueada) {
+        this.bloqueada = bloqueada;
+    }
+
     @OneToMany(mappedBy = "empresaByIdempresa")
     private List<AutorizadoEntity> autorizadosByIdempresa;
     @OneToMany(mappedBy = "empresaByIdempresa")
@@ -213,6 +226,7 @@ public class EmpresaEntity {
         empresa.setRegion(this.region);
         empresa.setCp(this.cp);
         empresa.setVerificado(this.verificado);
+        empresa.setBloqueada(this.bloqueada);
 
         return empresa;
 
