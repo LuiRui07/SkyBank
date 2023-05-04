@@ -1,7 +1,10 @@
 package com.example.skybank.controller;
 
+import com.example.skybank.dao.AsistenteRepository;
 import com.example.skybank.dto.ChatDTO;
+import com.example.skybank.dto.Cliente;
 import com.example.skybank.dto.MensajeDTO;
+import com.example.skybank.entity.AsistenteEntity;
 import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.service.AsistenteService;
 import com.example.skybank.service.MensajeService;
@@ -23,6 +26,9 @@ public class AsistenteController {
     AsistenteService asistenteService;
 
     @Autowired
+    AsistenteRepository asistenteRepository;
+
+    @Autowired
     ChatService chatService;
 
     @Autowired
@@ -32,12 +38,34 @@ public class AsistenteController {
 
         return "asistente/paginaPrincipal";
     }
+
+    @GetMapping("/login")
+    public String loginC(){
+        return "asistenteLogin";
+    }
+
+    @PostMapping("/login")
+    public String logear(@RequestParam("DNI") String user, @RequestParam("password") String contra,
+                         HttpSession sesion, Model model){
+        String urlTo = "redirect:/cliente/";
+        AsistenteEntity asistente = this.asistenteRepository.autenticar(user,contra);
+        if(asistente == null){
+            model.addAttribute("error", "Cliente no encontrado");
+            urlTo = "clienteLogin";
+        }else{
+                sesion.setAttribute("asistente",asistente);
+            }
+            return urlTo;
+    }
+
+
     @GetMapping("/chats")
-    public String mostrarChat(HttpSession session, Model model, @RequestParam("cliente") ClienteEntity cliente){
-        List<ChatDTO> chats = this.chatService.listaChatsDeAsistente(cliente.getIdcliente());
+    public String mostrarChat(HttpSession session, Model model){
+        AsistenteEntity asistente = (AsistenteEntity) session.getAttribute("asistente");
+        List<ChatDTO> chats = this.chatService.listaChatsDeAsistente(asistente.getIdasistente());
         model.addAttribute("chats",chats);
         model.addAttribute("filtro",new FiltroAsistente());
-        return "chats";
+        return "asistente/chats";
     }
 
     @GetMapping("/chat")

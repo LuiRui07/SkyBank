@@ -15,6 +15,8 @@
     <a class="btn btn-primary" href="cliente/login"> Cliente </a>
     <br/>
     <a class="btn btn-primary" href="gestor/login"> Gestor </a>
+    <br/>
+    <a class="btn btn-primary" href="asistente/login"> Asistente </a>
 </div>
 
 
