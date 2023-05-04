@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: skybank
+-- Host: 127.0.0.1    Database: skybank
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -65,7 +65,7 @@ CREATE TABLE `autorizado` (
   `solicituddesbloqueo` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_Socio_Empresa1_idx` (`idempresa`) /*!80000 INVISIBLE */,
-  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idEmpresa`)
+  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -101,8 +101,7 @@ CREATE TABLE `cliente` (
   `planta` int DEFAULT NULL,
   `region` varchar(100) DEFAULT NULL,
   `cp` int NOT NULL,
-  `solicitud` int NOT NULL DEFAULT '0',
-  `aceptado` int NOT NULL DEFAULT '0',
+  `verificado` int NOT NULL DEFAULT '0',
   `bloqueado` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idcliente`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
@@ -114,7 +113,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2001-10-18','Marcos Zapata','lui@gmail','lui',2,'Mala','España',1,'Andaluz',29017,0,0,0),(2,'11445544K','Manuel','Rodriguez','Meh','2002-10-31','Santo Domingo','manu@gmail','manu',2,'Teruel','España',1,'Aragon',11111,0,0,0);
+INSERT INTO `cliente` VALUES (1,'11223344J','Luis','Ruiz','Nuñez','2001-10-18','Marcos Zapata','lui@gmail','lui',2,'Mala','España',1,'Andaluz',29017,1,0),(2,'11445544K','Manuel','Rodriguez','Meh','2002-10-31','Santo Domingo','manu@gmail','manu',2,'Teruel','España',1,'Aragon',11111,0,0);
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -168,7 +167,7 @@ CREATE TABLE `cuenta` (
   KEY `Divisa_idx` (`divisa`),
   CONSTRAINT `Divisa` FOREIGN KEY (`divisa`) REFERENCES `divisa` (`iddivisa`),
   CONSTRAINT `fk_Cuenta_Cliente1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idEmpresa`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `fk_Cuenta_Empresa1` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -229,6 +228,7 @@ CREATE TABLE `empresa` (
   `region` varchar(100) DEFAULT NULL,
   `cp` int NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
+  `bloqueada` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idempresa`),
   UNIQUE KEY `CIF_UNIQUE` (`cif`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
@@ -240,7 +240,7 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1),(9,'123432341','Apple','apple@apple.us','manzana','poopo',3,32,'NY','US','',43412,1);
+INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1,0),(9,'123432341','Apple','apple@apple.us','manzana','poopo',3,32,'NY','US','',43412,1,0);
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -383,6 +383,29 @@ INSERT INTO `socio` VALUES (1,2,'1324324','paco','merte',NULL,'2000-03-12',0,'pa
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tipo-operacion`
+--
+
+DROP TABLE IF EXISTS `tipo-operacion`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tipo-operacion` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '1. Transferencia',
+  `Tipo` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tipo-operacion`
+--
+
+LOCK TABLES `tipo-operacion` WRITE;
+/*!40000 ALTER TABLE `tipo-operacion` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipo-operacion` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tipooperacion`
 --
 
@@ -415,4 +438,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-04  0:40:01
+-- Dump completed on 2023-05-04 13:34:23
