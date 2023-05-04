@@ -5,12 +5,14 @@
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
+<%@ page import="com.example.skybank.dto.Cliente" %>
+<%@ page import="com.example.skybank.dto.Cuenta" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
-    List<CuentaEntity> cuentas = (List<CuentaEntity>) request.getAttribute("cuentas");
+    Cliente cliente = (Cliente) request.getAttribute("cliente");
+    List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");
 %>
 
 <html>
@@ -40,12 +42,12 @@
         </div>
     </p>
 
-    <% for (CuentaEntity cuenta : cuentas) { %>
+    <% for (Cuenta cuenta : cuentas) { %>
         <%if (!((cuenta.getSaldo() - 0.01) < 0 )){%>
         <div class="card" style="margin-bottom: 3%">
-            <p class="display-3 p-3 rounded bg-light"><%=cuenta.getSaldo()%>     <%=cuenta.getDivisaByDivisa().getSimbolo()%>
-            <%if (cuenta.getDivisaByDivisa().getSimbolo().contains("$")){ %>
-            <a class="h5 text-muted"> <%=cuenta.getDivisaByDivisa().getNombre()%></a>
+            <p class="display-3 p-3 rounded bg-light"><%=cuenta.getSaldo()%>     <%=cuenta.getDivisa().getSimbolo()%>
+            <%if (cuenta.getDivisa().getSimbolo().contains("$")){ %>
+            <a class="h5 text-muted"> <%=cuenta.getDivisa().getNombre()%></a>
             <%}%>
             <a class="text-muted" style="float: right;font-size: 20%"> IBAN: <%=cuenta.getIdcuenta()%></a>
             </p>

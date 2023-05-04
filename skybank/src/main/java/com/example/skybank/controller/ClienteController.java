@@ -4,7 +4,8 @@
 
 package com.example.skybank.controller;
 import com.example.skybank.dao.*;
-import com.example.skybank.entity.*;
+import com.example.skybank.dto.*;
+import com.example.skybank.service.*;
 import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,15 +36,26 @@ public class ClienteController {
     @Autowired
     private DivisaRepository divisaRepository;
 
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private CuentaService cuentaService;
+
+    @Autowired
+    private OperacionService operacionService;
+
+    @Autowired
+    private DivisaService divisaService;
+
     @GetMapping("/")
     public String getClientes(Model model, HttpSession session){
-        ClienteEntity cliente = (ClienteEntity) session.getAttribute("cliente");
+        Cliente cliente = (Cliente) session.getAttribute("cliente");
         if (cliente == null){
             return "redirect:/cliente/login";
         } else {
             model.addAttribute("cliente",cliente);
-            List<CuentaEntity> cuentas = cuentaRepository.findByCliente(cliente.getIdcliente());
-            model.addAttribute("cuentas",cuentas);
+            model.addAttribute("cuentas", clienteService.obtenerCuentasDeCliente(cliente));
             return "cliente";
         }
     }
@@ -63,7 +75,7 @@ public class ClienteController {
     public String logear(@RequestParam("DNI") String user, @RequestParam("password") String contra,
                          HttpSession sesion, Model model){
         String urlTo = "redirect:/cliente/";
-        ClienteEntity cliente = (ClienteEntity) clienteRepository.autenticar(user,contra);
+        Cliente cliente = clienteService.autenticar(user,contra);
         if(cliente == null){
             model.addAttribute("error", "Usuario no encontrado");
             urlTo = "loginCliente";
@@ -75,22 +87,23 @@ public class ClienteController {
 
     @GetMapping("/register")
     public String registrarCliente (Model model){
-        model.addAttribute("clienteNuevo",new ClienteEntity());
+        model.addAttribute("clienteNuevo",new Cliente());
         return "clienteRegister";
     }
 
     @PostMapping("/crearCliente")
-    public String registarCliente (@ModelAttribute("clienteNuevo") ClienteEntity cliente){
-        clienteRepository.save(cliente);
+    public String registarCliente (@ModelAttribute("clienteNuevo") Cliente cliente, Model model){
+        Cliente c = clienteService.guardarCliente(cliente);
+        model.addAttribute("cliente",c);
         return "redirect:/cliente/login";
     }
 
     @GetMapping("/historial")
     public String verHistorial (Model model, @RequestParam("id") int id){
-       CuentaEntity cuenta = cuentaRepository.findById(id).orElse(null);
-       List<OperacionEntity> operaciones =  operacionRepository.findbyAccount(cuenta.getIdcuenta());
+       Cuenta cuenta = cuentaService.obtenerCuentaPorId(id);
+       List<Operacion> operaciones = operacionService.obtenerOperacaionesCliente(cuenta);
        FiltroOperaciones filtro = new FiltroOperaciones();
-       List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+       List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
        filtro.setIdCuenta(cuenta.getIdcuenta());
        model.addAttribute("operaciones",operaciones);
        model.addAttribute("tipos",tipos);
@@ -98,6 +111,7 @@ public class ClienteController {
        model.addAttribute("cuenta",cuenta);
        return "clienteHistorial";
     }
+
     @PostMapping("/filtrar")
     public String doFiltrar (@ModelAttribute("filtro") FiltroOperaciones filtro,
                              Model model, HttpSession session) {
@@ -106,28 +120,28 @@ public class ClienteController {
 
     protected String procesarFiltrado (FiltroOperaciones filtro,
                                        Model model, HttpSession session) {
-        CuentaEntity cuenta = cuentaRepository.findById(filtro.getIdCuenta()).orElse(null);
-        List<OperacionEntity> operaciones = operacionRepository.findbyAccount(filtro.getIdCuenta());
-        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+        Cuenta cuenta = cuentaService.obtenerCuentaPorId(filtro.getIdCuenta());
+        List<Operacion> operaciones = operacionService.obtenerOperacaionesCliente(cuenta);
+        List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
         model.addAttribute("tipos",tipos);
 
         if(filtro.getTipo() != ""){
-            operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo(),filtro.getIdCuenta());
+            operaciones = operacionService.filtrarPorTipo(filtro,filtro.getIdCuenta());
         }
         if(filtro.getMax() != null){
-            List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(), filtro.getIdCuenta());
+            List<Operacion> operaciones2 = operacionService.filtrarMax(filtro,filtro.getIdCuenta());
             operaciones.retainAll(operaciones2);
         }
         if (filtro.getMin() != null){
-            List<OperacionEntity> operaciones3 = operacionRepository.filtrarMin(filtro.getMin(), filtro.getIdCuenta());
+            List<Operacion> operaciones3 = operacionService.filtrarMin(filtro,filtro.getIdCuenta());
             operaciones.retainAll(operaciones3);
         }
         if (filtro.getDesde() != null){
-            List<OperacionEntity> operaciones4 = operacionRepository.filtrarDesde(filtro.getDesde(), filtro.getIdCuenta());
+            List<Operacion> operaciones4 = operacionService.filtrarDesde(filtro,filtro.getIdCuenta());
             operaciones.retainAll(operaciones4);
         }
         if (filtro.getHasta() != null){
-            List<OperacionEntity> operaciones5 = operacionRepository.filtrarHasta(filtro.getHasta(), filtro.getIdCuenta());
+            List<Operacion> operaciones5 = operacionService.filtrarHasta(filtro,filtro.getIdCuenta());
             operaciones.retainAll(operaciones5);
         }
 
@@ -140,41 +154,25 @@ public class ClienteController {
 
     @GetMapping("/editar")
     public String mostrarDatos (Model model, @RequestParam("id") int idCliente){
-        ClienteEntity cliente = (ClienteEntity) clienteRepository.findById(idCliente).orElse(null);
+        Cliente cliente = clienteService.getClienteById(idCliente);
         model.addAttribute("cliente",cliente);
         return "clienteEditar";
     }
 
     @PostMapping("/editar")
-    public String doEditar (Model model, @ModelAttribute("cliente") ClienteEntity clienteForm, HttpSession sesion){
-        ClienteEntity cliente = clienteRepository.findById(clienteForm.getIdcliente()).orElse(null);
-        cliente.setNombre(clienteForm.getNombre());
-        cliente.setApellido1(clienteForm.getApellido1());
-        cliente.setApellido2(clienteForm.getApellido2());
-        cliente.setDni(clienteForm.getDni());
-        cliente.setNacimiento(clienteForm.getNacimiento());
-        cliente.setEmail(clienteForm.getEmail());
-        cliente.setCalle(clienteForm.getCalle());
-        cliente.setNumero(clienteForm.getNumero());
-        cliente.setPlanta(clienteForm.getPlanta());
-        cliente.setCp(clienteForm.getCp());
-        cliente.setCiudad(clienteForm.getCiudad());
-        cliente.setRegion(clienteForm.getRegion());
-        cliente.setPais(clienteForm.getPais());
-
-        clienteRepository.save(cliente);
-        sesion.setAttribute("cliente",cliente);
+    public String doEditar (Model model, @ModelAttribute("cliente") Cliente clienteForm, HttpSession sesion){
+        clienteService.editarCliente(clienteForm);
+        sesion.setAttribute("cliente",clienteForm);
         return "redirect:/cliente/";
     }
 
     @GetMapping("/trans")
     public String doTrans (Model model, @RequestParam("id") int idCuenta){
-        CuentaEntity cuentaOrigen = cuentaRepository.findById(idCuenta).orElse(null);
-        List<CuentaEntity> cuentas = cuentaRepository.findByDivisa(cuentaOrigen.getDivisaByDivisa().getIddivisa());
-        cuentas.remove(cuentaOrigen);
-        OperacionEntity operacion = new OperacionEntity();
-        operacion.setCuentaByIdcuenta(cuentaOrigen);
-        operacion.setDivisaByDivisa(cuentaOrigen.getDivisaByDivisa());
+        Cuenta cuentaOrigen = cuentaService.obtenerCuentaPorId(idCuenta);
+        List<Cuenta> cuentas = cuentaService.getCuentasByDivisa(cuentaOrigen.getDivisa(), cuentaOrigen.getIdcuenta());
+        Operacion operacion = new Operacion();
+        operacion.setCuentaOrigen(cuentaOrigen);
+        operacion.setDivisa(cuentaOrigen.getDivisa());
         model.addAttribute("cuentaOrigen",cuentaOrigen);
         model.addAttribute("cuentas",cuentas);
         model.addAttribute("operacion",operacion);
@@ -182,109 +180,67 @@ public class ClienteController {
     }
 
     @PostMapping("/doTransf")
-    public String realizarTrans (Model model, @ModelAttribute("operacion") OperacionEntity operacionForm){
-        if (operacionForm.getCantidad() > operacionForm.getCuentaByIdcuenta().getSaldo() || operacionForm.getCantidad() <= 0.00){
+    public String realizarTrans (Model model, @ModelAttribute("operacion") Operacion operacionForm){
+        Cuenta cuenta = cuentaService.obtenerCuentaPorId(operacionForm.getCuentaOrigen().getIdcuenta());
+        Double saldo = cuenta.getSaldo();
+
+        if (operacionForm.getCantidad() > saldo || operacionForm.getCantidad() <= 0.00){
+            model.addAttribute("tipo", 1);
+            model.addAttribute("cuenta",cuenta);
             return "clienteError";
         } else {
-            TipoOperacionEntity tipo = tipoOperacionRepository.findById(1).orElse(null);
-            OperacionEntity op = new OperacionEntity();
-            op.setCantidad(operacionForm.getCantidad());
-            op.setConcepto(null);
-            op.setCuentaByIdcuenta(operacionForm.getCuentaByIdcuenta());
-            op.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
-            op.setCuentaByIdcuenta2(operacionForm.getCuentaByIdcuenta2());
-            op.setTipoOperacionByTipopperacionid(tipo);
-            op.setConcepto(operacionForm.getConcepto());
-            op.setFecha(new Date());
-
-            ClienteEntity cliente = operacionForm.getCuentaByIdcuenta2().getClienteByIdcliente();
-            CuentaEntity quitar = operacionForm.getCuentaByIdcuenta();
-            CuentaEntity anadir = operacionForm.getCuentaByIdcuenta2();
-
-            quitar.quitarSaldo(operacionForm.getCantidad());
-            cuentaRepository.save(quitar);
-            anadir.anadirSaldo(operacionForm.getCantidad());
-            cuentaRepository.save(anadir);
-                operacionRepository.save(op);
+            operacionService.realizarTransferenciaCliente(operacionForm);
             return "redirect:/cliente/";
         }
-
     }
 
     @GetMapping("/cambio")
     public String mostrarCambio(Model model, @RequestParam("id") int idCuenta){
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
-        OperacionEntity operacion = new OperacionEntity();
-        operacion.setCuentaByIdcuenta(cuenta);
-        List<DivisaEntity> divisas = (List<DivisaEntity>) divisaRepository.findAll();
-        divisas.remove(cuenta.getDivisaByDivisa());
-        model.addAttribute("cuentaCambio",cuenta);
+        Cuenta cuenta = cuentaService.obtenerCuentaPorId(idCuenta);
+        Operacion operacion = new Operacion();
+        operacion.setCuentaOrigen(cuenta);
+
+        List<Divisa> divisas = divisaService.obtenerTodasLasDivisasMenos(cuenta.getDivisa());
+
+        model.addAttribute("cuenta",cuenta);
         model.addAttribute("operacionCambio",operacion);
         model.addAttribute("divisas",divisas);
         return "clienteCambio";
     }
 
     @GetMapping("/valorCambio")
-    public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") OperacionEntity operacion){
-        model.addAttribute("operacion", operacion);
-        if (operacion.getCantidad() > operacion.getCuentaByIdcuenta().getSaldo() || operacion.getCantidad() <= 0.00){
+    public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") Operacion operacionForm) {
+
+        Double saldo = cuentaService.obtenerCuentaPorId(operacionForm.getCuentaOrigen().getIdcuenta()).getSaldo();
+
+        Cuenta cuenta = cuentaService.obtenerCuentaPorId(operacionForm.getCuentaOrigen().getIdcuenta());
+
+
+        model.addAttribute("cuenta",cuenta);
+
+        if (operacionForm.getCantidad() > saldo || operacionForm.getCantidad() <= 0.00){
+            model.addAttribute("tipo",2);
             return "clienteError";
         } else {
-            return "clienteCambioValor";
+
+        model.addAttribute("operacion", operacionForm);
+        Divisa divisaOp = divisaService.obtenerDivisa(operacionForm.getDivisa().getIddivisa());
+        Divisa divisaCu = divisaService.obtenerDivisa(cuenta.getDivisa().getIddivisa());
+
+
+
+        model.addAttribute("divisa",divisaOp);
+        model.addAttribute("divisaC", divisaCu);
+
+
+        return "clienteCambioValor";
         }
     }
 
     @PostMapping("/doDivisa")
-    public String doDivisa (Model model, @ModelAttribute("operacionCambio") OperacionEntity operacionForm){
-        TipoOperacionEntity tipo = tipoOperacionRepository.findById(2).orElse(null);
-        OperacionEntity op = new OperacionEntity();
-        op.setCantidad(operacionForm.getCantidad());
-        op.setConcepto(null);
-        op.setCuentaByIdcuenta(operacionForm.getCuentaByIdcuenta());
-        op.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
-        op.setTipoOperacionByTipopperacionid(tipo);
-        op.setFecha(new Date());
-
-
-        ClienteEntity cliente = operacionForm.getCuentaByIdcuenta().getClienteByIdcliente();
-        CuentaEntity quitar = operacionForm.getCuentaByIdcuenta();
-        CuentaEntity anadir = tieneDivisa(cliente,operacionForm.getDivisaByDivisa());
-
-        quitar.quitarSaldo(operacionForm.getCantidad());
-        cuentaRepository.save(quitar);
-        Double saldoN = (operacionForm.getCantidad()/operacionForm.getCuentaByIdcuenta().getDivisaByDivisa().getValor() ) * operacionForm.getDivisaByDivisa().getValor();
-        DecimalFormat formato = new DecimalFormat("#.##");
-        String aproximado = formato.format(saldoN);
-        aproximado = aproximado.replace(',', '.');
-        Double saldoNuevo = Double.parseDouble(aproximado);
-        if ( anadir != null){
-            anadir.anadirSaldo(saldoNuevo);
-            op.setCuentaByIdcuenta2(anadir);
-            cuentaRepository.save(anadir);
-        } else {
-            CuentaEntity cuentaNueva = new CuentaEntity();
-            cuentaNueva.setClienteByIdcliente(cliente);
-            cuentaNueva.setSaldo(saldoNuevo);
-            cuentaNueva.setDivisaByDivisa(operacionForm.getDivisaByDivisa());
-            cuentaNueva.setSospechosa(0);
-            cuentaNueva.setActiva(1);
-            op.setCuentaByIdcuenta2(cuentaNueva);
-            cuentaRepository.save(cuentaNueva);
-        }
-        operacionRepository.save(op);
-            return "redirect:/cliente/";
-    }
-
-    private CuentaEntity tieneDivisa (ClienteEntity cliente, DivisaEntity divisa){
-        CuentaEntity res = null;
-        List<CuentaEntity> cuentas = cliente.getCuentasByIdcliente();
-        for (CuentaEntity cuenta : cuentas){
-            if (cuenta.getDivisaByDivisa() == divisa){
-                    res = cuenta;
-            }
-        }
-
-        return res;
+    public String doDivisa (Model model, @ModelAttribute("operacionCambio") Operacion operacionForm){
+        operacionService.realizarCambioDivisa(operacionForm);
+        return "redirect:/cliente/";
     }
 
 }

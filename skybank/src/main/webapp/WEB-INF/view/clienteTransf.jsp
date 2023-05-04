@@ -6,9 +6,11 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
+<%@ page import="com.example.skybank.dto.Cuenta" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% List<CuentaEntity> cuentas = (List<CuentaEntity>) request.getAttribute("cuentas");%>
-<% CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuentaOrigen");%>
+
+<% List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");%>
+<% Cuenta cuenta = (Cuenta) request.getAttribute("cuentaOrigen");%>
 <html>
 <head>
     <title>Realizar Transferencia</title>
@@ -26,13 +28,13 @@
         </div>
 
         <form:form modelAttribute="operacion" method="post" action="/cliente/doTransf">
-        <form:hidden path="cuentaByIdcuenta"></form:hidden>
-        <form:hidden path="divisaByDivisa"></form:hidden>
+        <form:hidden path="cuentaOrigen.idcuenta"></form:hidden>
+        <form:hidden path="divisa.iddivisa"></form:hidden>
         <div>
-            <form:input cssStyle="text-align: center; margin-left: 10%; margin-top: 2%" path="cantidad"></form:input> <a style="padding-right: 15%"><%=cuenta.getDivisaByDivisa().getNombre()%></a>
-            <form:select cssStyle="float: right; margin-right: 20%; margin-top: 2%;" path="cuentaByIdcuenta2" items="${cuentas}" ></form:select>
+            <form:input cssStyle="text-align: center; margin-left: 10%; margin-top: 2%" path="cantidad"></form:input> <a style="padding-right: 15%"><%=cuenta.getDivisa().getNombre()%></a>
+            <form:select cssStyle="float: right; margin-right: 20%; margin-top: 2%;" path="cuentaDestino.idcuenta" items="${cuentas}" itemValue="idcuenta" itemLabel="idcuenta" ></form:select>
         </div>
-        <footer style="margin-left: 10%" class="blockquote-footer">Disponible <%=cuenta.getSaldo()%> <%=cuenta.getDivisaByDivisa().getNombre()%> </footer>
+        <footer style="margin-left: 10%" class="blockquote-footer">Disponible <%=cuenta.getSaldo()%> <%=cuenta.getDivisa().getNombre()%> </footer>
 
 
         <form:input placeholder="Concepto" cssStyle="margin-top: 3%; margin-left: 6%; text-align: center" path="concepto" size="30"></form:input>

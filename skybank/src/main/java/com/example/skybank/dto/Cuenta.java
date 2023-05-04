@@ -11,7 +11,6 @@ public class Cuenta {
     private double saldo;
     private int sospechosa;
     private int activa;
-
     private Divisa divisa;
 
     public Divisa getDivisa() {

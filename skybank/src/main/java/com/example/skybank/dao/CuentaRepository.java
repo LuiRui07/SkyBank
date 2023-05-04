@@ -16,8 +16,8 @@ import java.util.List;
 @Repository
 public interface CuentaRepository extends JpaRepository<CuentaEntity,Integer> {
 
-    @Query("select c from CuentaEntity c where c.divisaByDivisa.iddivisa = :divisa")
-    List<CuentaEntity> findByDivisa(@Param("divisa")int divisa);
+    @Query("select c from CuentaEntity c where (c.divisaByDivisa.iddivisa = :divisa and c.idcuenta <>:cuenta)")
+    List<CuentaEntity> findByDivisa(@Param("divisa")int divisa,@Param("cuenta") int cuenta);
 
     @Query("select c from CuentaEntity c where c.clienteByIdcliente.idcliente = :cliente")
     List<CuentaEntity> findByCliente(@Param("cliente")int cliente);

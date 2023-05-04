@@ -10,10 +10,12 @@
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.example.skybank.ui.FiltroOperaciones" %>
+<%@ page import="com.example.skybank.dto.Operacion" %>
+<%@ page import="com.example.skybank.dto.Cuenta" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operaciones");%>
-<% CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");%>
+<% List<Operacion> operaciones = (List<Operacion>) request.getAttribute("operaciones");%>
+<% Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");%>
 <% FiltroOperaciones filtro = (FiltroOperaciones) request.getAttribute("filtro");%>
 <html>
 <head>
@@ -44,31 +46,31 @@
     </form:form>
 
     <%if (operaciones != null) { %>
-    <%for (OperacionEntity operacion : operaciones){ %>
+    <%for (Operacion operacion : operaciones){ %>
     <div class="card" style="margin-bottom: 3%">
-        <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacionByTipopperacionid().getTipo()%></h2>
+        <h2 style="margin-top: 1%;" class="card-title"><%=operacion.getTipoOperacion().getTipo()%></h2>
         <% SimpleDateFormat dt1 = new SimpleDateFormat("dd/MM/YYYY");%>
         <a datatype="date"> Fecha: <%=dt1.format(operacion.getFecha())%></a>
-        <% if (operacion.getTipoOperacionByTipopperacionid().getId() == 1){ %>
-        <% if (operacion.getCuentaByIdcuenta().getIdcuenta() == cuenta.getIdcuenta()){ %>
+        <% if (operacion.getTipoOperacion().getId() == 1){ %>
+        <% if (operacion.getCuentaOrigen().getIdcuenta() == cuenta.getIdcuenta()){ %>
             <div>
-                Cantidad: <a style="color: crimson"> -<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+                Cantidad: <a style="color: crimson"> -<%=operacion.getCantidad()%> <%=operacion.getDivisa().getSimbolo()%></a>
             </div>
-            <a> Transferido a la cuenta: <%=operacion.getCuentaByIdcuenta2().getIdcuenta()%> </a>
+            <a> Transferido a la cuenta: <%=operacion.getCuentaDestino().getIdcuenta()%> </a>
         <%} else {%>
             <div>
-            Cantidad: <a style="color: forestgreen"> +<%=operacion.getCantidad()%> <%=operacion.getDivisaByDivisa().getSimbolo()%></a>
+            Cantidad: <a style="color: forestgreen"> +<%=operacion.getCantidad()%> <%=operacion.getDivisa().getSimbolo()%></a>
             </div>
-            <a> Recibido de la cuenta:  <%=operacion.getCuentaByIdcuenta().getIdcuenta()%> </a>
+            <a> Recibido de la cuenta:  <%=operacion.getCuentaOrigen().getIdcuenta()%> </a>
         <%}%> <%} else {%>
-            <%if (operacion.getDivisaByDivisa() == cuenta.getDivisaByDivisa()){ %>
+            <%if (operacion.getDivisa() == cuenta.getDivisa()){ %>
             <div>
-            Cantidad: <a style="color: forestgreen"> +<%=operacion.getCantidad()%> <%=cuenta.getDivisaByDivisa().getSimbolo()%></a>
+            Cantidad: <a style="color: forestgreen"> +<%=operacion.getCantidad()%> <%=cuenta.getDivisa().getSimbolo()%></a>
             </div>
             <%} else { %>
-            Cantidad: <a style="color: crimson"> -<%=operacion.getCantidad()%> <%=cuenta.getDivisaByDivisa().getSimbolo()%></a>
+            Cantidad: <a style="color: crimson"> -<%=operacion.getCantidad()%> <%=cuenta.getDivisa().getSimbolo()%></a>
             <%}%>
-            <a> Cambio de Divisas a : <%= operacion.getDivisaByDivisa().getNombre()%></a>
+            <a> Cambio de Divisas a : <%= operacion.getDivisa().getNombre()%></a>
         <% }%>
         <br/>
 

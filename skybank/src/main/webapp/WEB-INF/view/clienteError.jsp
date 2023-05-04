@@ -1,7 +1,10 @@
-<%--
+<%@ page import="com.example.skybank.dto.Operacion" %>
+<%@ page import="com.example.skybank.dto.Cuenta" %><%--
   @author: Luis Ruiz Nuñez
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% int Tipo = (Integer) request.getAttribute("tipo");%>
+<% Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");%>
 <html>
 <head>
     <title>Error</title>
@@ -11,7 +14,12 @@
 <body>
 <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
     <h1 class="display-1"> Error: No hay Saldo Suficiente o es Incorrecto </h1>
-    <a href="/cliente/" style="color: white" class="btn btn-danger"> Aceptar</a>
+    <%if (Tipo == 1){ %>
+    <a href="/cliente/trans?id=<%=cuenta.getIdcuenta()%>" style="color: white" class="btn btn-danger"> Aceptar</a>
+    <%} else { %>
+        <a href="/cliente/cambio?id=<%=cuenta.getIdcuenta()%>" style="color: white" class="btn btn-danger"> Aceptar</a>
+    <%}%>
+
 </div>
 
 

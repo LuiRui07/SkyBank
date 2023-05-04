@@ -4,7 +4,6 @@
 package com.example.skybank.controller;
 
 
-import com.example.skybank.entity.ClienteEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

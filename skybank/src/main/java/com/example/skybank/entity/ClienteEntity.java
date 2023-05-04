@@ -1,5 +1,7 @@
 package com.example.skybank.entity;
 
+import com.example.skybank.dto.Cliente;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -231,5 +233,26 @@ public class ClienteEntity {
 
     public void setCuentasByIdcliente(List<CuentaEntity> cuentasByIdcliente) {
         this.cuentasByIdcliente = cuentasByIdcliente;
+    }
+
+    public Cliente toDTO(){
+        Cliente cliente = new Cliente();
+        cliente.setIdcliente(this.idcliente);
+        cliente.setDni(this.dni);
+        cliente.setNombre(this.nombre);
+        cliente.setApellido1(this.apellido1);
+        cliente.setApellido2(this.apellido2);
+        cliente.setNacimiento(this.nacimiento);
+        cliente.setCalle(this.calle);
+        cliente.setEmail(this.email);
+        cliente.setPassword(this.password);
+        cliente.setNumero(this.numero);
+        cliente.setCiudad(this.ciudad);
+        cliente.setPais(this.pais);
+        cliente.setPlanta(this.planta);
+        cliente.setRegion(this.region);
+        cliente.setCp(this.cp);
+
+        return cliente;
     }
 }

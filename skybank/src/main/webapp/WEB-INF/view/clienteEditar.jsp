@@ -4,8 +4,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="Email" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
+<%@ page import="com.example.skybank.dto.Cliente" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");%>
+<% Cliente cliente = (Cliente) request.getAttribute("cliente");%>
 <html>
 <head>
     <title>Modificar Datos</title>
