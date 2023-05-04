@@ -22,6 +22,4 @@ public interface CuentaRepository extends JpaRepository<CuentaEntity,Integer> {
     @Query("select c from CuentaEntity c where c.clienteByIdcliente.idcliente = :cliente")
     List<CuentaEntity> findByCliente(@Param("cliente")int cliente);
 
-    @Query ("select c from CuentaEntity c where c.solicitado = 1")
-    List<CuentaEntity> findSolicitadas();
 }

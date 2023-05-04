@@ -18,4 +18,8 @@ public interface AutorizadoRepository extends JpaRepository<AutorizadoEntity, In
 
     @Query("SELECT a from AutorizadoEntity a where a.empresaByIdempresa.idempresa = :id")
     List<AutorizadoEntity> todosDeUnaEmpresa(@Param("id") Integer id);
+
+    //Rafael Ceballos
+    @Query ("select a from AutorizadoEntity a where a.solicituddesbloqueo = 1")
+    List<AutorizadoEntity> solicitudesDesbloqueo();
 }

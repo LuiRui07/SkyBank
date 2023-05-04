@@ -1,6 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.CuentaEntity" %><%--
+<%@ page import="com.example.skybank.entity.CuentaEntity" %>
+<%@ page import="com.example.skybank.entity.ClienteEntity" %><%--
   Created by IntelliJ IDEA.
   User: Rafael Ceballos
   Date: 03/05/2023
@@ -10,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    List<CuentaEntity> solicitadas = (List<CuentaEntity>) request.getAttribute("solicitadas");
+    List<ClienteEntity> solicitadas = (List<ClienteEntity>) request.getAttribute("solicitadas");
 %>
 <html>
 <head>
@@ -24,23 +25,14 @@
         <td>NOMBRE</td>
         <td>DNI/CIF</td>
         <td>ACTIVAR</td>
-        <td>DESACTIVAR</td>
         </thead>
-        <% for (CuentaEntity c:solicitadas){ %>
+        <% for (ClienteEntity c:solicitadas){ %>
         <tr>
-            <% if(c.getClienteByIdcliente() == null && c.getEmpresaByIdempresa() != null){
-            %>
-            <td>Empresa</td>
-            <td><%=c.getEmpresaByIdempresa().getNombre()%></td>
-            <td><%=c.getEmpresaByIdempresa().getCif()%></td>
-
-            <% }else if(c.getClienteByIdcliente() != null && c.getEmpresaByIdempresa() == null){ %>
             <td>Cliente</td>
-            <td><%=c.getClienteByIdcliente().getNombre()%></td>
-            <td><%=c.getClienteByIdcliente().getDni()%></td>
-            <% }%>
-            <td><a href="aceptar?postId=<%=c.getIdcuenta()%>">Aceptar</a></td>
-            <td><a href="rechazar?postId=<%=c.getIdcuenta()%>">Rechazar</a></td>
+            <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
+            <td><%=c.getDni()%></td>
+
+            <td><a href="aceptar?postId=<%=c.getIdcliente()%>">Aceptar</a></td>
         </tr>
         <% } %>
     </table>

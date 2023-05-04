@@ -54,6 +54,15 @@ public class ClienteEntity {
     @Basic
     @Column(name = "cp", nullable = false)
     private int cp;
+
+    @Basic
+    @Column(name = "verificado", nullable = false)
+    private int verificado;
+
+    @Basic
+    @Column(name = "bloqueado", nullable = false)
+    private int bloqueado;
+
     @OneToMany(mappedBy = "clienteByIdcliente")
     private List<ConversacionEntity> conversacionsByIdcliente;
     @OneToMany(mappedBy = "clienteByIdcliente")
@@ -178,6 +187,22 @@ public class ClienteEntity {
     public void setCp(int cp) {
         this.cp = cp;
     }
+    public int getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(int verificado) {
+        this.verificado = verificado;
+    }
+
+    public int getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(int bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
 
     @Override
     public boolean equals(Object o) {

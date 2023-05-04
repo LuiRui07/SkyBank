@@ -4,8 +4,8 @@ package com.example.skybank.controller;
  * @author Rafael Ceballos
  */
 
+import com.example.skybank.dao.ClienteRepository;
 import com.example.skybank.dao.CuentaRepository;
-import com.example.skybank.dao.CustomerRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.GestorRepository;
 import com.example.skybank.entity.ClienteEntity;
@@ -31,7 +31,7 @@ public class GestorController {
     private GestorRepository gestorRepository;
 
     @Autowired
-    private CustomerRepository customerRepository;
+    private ClienteRepository clienteRepository;
 
     @Autowired
     private EmpresaRepository empresaRepository;
@@ -44,9 +44,9 @@ public class GestorController {
         GestorEntity gestor = (GestorEntity) session.getAttribute("gestor");
 
         if (gestor == null){
-            return "redirect:/cliente/login";
+            return "redirect:/gestor/login";
         }else{
-            List<ClienteEntity> listaClientes = customerRepository.findAll();
+            List<ClienteEntity> listaClientes = clienteRepository.findAll();
             List<EmpresaEntity> listaEmpresas = empresaRepository.findAll();
 
             model.addAttribute("listaEmpresas",listaEmpresas);
@@ -87,9 +87,9 @@ public class GestorController {
         GestorEntity gestor = (GestorEntity) session.getAttribute("gestor");
 
         if (gestor == null){
-            return "redirect:/cliente/login";
+            return "redirect:/gestor/login";
         }else{
-            List<CuentaEntity> solicitadas = cuentaRepository.findSolicitadas();
+            List<ClienteEntity> solicitadas = clienteRepository.getPendientesDeVerificar();
             model.addAttribute("solicitadas",solicitadas);
         }
 
@@ -97,24 +97,15 @@ public class GestorController {
     }
 
     @GetMapping("/aceptar")
-    public String aceptarCuenta(Model model, @RequestParam("postId") int idCuenta){
+    public String aceptarCliente(Model model, @RequestParam("postId") int idCliente){
+        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
-
-        cuenta.setAceptado(1);
-        cuenta.setSolicitado(0);
-        cuentaRepository.save(cuenta);
-
+        cliente.setVerificado(1);
+        clienteRepository.save(cliente);
         return "redirect:/gestor/solicitudes";
     }
 
-    @GetMapping("/rechazar")
-    public String rechazarCuenta(Model model, @RequestParam("postId") int idCuenta){
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
 
 
-        return "redirect:/gestor/solicitudes";
-    }
 
-    @GetMapping("/")
 }
