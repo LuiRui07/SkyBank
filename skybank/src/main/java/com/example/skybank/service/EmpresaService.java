@@ -46,6 +46,7 @@ public class EmpresaService {
         nuevaEmpresa.setRegion(empresaDTO.getRegion());
         nuevaEmpresa.setCp(empresaDTO.getCp());
         nuevaEmpresa.setVerificado(empresaDTO.getVerificado());
+        nuevaEmpresa.setBloqueada(empresaDTO.getBloqueada());
 
         empresaRepository.save(nuevaEmpresa);
 
@@ -82,6 +83,7 @@ public class EmpresaService {
         e.setRegion(empresaDTO.getRegion());
         e.setCp(empresaDTO.getCp());
         e.setVerificado(empresaDTO.getVerificado());
+        e.setBloqueada(empresaDTO.getBloqueada());
 
         empresaRepository.save(e);
     }
