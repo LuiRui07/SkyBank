@@ -234,5 +234,60 @@ public class GestorController {
         return "redirect:/gestor/cuentasSinUso";
     }
 
+    @GetMapping("/sospechas")
+    public String mostrarSospechas(Model model, HttpSession session){
+        List<OperacionEntity> opSospechosas = operacionRepository.obtenerOperacionesSospechosas();
+        List<ClienteEntity> clientesSospechosos = new ArrayList<>();
+        List<EmpresaEntity> empresasSospechosas = new ArrayList<>();
+
+        for(OperacionEntity o : opSospechosas){
+                if(o.getCuentaByIdcuenta().getClienteByIdcliente() != null && !clientesSospechosos.contains(o.getCuentaByIdcuenta().getClienteByIdcliente())){
+                    clientesSospechosos.add(o.getCuentaByIdcuenta().getClienteByIdcliente());
+                }else if(o.getCuentaByIdcuenta().getEmpresaByIdempresa() != null && !empresasSospechosas.contains(o.getCuentaByIdcuenta().getEmpresaByIdempresa())){
+                    empresasSospechosas.add(o.getCuentaByIdcuenta().getEmpresaByIdempresa());
+                }
+        }
+
+        model.addAttribute("clientesSospechosos", clientesSospechosos);
+        model.addAttribute("empresasSospechosas", empresasSospechosas);
+
+        return "listaSospechosas";
+    }
+
+    @GetMapping("/bloquearCliente2")
+    public String bloquearCliente2(Model model, @RequestParam("postId") int idCliente){
+        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+
+        cliente.setBloqueado(1);
+        clienteRepository.save(cliente);
+        return "redirect:/gestor/sospechas";
+    }
+
+    @GetMapping("/bloquearEmpresa2")
+    public String bloquearEmpresa2(Model model, @RequestParam("postId") int idEmpresa){
+        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+
+        empresa.setBloqueada(1);
+        empresaRepository.save(empresa);
+        return "redirect:/gestor/sospechas";
+    }
+
+    @GetMapping("/desbloquearCliente2")
+    public String desbloquearCliente2(Model model, @RequestParam("postId") int idCliente){
+        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+
+        cliente.setBloqueado(0);
+        clienteRepository.save(cliente);
+        return "redirect:/gestor/sospechas";
+    }
+
+    @GetMapping("/desbloquearEmpresa2")
+    public String desbloquearEmpresa2(Model model, @RequestParam("postId") int idEmpresa){
+        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+
+        empresa.setBloqueada(0);
+        empresaRepository.save(empresa);
+        return "redirect:/gestor/sospechas";
+    }
 
 }
