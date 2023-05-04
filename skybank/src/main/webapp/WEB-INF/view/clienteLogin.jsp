@@ -5,6 +5,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<% String error = (String) request.getAttribute("error");%>
+
 <html>
 <head>
     <title>Sesión de Cliente</title>
@@ -17,8 +19,7 @@
 
 
     <h1 class="mt-5">Inicio Sesión como Cliente:</h1>
-    <% String error = (String) request.getAttribute("error");
-        if (error != null) { %>
+        <%if (error != null) { %>
     <div class="alert alert-danger mt-3" role="alert">
         ${error}
     </div>

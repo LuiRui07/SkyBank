@@ -252,7 +252,8 @@ public class ClienteEntity {
         cliente.setPlanta(this.planta);
         cliente.setRegion(this.region);
         cliente.setCp(this.cp);
-
+        cliente.setVerificado(this.verificado);
+        cliente.setBloqueado(this.bloqueado);
         return cliente;
     }
 }

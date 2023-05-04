@@ -25,6 +25,26 @@ public class Cliente {
     private String region;
     private int cp;
 
+    private int verificado;
+
+    private int bloqueado;
+
+    public int getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(int verificado) {
+        this.verificado = verificado;
+    }
+
+    public int getBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(int bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

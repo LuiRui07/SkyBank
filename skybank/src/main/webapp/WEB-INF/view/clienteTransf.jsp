@@ -11,6 +11,7 @@
 
 <% List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");%>
 <% Cuenta cuenta = (Cuenta) request.getAttribute("cuentaOrigen");%>
+
 <html>
 <head>
     <title>Realizar Transferencia</title>
@@ -21,6 +22,7 @@
 
     <div class="container" style="align-items: center; text-align: center; margin-top: 5%;">
         <h3 class="display-3">Transferencia</h3>
+
     </div>
         <div>
             <a class="display-4" style="margin-left: 6%"> Elegir cantidad </a>

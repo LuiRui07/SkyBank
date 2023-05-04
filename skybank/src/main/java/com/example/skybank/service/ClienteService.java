@@ -62,6 +62,8 @@ public class ClienteService {
         clienteNuevo.setPlanta(cliente.getPlanta());
         clienteNuevo.setRegion(cliente.getRegion());
         clienteNuevo.setCp(cliente.getCp());
+        clienteNuevo.setBloqueado(cliente.getBloqueado());
+        clienteNuevo.setVerificado(cliente.getBloqueado());
 
         clienteRepository.save(clienteNuevo);
 
@@ -104,6 +106,8 @@ public class ClienteService {
         cliente.setCiudad(clienteForm.getCiudad());
         cliente.setRegion(clienteForm.getRegion());
         cliente.setPais(clienteForm.getPais());
+        cliente.setBloqueado(clienteForm.getBloqueado());
+        cliente.setVerificado(clienteForm.getBloqueado());
 
         clienteRepository.save(cliente);
     }

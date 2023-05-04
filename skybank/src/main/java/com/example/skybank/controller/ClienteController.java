@@ -76,14 +76,27 @@ public class ClienteController {
                          HttpSession sesion, Model model){
         String urlTo = "redirect:/cliente/";
         Cliente cliente = clienteService.autenticar(user,contra);
+
         if(cliente == null){
-            model.addAttribute("error", "Usuario no encontrado");
-            urlTo = "loginCliente";
+            model.addAttribute("error", "Cliente no encontrado");
+            urlTo = "clienteLogin";
         }else{
-            sesion.setAttribute("cliente",cliente);
+            if(cliente.getBloqueado() == 1){
+                model.addAttribute("error", "Cliente bloqueado por un gestor.");
+                urlTo = "loginEmpresa";
+
+            }else if(cliente.getBloqueado() == 0 && cliente.getVerificado() == 0){
+                model.addAttribute("error", "Cliente no verificado por un Gestor, espere a ser verificado por favor.");
+                urlTo = "loginEmpresa";
+
+            }else if(cliente.getVerificado() == 1) {
+                sesion.setAttribute("cliente", cliente);
+            }
         }
         return urlTo;
     }
+
+
 
     @GetMapping("/register")
     public String registrarCliente (Model model){
