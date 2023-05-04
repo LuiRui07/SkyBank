@@ -14,6 +14,15 @@ public class GestorEntity {
     @Basic
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
+
+    @Basic
+    @Column(name = "DNI", nullable = false, length = 9)
+    private String dni;
+
+    @Basic
+    @Column(name = "password", nullable = false, length = 45)
+    private String password;
+
     @OneToMany(mappedBy = "gestorByIdgestor")
     private List<OperacionEntity> operacionsByIdgestor;
 
@@ -31,6 +40,22 @@ public class GestorEntity {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getDni() {
+        return dni;
+    }
+
+    public void setDni(String dni) {
+        this.dni = nombre;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

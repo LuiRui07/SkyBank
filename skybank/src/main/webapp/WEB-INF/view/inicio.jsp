@@ -13,6 +13,8 @@
     <a class="btn btn-primary" href="empresa/login"> Empresa </a>
     <br/>
     <a class="btn btn-primary" href="cliente/login"> Cliente </a>
+    <br/>
+    <a class="btn btn-primary" href="gestor/login"> Gestor </a>
 </div>
 
 
