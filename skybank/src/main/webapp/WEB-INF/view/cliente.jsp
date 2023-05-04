@@ -39,9 +39,20 @@
         <div>
             <a href="editar?id=${cliente.idcliente}" class="btn btn-outline-primary">Modificar Datos</a>
             <a onclick="CerrarSesion()" style="float:right" class="btn btn-outline-info"> Cerrar Sesión </a>
+            <%if (cliente.getBloqueado() == 1 && cliente.getSolicitudactivacion() != 1){%>
+                <a href="solicitar?id=<%=cliente.getIdcliente()%>"  class="btn btn-outline-success">Solicitar Activacion</a> <br/>
         </div>
     </p>
 
+    <a class="display-1" style="align-items: center; text-align: center;" >Cuenta de Cliente Bloqueada</a>
+
+    <%} else if (cliente.getSolicitudactivacion() == 1) {%>
+        </div>
+    </p>
+    <a class="display-1" style="align-items: center; text-align: center;" >Cuenta de Cliente Solicitada para Desbloqueo</a>
+    <%} else {%>
+        </div>
+    </p>
     <% for (Cuenta cuenta : cuentas) { %>
         <%if (!((cuenta.getSaldo() - 0.01) < 0 )){%>
         <div class="card" style="margin-bottom: 3%">
@@ -55,12 +66,10 @@
             <% if (cuenta.getActiva() == 1){%>
             <a style="margin-top:1%" href="trans?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Transferencia</a>
             <a style="margin-top:1%" href="cambio?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
-            <a style="margin-top:1%" class="btn btn-outline-danger">Solicitar Desactivacion</a>
         </div>
-    <%} else {%>
-    <a style="margin-top:1%" class="btn btn-outline-success">Solicitar Activacion</a> <br/>
-
-    <%}}}%>
+    <%} else { %>
+        <a style="margin-top:1%" href="#" class="btn btn-outline-danger">Cuenta Bloqueada</a>
+    <%}}}}%>
 </div>
 
 

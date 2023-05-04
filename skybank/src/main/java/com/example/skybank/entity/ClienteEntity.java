@@ -65,6 +65,10 @@ public class ClienteEntity {
     @Column(name = "bloqueado", nullable = false)
     private int bloqueado;
 
+    @Basic
+    @Column(name = "solicitudactivacion", nullable = false)
+    private int solicitudactivacion;
+
     @OneToMany(mappedBy = "clienteByIdcliente")
     private List<ConversacionEntity> conversacionsByIdcliente;
     @OneToMany(mappedBy = "clienteByIdcliente")
@@ -205,6 +209,13 @@ public class ClienteEntity {
         this.bloqueado = bloqueado;
     }
 
+    public int getSolicitudactivacion() {
+        return solicitudactivacion;
+    }
+
+    public void setSolicitudactivacion(int solicitudactivacion) {
+        this.solicitudactivacion = solicitudactivacion;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -254,6 +265,7 @@ public class ClienteEntity {
         cliente.setCp(this.cp);
         cliente.setVerificado(this.verificado);
         cliente.setBloqueado(this.bloqueado);
+        cliente.setSolicitudactivacion(this.solicitudactivacion);
         return cliente;
     }
 }

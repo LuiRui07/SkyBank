@@ -82,15 +82,10 @@ public class ClienteController {
             model.addAttribute("error", "Cliente no encontrado");
             urlTo = "clienteLogin";
         }else{
-            if(cliente.getBloqueado() == 1){
-                model.addAttribute("error", "Cliente bloqueado por un gestor.");
-                urlTo = "loginEmpresa";
-
-            }else if(cliente.getBloqueado() == 0 && cliente.getVerificado() == 0){
+            if(cliente.getVerificado() == 0){
                 model.addAttribute("error", "Cliente no verificado por un Gestor, espere a ser verificado por favor.");
                 urlTo = "loginEmpresa";
-
-            }else if(cliente.getVerificado() == 1) {
+            }else{
                 sesion.setAttribute("cliente", cliente);
             }
         }
@@ -239,6 +234,15 @@ public class ClienteController {
     public String doDivisa (Model model, @ModelAttribute("operacionCambio") Operacion operacionForm){
         operacionService.realizarCambioDivisa(operacionForm);
         return "redirect:/cliente/";
+    }
+
+    @GetMapping("/solicitar")
+    public String soliticar (Model model, @RequestParam("id") int idcliente){
+        clienteService.solicitar(idcliente);
+        Cliente cliente = clienteService.getClienteById(idcliente);
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("cuentas", clienteService.obtenerCuentasDeCliente(cliente));
+        return "cliente";
     }
 
 }

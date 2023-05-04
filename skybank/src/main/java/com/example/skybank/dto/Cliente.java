@@ -24,10 +24,18 @@ public class Cliente {
     private Integer planta;
     private String region;
     private int cp;
-
     private int verificado;
-
     private int bloqueado;
+    private int solicitudactivacion;
+
+
+    public int getSolicitudactivacion() {
+        return solicitudactivacion;
+    }
+
+    public void setSolicitudactivacion(int solicitudactivacion) {
+        this.solicitudactivacion = solicitudactivacion;
+    }
 
     public int getVerificado() {
         return verificado;

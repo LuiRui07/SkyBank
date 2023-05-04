@@ -64,6 +64,7 @@ public class ClienteService {
         clienteNuevo.setCp(cliente.getCp());
         clienteNuevo.setBloqueado(cliente.getBloqueado());
         clienteNuevo.setVerificado(cliente.getBloqueado());
+        clienteNuevo.setSolicitudactivacion(cliente.getSolicitudactivacion());
 
         clienteRepository.save(clienteNuevo);
 
@@ -108,7 +109,14 @@ public class ClienteService {
         cliente.setPais(clienteForm.getPais());
         cliente.setBloqueado(clienteForm.getBloqueado());
         cliente.setVerificado(clienteForm.getBloqueado());
+        cliente.setSolicitudactivacion(clienteForm.getSolicitudactivacion());
 
+        clienteRepository.save(cliente);
+    }
+
+    public void solicitar (int idcliente){
+        ClienteEntity cliente = clienteRepository.findById(idcliente).orElse(null);
+        cliente.setSolicitudactivacion(1);
         clienteRepository.save(cliente);
     }
 }
