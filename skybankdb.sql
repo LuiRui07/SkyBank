@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: skybank
+-- Host: 127.0.0.1    Database: skybank
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -65,7 +65,7 @@ CREATE TABLE `autorizado` (
   `solicituddesbloqueo` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `fk_Socio_Empresa1_idx` (`idempresa`) /*!80000 INVISIBLE */,
-  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idEmpresa`)
+  CONSTRAINT `fk_Socio_Empresa10` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -229,6 +229,7 @@ CREATE TABLE `empresa` (
   `region` varchar(100) DEFAULT NULL,
   `cp` int NOT NULL,
   `verificado` int NOT NULL DEFAULT '0',
+  `bloqueada` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`idempresa`),
   UNIQUE KEY `CIF_UNIQUE` (`cif`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb3;
@@ -240,7 +241,7 @@ CREATE TABLE `empresa` (
 
 LOCK TABLES `empresa` WRITE;
 /*!40000 ALTER TABLE `empresa` DISABLE KEYS */;
-INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1),(9,'123432341','Apple','apple@apple.us','manzana','poopo',3,32,'NY','US','',43412,1);
+INSERT INTO `empresa` VALUES (1,'ASDADS23','Logitech','admin@logitech.es','pepene','Morad',1,2,'Malaga','Spain',NULL,29001,0,0),(2,'43434','Danone','admin@sample.com','danone4','popelle',1,2,'jaen','spain','',23422,1,0),(9,'123432341','Apple','apple@apple.us','manzana','poopo',3,32,'NY','US','',43412,1,0);
 /*!40000 ALTER TABLE `empresa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -368,7 +369,7 @@ CREATE TABLE `socio` (
   `solicituddesbloqueo` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `idEmpresa_idx` (`idempresa`),
-  CONSTRAINT `idEmpresa` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`)
+  CONSTRAINT `idEmpresa` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -415,4 +416,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-04  0:40:01
+-- Dump completed on 2023-05-04 12:55:34
