@@ -1,7 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
-<%@ page import="com.example.skybank.entity.ClienteEntity" %><%--
+<%@ page import="com.example.skybank.entity.ClienteEntity" %>
+<%@ page import="com.example.skybank.entity.EmpresaEntity" %><%--
   Created by IntelliJ IDEA.
   User: Rafael Ceballos
   Date: 03/05/2023
@@ -11,6 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
+    List<EmpresaEntity> solicitadasE =(List<EmpresaEntity>) request.getAttribute("solicitadasE");
     List<ClienteEntity> solicitadas = (List<ClienteEntity>) request.getAttribute("solicitadas");
 %>
 <html>
@@ -31,10 +33,18 @@
             <td>Cliente</td>
             <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
             <td><%=c.getDni()%></td>
-
-            <td><a href="aceptar?postId=<%=c.getIdcliente()%>">Aceptar</a></td>
+            <td><a href="aceptarCliente?postId=<%=c.getIdcliente()%>">Aceptar</a></td>
         </tr>
-        <% } %>
+        <% }
+        for(EmpresaEntity e :solicitadasE){
+        %>
+        <tr>
+            <td>Empresa</td>
+            <td><%=e.getNombre()%></td>
+            <td><%=e.getCif()%></td>
+            <td><a href="aceptarEmpresa?postId=<%=e.getIdempresa()%>">Aceptar</a></td>
+        </tr>
+        <% }%>
     </table>
 
 </body>
