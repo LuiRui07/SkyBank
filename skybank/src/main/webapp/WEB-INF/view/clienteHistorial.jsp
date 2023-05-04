@@ -12,11 +12,20 @@
 <%@ page import="com.example.skybank.ui.FiltroOperaciones" %>
 <%@ page import="com.example.skybank.dto.Operacion" %>
 <%@ page import="com.example.skybank.dto.Cuenta" %>
+<%@ page import="com.example.skybank.ui.OrdenOperaciones" %>
+<%@ page import="java.util.ArrayList" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <% List<Operacion> operaciones = (List<Operacion>) request.getAttribute("operaciones");%>
 <% Cuenta cuenta = (Cuenta) request.getAttribute("cuenta");%>
-<% FiltroOperaciones filtro = (FiltroOperaciones) request.getAttribute("filtro");%>
+<%  List<OrdenOperaciones> ordenes = new ArrayList<>();
+    ordenes.add(new OrdenOperaciones(1,"Fecha - ASC"));
+    ordenes.add(new OrdenOperaciones(2,"Fecha - DESC"));
+    ordenes.add(new OrdenOperaciones(3,"Cantidad - ASC"));
+    ordenes.add(new OrdenOperaciones(4,"Cantidad - DESC"));
+    request.setAttribute("ordenes",ordenes);%>
+
+
 <html>
 <head>
     <title>Historial</title>
@@ -30,7 +39,15 @@
         <a href="/cliente/" class="btn btn-danger" style="position: absolute; left: 3%; top: 1.5%">Volver</a>
         <a class="display-3">Historial de Operaciones:</a>
     </div>
+
     <form:form modelAttribute="filtro" method="post" action="/cliente/filtrar">
+        <div style="margin-bottom: 2%">
+            Ordenar por:
+            <form:select path="ordenOperaciones.orden" multiple="false">
+                <form:option value="" label="" />
+                <form:options items="${ordenes}" itemLabel="orden" itemValue="orden"/>
+            </form:select>
+        </div>
         <form:select multiple="false" path="tipo" cssStyle="margin-right: 2%;">
             <form:option value="" label="Todos" />
             <form:options items="${tipos}" itemLabel="tipo" itemValue="tipo"/>
@@ -40,8 +57,8 @@
         Hasta: <form:input type="date" path="hasta" cssStyle="margin-right: 3%" size="15"></form:input>
 
 
-        <form:input path="min" placeholder="Minima cantidad"></form:input>
-        <form:input path="max" placeholder="Maxima cantidad"></form:input>
+        <form:input path="min" placeholder="Minima cantidad" size="15"></form:input>
+        <form:input path="max" placeholder="Maxima cantidad" size="15"></form:input>
         <button style="margin-left: 2%" class="btn btn-info">Filtrar</button>
     </form:form>
 

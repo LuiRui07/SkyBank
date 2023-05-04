@@ -13,6 +13,8 @@ public class FiltroOperaciones {
 
     private int idCuenta;
 
+    private OrdenOperaciones ordenOperaciones;
+
     public int getIdCuenta() {
         return idCuenta;
     }
@@ -41,6 +43,15 @@ public class FiltroOperaciones {
         Min = null;
         desde = null;
         Hasta = null;
+        ordenOperaciones = null;
+    }
+
+    public OrdenOperaciones getOrdenOperaciones() {
+        return ordenOperaciones;
+    }
+
+    public void setOrdenOperaciones(OrdenOperaciones ordenOperaciones) {
+        this.ordenOperaciones = ordenOperaciones;
     }
 
     public String getTipo(){

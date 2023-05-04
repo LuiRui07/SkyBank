@@ -172,33 +172,47 @@ public class OperacionService {
     }
 
 
-
-    public List<Operacion> filtrar (FiltroOperaciones filtro) {
+    public List<Operacion> filtrar(FiltroOperaciones filtro) {
         List<OperacionEntity> operaciones = operacionRepository.findbyAccount(filtro.getIdCuenta());
         int idcuenta = filtro.getIdCuenta();
 
-        if (filtro.getTipo() != "") {
-            operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo(), idcuenta);
-        }
-        if (filtro.getMax() != null) {
-            List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(),idcuenta);
-            operaciones.retainAll(operaciones2);
-        }
-        if (filtro.getMin() != null) {
-            List<OperacionEntity> operaciones3 = operacionRepository.filtrarMin(filtro.getMin(),idcuenta);
-            operaciones.retainAll(operaciones3);
-        }
-        if (filtro.getDesde() != null) {
-            List<OperacionEntity> operaciones4 = operacionRepository.filtrarDesde(filtro.getDesde(),idcuenta);
-            operaciones.retainAll(operaciones4);
-        }
-        if (filtro.getHasta() != null) {
-            List<OperacionEntity> operaciones5 = operacionRepository.filtrarHasta(filtro.getHasta(),idcuenta);
-            operaciones.retainAll(operaciones5);
+        if (filtro.getOrdenOperaciones().getOrden().contains("Fecha")) {
+            if (filtro.getOrdenOperaciones().getOrden().contains("ASC")) {
+                operaciones = operacionRepository.ordenarPorFechaAsc(filtro.getIdCuenta());
+            } else {
+                operaciones = operacionRepository.ordenarPorFechaDesc(filtro.getIdCuenta());
+            }
+        } else if (filtro.getOrdenOperaciones().getOrden().contains("Cantidad")) {
+            if (filtro.getOrdenOperaciones().getOrden().contains("ASC")) {
+                operaciones = operacionRepository.ordenarPorCantidadAsc(filtro.getIdCuenta());
+            } else {
+                operaciones = operacionRepository.ordenarPorCantidadDesc(filtro.getIdCuenta());
+            }
         }
 
-        return operaciones.stream().map(o -> o.toDTO()).toList();
+            if (filtro.getTipo() != "") {
+                List<OperacionEntity> operaciones1 = operacionRepository.filtrarPorTipo(filtro.getTipo(), idcuenta);
+                operaciones.retainAll(operaciones);
+            }
+            if (filtro.getMax() != null) {
+                List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(), idcuenta);
+                operaciones.retainAll(operaciones2);
+            }
+            if (filtro.getMin() != null) {
+                List<OperacionEntity> operaciones3 = operacionRepository.filtrarMin(filtro.getMin(), idcuenta);
+                operaciones.retainAll(operaciones3);
+            }
+            if (filtro.getDesde() != null) {
+                List<OperacionEntity> operaciones4 = operacionRepository.filtrarDesde(filtro.getDesde(), idcuenta);
+                operaciones.retainAll(operaciones4);
+            }
+            if (filtro.getHasta() != null) {
+                List<OperacionEntity> operaciones5 = operacionRepository.filtrarHasta(filtro.getHasta(), idcuenta);
+                operaciones.retainAll(operaciones5);
+            }
+
+            return operaciones.stream().map(o -> o.toDTO()).toList();
+        }
+
     }
-
-}
 

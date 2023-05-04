@@ -7,6 +7,7 @@ import com.example.skybank.dao.*;
 import com.example.skybank.dto.*;
 import com.example.skybank.service.*;
 import com.example.skybank.ui.FiltroOperaciones;
+import com.example.skybank.ui.OrdenOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,6 +123,7 @@ public class ClienteController {
        model.addAttribute("tipos",tipos);
        model.addAttribute("filtro",filtro);
        model.addAttribute("cuenta",cuenta);
+
        return "clienteHistorial";
     }
 

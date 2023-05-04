@@ -18,26 +18,38 @@ public interface OperacionRepository extends JpaRepository<OperacionEntity,Integ
     @Query("select o from OperacionEntity o where o.cuentaByIdcuenta2.idcuenta = :idCuenta and o.tipoOperacionByTipopperacionid.id = 1 and o.cantidad > 0 order by o.fecha desc")
     List<OperacionEntity> obtenerPagosPositivos(@Param("idCuenta") int idCuenta);
 
-    @Query("select o from OperacionEntity o where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc ")
+    @Query("select o from OperacionEntity o where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id )")
     List<OperacionEntity> findbyAccount(@Param("id") int id);
 
-    @Query("select o from OperacionEntity o where (o.tipoOperacionByTipopperacionid.tipo = :tipo) and (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc ")
+    @Query("select o from OperacionEntity o where (o.tipoOperacionByTipopperacionid.tipo = :tipo) and (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id )")
     List<OperacionEntity> filtrarPorTipo (@Param("tipo") String tipo, @Param("id") int id);
 
     @Query("select o from OperacionEntity o where (o.cantidad <= :maxC) and (o.cuentaByIdcuenta.idcuenta = " +
-            ":id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc")
+            ":id or o.cuentaByIdcuenta2.idcuenta = :id )")
     List<OperacionEntity> filtrarMax(@Param("maxC") Double maxC, @Param("id") int id);
 
     @Query("select o from OperacionEntity o where (:minC <= o.cantidad) and (o.cuentaByIdcuenta.idcuenta = " +
-            ":id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc")
+            ":id or o.cuentaByIdcuenta2.idcuenta = :id )")
     List<OperacionEntity> filtrarMin(@Param("minC") Double minC, @Param("id") int id);
 
     @Query("select o from OperacionEntity o where (:desde <= o.fecha) and (o.cuentaByIdcuenta.idcuenta = " +
-            ":id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc")
+            ":id or o.cuentaByIdcuenta2.idcuenta = :id ) ")
     List<OperacionEntity> filtrarDesde(@Param("desde") Date desde, @Param("id") int id);
 
     @Query("select o from OperacionEntity o where (o.fecha <= :hasta) and (o.cuentaByIdcuenta.idcuenta = " +
-            ":id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc")
+            ":id or o.cuentaByIdcuenta2.idcuenta = :id )")
     List<OperacionEntity> filtrarHasta(@Param("hasta") Date hasta, @Param("id") int id);
+
+    @Query("select o from OperacionEntity o  where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc")
+    List<OperacionEntity> ordenarPorFechaDesc(@Param("id") int id);
+
+    @Query("select o from OperacionEntity o  where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha asc ")
+    List<OperacionEntity> ordenarPorFechaAsc(@Param("id") int id);
+
+    @Query("select o from OperacionEntity  o where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.cantidad desc")
+    List<OperacionEntity> ordenarPorCantidadDesc(@Param("id") int id);
+
+    @Query("select o from OperacionEntity  o where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.cantidad asc")
+    List<OperacionEntity> ordenarPorCantidadAsc(@Param("id") int id);
 }
 
