@@ -40,6 +40,7 @@ public interface OperacionRepository extends JpaRepository<OperacionEntity,Integ
             ":id or o.cuentaByIdcuenta2.idcuenta = :id )")
     List<OperacionEntity> filtrarHasta(@Param("hasta") Date hasta, @Param("id") int id);
 
+<<<<<<< Updated upstream
     @Query("select o from OperacionEntity o  where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.fecha desc")
     List<OperacionEntity> ordenarPorFechaDesc(@Param("id") int id);
 
@@ -51,5 +52,10 @@ public interface OperacionRepository extends JpaRepository<OperacionEntity,Integ
 
     @Query("select o from OperacionEntity  o where (o.cuentaByIdcuenta.idcuenta = :id or o.cuentaByIdcuenta2.idcuenta = :id ) order by o.cantidad asc")
     List<OperacionEntity> ordenarPorCantidadAsc(@Param("id") int id);
+=======
+
+    @Query("select distinct o from OperacionEntity o where DATEDIFF(:fechaAct, o.fecha)<30")
+    List<OperacionEntity> obtenerOperacionesRecientes(@Param("fechaAct") Date actual);
+>>>>>>> Stashed changes
 }
 
