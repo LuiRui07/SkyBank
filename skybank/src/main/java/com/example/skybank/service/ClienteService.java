@@ -69,6 +69,7 @@ public class ClienteService {
         DivisaEntity d = divisaRepository.getById(1);
 
         c.setDivisaByDivisa(d);
+        c.setSaldo(10.00);
         c.setClienteByIdcliente(clienteNuevo);
         cuentaRepository.save(c);
 

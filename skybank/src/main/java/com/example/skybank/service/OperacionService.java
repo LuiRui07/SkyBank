@@ -1,5 +1,5 @@
 /*
-    @autor: José Luis López Ruiz(10%) y Luis Ruiz Nuñez(90%).
+    @autor: José Luis López Ruiz(40%) y Luis Ruiz Nuñez(60%).
  */
 
 package com.example.skybank.service;
@@ -37,20 +37,20 @@ public class OperacionService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    public List<List<Operacion>> obtenerTransferenciasEnviadas(Empresa empresa){
-        List<List<Operacion>> transferencias  = new ArrayList<>();
+    public List<List<Operacion>> obtenerTransferenciasEnviadas(Empresa empresa) {
+        List<List<Operacion>> transferencias = new ArrayList<>();
         empresaService.obtenerCuentasDeEmpresa(empresa).forEach(c -> transferencias.add(this.operacionRepository.obtenerPagosNegativos(c.getIdcuenta()).stream().map(o -> o.toDTO()).toList()));
         return transferencias;
     }
 
-    public List<List<Operacion>> obtenerTransferenciasRecibidas(Empresa empresa){
-        List<List<Operacion>> transferencias  = new ArrayList<>();
+    public List<List<Operacion>> obtenerTransferenciasRecibidas(Empresa empresa) {
+        List<List<Operacion>> transferencias = new ArrayList<>();
         empresaService.obtenerCuentasDeEmpresa(empresa).forEach(c -> transferencias.add(this.operacionRepository.obtenerPagosPositivos(c.getIdcuenta()).stream().map(o -> o.toDTO()).toList()));
         return transferencias;
     }
 
 
-    public void realizarTransferencia(Double cantidad,Integer idOrigen,Integer idDestino, String concepto){
+    public void realizarTransferencia(Double cantidad, Integer idOrigen, Integer idDestino, String concepto) {
         CuentaEntity origen = cuentaRepository.getById(idOrigen);
         CuentaEntity destino = cuentaRepository.getById(idDestino);
 
@@ -96,36 +96,16 @@ public class OperacionService {
         cuentaRepository.save(destino);
     }
 
-    public List<Operacion> obtenerOperacaionesCliente(Cuenta cuenta){
+    public List<Operacion> obtenerOperacionesCliente(Cuenta cuenta) {
         List<Operacion> operaciones = operacionRepository.findbyAccount(cuenta.getIdcuenta()).stream().map(o -> o.toDTO()).toList();
         return operaciones;
     }
 
-    public List<TipoOperacion> obtenerTodosTiposOperacion (){
+    public List<TipoOperacion> obtenerTodosTiposOperacion() {
         return tipoOperacionRepository.findAll().stream().map(t -> t.toDTO()).toList();
     }
 
-    public List<Operacion> filtrarPorTipo(FiltroOperaciones filtro, int idcuenta){
-        return operacionRepository.filtrarPorTipo(filtro.getTipo(),idcuenta).stream().map(o -> o.toDTO()).toList();
-    }
-
-    public List<Operacion> filtrarMax (FiltroOperaciones filtro, int idcuenta){
-        return operacionRepository.filtrarMax(filtro.getMax(),idcuenta).stream().map(o -> o.toDTO()).toList();
-    }
-
-    public List<Operacion> filtrarMin (FiltroOperaciones filtro, int idcuenta){
-        return operacionRepository.filtrarMin(filtro.getMin(),idcuenta).stream().map(o -> o.toDTO()).toList();
-    }
-
-    public List<Operacion> filtrarDesde (FiltroOperaciones filtro, int idcuenta){
-        return operacionRepository.filtrarDesde(filtro.getDesde(),idcuenta).stream().map(o -> o.toDTO()).toList();
-    }
-
-    public List<Operacion> filtrarHasta (FiltroOperaciones filtro, int idcuenta){
-        return operacionRepository.filtrarHasta(filtro.getHasta(),idcuenta).stream().map(o -> o.toDTO()).toList();
-    }
-
-    public void realizarTransferenciaCliente(Operacion operacionForm){
+    public void realizarTransferenciaCliente(Operacion operacionForm) {
         TipoOperacionEntity tipo = tipoOperacionRepository.findById(1).orElse(null);
         CuentaEntity origen = cuentaRepository.findById(operacionForm.getCuentaOrigen().getIdcuenta()).orElse(null);
         CuentaEntity destino = cuentaRepository.findById((operacionForm.getCuentaDestino().getIdcuenta())).orElse(null);
@@ -149,7 +129,7 @@ public class OperacionService {
         operacionRepository.save(op);
     }
 
-    public void realizarCambioDivisa(Operacion operacionForm){
+    public void realizarCambioDivisa(Operacion operacionForm) {
         CuentaEntity origen = cuentaRepository.findById(operacionForm.getCuentaOrigen().getIdcuenta()).orElse(null);
         DivisaEntity divisaOperacion = divisaRepository.findById(operacionForm.getDivisa().getIddivisa()).orElse(null);
 
@@ -164,16 +144,17 @@ public class OperacionService {
 
 
         ClienteEntity cliente = origen.getClienteByIdcliente();
-        CuentaEntity destino = tieneDivisa(cliente,divisaOperacion);
+        CuentaEntity destino = new CuentaEntity();
+        destino = destino.tieneDivisa(cliente, divisaOperacion);
 
         origen.quitarSaldo(operacionForm.getCantidad());
         cuentaRepository.save(origen);
-        Double saldoN = (operacionForm.getCantidad()/origen.getDivisaByDivisa().getValor() ) * divisaOperacion.getValor();
+        Double saldoN = (operacionForm.getCantidad() / origen.getDivisaByDivisa().getValor()) * divisaOperacion.getValor();
         DecimalFormat formato = new DecimalFormat("#.##");
         String aproximado = formato.format(saldoN);
         aproximado = aproximado.replace(',', '.');
         Double saldoNuevo = Double.parseDouble(aproximado);
-        if (destino != null){
+        if (destino != null) {
             destino.anadirSaldo(saldoNuevo);
             op.setCuentaByIdcuenta2(destino);
             cuentaRepository.save(destino);
@@ -190,16 +171,34 @@ public class OperacionService {
         operacionRepository.save(op);
     }
 
-    private CuentaEntity tieneDivisa (ClienteEntity cliente, DivisaEntity divisa){
-        CuentaEntity res = null;
-        List<CuentaEntity> cuentas = cliente.getCuentasByIdcliente();
-        for (CuentaEntity cuenta : cuentas){
-            if (cuenta.getDivisaByDivisa() == divisa){
-                res = cuenta;
-            }
+
+
+    public List<Operacion> filtrar (FiltroOperaciones filtro) {
+        List<OperacionEntity> operaciones = operacionRepository.findbyAccount(filtro.getIdCuenta());
+        int idcuenta = filtro.getIdCuenta();
+
+        if (filtro.getTipo() != "") {
+            operaciones = operacionRepository.filtrarPorTipo(filtro.getTipo(), idcuenta);
+        }
+        if (filtro.getMax() != null) {
+            List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(),idcuenta);
+            operaciones.retainAll(operaciones2);
+        }
+        if (filtro.getMin() != null) {
+            List<OperacionEntity> operaciones3 = operacionRepository.filtrarMin(filtro.getMin(),idcuenta);
+            operaciones.retainAll(operaciones3);
+        }
+        if (filtro.getDesde() != null) {
+            List<OperacionEntity> operaciones4 = operacionRepository.filtrarDesde(filtro.getDesde(),idcuenta);
+            operaciones.retainAll(operaciones4);
+        }
+        if (filtro.getHasta() != null) {
+            List<OperacionEntity> operaciones5 = operacionRepository.filtrarHasta(filtro.getHasta(),idcuenta);
+            operaciones.retainAll(operaciones5);
         }
 
-        return res;
+        return operaciones.stream().map(o -> o.toDTO()).toList();
     }
 
 }
+

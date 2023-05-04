@@ -138,6 +138,18 @@ public class CuentaEntity {
         this.saldo = Double.parseDouble(aprox);
     }
 
+    public CuentaEntity tieneDivisa (ClienteEntity cliente, DivisaEntity divisa){
+        CuentaEntity res = null;
+        List<CuentaEntity> cuentas = cliente.getCuentasByIdcliente();
+        for (CuentaEntity cuenta : cuentas){
+            if (cuenta.getDivisaByDivisa() == divisa){
+                res = cuenta;
+            }
+        }
+
+        return res;
+    }
+
     public Cuenta toDTO(){
         Cuenta cuenta = new Cuenta();
         cuenta.setIdcuenta(this.idcuenta);
@@ -148,4 +160,5 @@ public class CuentaEntity {
 
         return cuenta;
     }
+
 }

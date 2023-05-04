@@ -101,7 +101,7 @@ public class ClienteController {
     @GetMapping("/historial")
     public String verHistorial (Model model, @RequestParam("id") int id){
        Cuenta cuenta = cuentaService.obtenerCuentaPorId(id);
-       List<Operacion> operaciones = operacionService.obtenerOperacaionesCliente(cuenta);
+       List<Operacion> operaciones = operacionService.obtenerOperacionesCliente(cuenta);
        FiltroOperaciones filtro = new FiltroOperaciones();
        List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
        filtro.setIdCuenta(cuenta.getIdcuenta());
@@ -120,30 +120,13 @@ public class ClienteController {
 
     protected String procesarFiltrado (FiltroOperaciones filtro,
                                        Model model, HttpSession session) {
+
         Cuenta cuenta = cuentaService.obtenerCuentaPorId(filtro.getIdCuenta());
-        List<Operacion> operaciones = operacionService.obtenerOperacaionesCliente(cuenta);
+        List<Operacion> operaciones = operacionService.obtenerOperacionesCliente(cuenta);
         List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
         model.addAttribute("tipos",tipos);
 
-        if(filtro.getTipo() != ""){
-            operaciones = operacionService.filtrarPorTipo(filtro,filtro.getIdCuenta());
-        }
-        if(filtro.getMax() != null){
-            List<Operacion> operaciones2 = operacionService.filtrarMax(filtro,filtro.getIdCuenta());
-            operaciones.retainAll(operaciones2);
-        }
-        if (filtro.getMin() != null){
-            List<Operacion> operaciones3 = operacionService.filtrarMin(filtro,filtro.getIdCuenta());
-            operaciones.retainAll(operaciones3);
-        }
-        if (filtro.getDesde() != null){
-            List<Operacion> operaciones4 = operacionService.filtrarDesde(filtro,filtro.getIdCuenta());
-            operaciones.retainAll(operaciones4);
-        }
-        if (filtro.getHasta() != null){
-            List<Operacion> operaciones5 = operacionService.filtrarHasta(filtro,filtro.getIdCuenta());
-            operaciones.retainAll(operaciones5);
-        }
+        operaciones = operacionService.filtrar(filtro);
 
         model.addAttribute("operaciones",operaciones);
         model.addAttribute("filtro",filtro);
