@@ -64,6 +64,7 @@
     </tr>
     <%}}} %>
 </table>
+<br>
 <a href="/gestor/">VOLVER</a>
 </body>
 </html>

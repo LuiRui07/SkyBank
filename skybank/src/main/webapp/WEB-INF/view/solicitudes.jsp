@@ -75,19 +75,19 @@
     <thead>
     <td>NOMBRE</td>
     <td>DNI/CIF</td>
-    <td>ACTIVAR</td>
+    <td>DESBLOQUEAR</td>
     </thead>
     <% if(solicitaDesbloqueo!=null){
         for (SocioEntity s: solicitaDesbloqueo){ %>
     <tr>
         <td><%=s.getNombre()%> <%=s.getApellido1()%> <%=s.getApellido2()%></td>
         <td><%=s.getNif()%></td>
-        <td><a href="desbloquearSocio?postId=<%=s.getId()%>">DESBLOQUEAR</a></td>
+        <td><a href="desbloquearSocio?postId=<%=s.getId()%>">Desbloquear</a></td>
     </tr>
     <% }
     } %>
 </table>
-
+<br>
 <a href="/gestor/">VOLVER</a>
 </body>
 </html>

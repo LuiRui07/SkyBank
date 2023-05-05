@@ -54,7 +54,7 @@
                     for(ClienteEntity c : listaClientes){
                 %>
                 <tr>
-                    <td> <a href="/gestor/gestionarCliente?postId="<%=c.getIdcliente()%>"><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></a></td>
+                    <td> <a href="/gestor/gestionarCliente?postId=<%=c.getIdcliente()%>"><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></a></td>
 
                 </tr>
                 <% } %>

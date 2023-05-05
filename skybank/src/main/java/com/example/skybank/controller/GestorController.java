@@ -5,9 +5,13 @@ package com.example.skybank.controller;
  */
 
 import com.example.skybank.dao.*;
+import com.example.skybank.dto.Cuenta;
+import com.example.skybank.dto.Operacion;
+import com.example.skybank.dto.TipoOperacion;
 import com.example.skybank.entity.*;
 import com.example.skybank.service.GestorService;
 import com.example.skybank.ui.FiltroListadoClientes;
+import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +42,12 @@ public class GestorController {
 
     @Autowired
     private SocioRepository socioRepository;
+
+    @Autowired
+    private CuentaRepository cuentaRepository;
+
+    @Autowired
+    private TipoOperacionRepository tipoOperacionRepository;
 
     @Autowired
     private GestorService gestorService;
@@ -326,6 +336,26 @@ public class GestorController {
         empresa.setBloqueada(0);
         empresaRepository.save(empresa);
         return "redirect:/gestor/sospechas";
+    }
+
+
+    @GetMapping("/gestionarCliente")
+    public String verHistorial (Model model, @RequestParam("postId") int id){
+
+        //ARREGLAR
+
+        //CuentaEntity cuenta = cuentaRepository.findByCliente(id);
+        List<OperacionEntity> operaciones = operacionRepository.findbyAccount(id);
+        FiltroOperaciones filtro = new FiltroOperaciones();
+        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
+        filtro.setIdCuenta(cuenta.getIdcuenta());
+
+        model.addAttribute("operaciones",operaciones);
+        model.addAttribute("tipos",tipos);
+        model.addAttribute("filtro",filtro);
+        model.addAttribute("cuenta",cuenta);
+
+        return "gestorCliente";
     }
 
 }
