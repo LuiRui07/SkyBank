@@ -1,3 +1,5 @@
+use skybank;
+
 -- MySQL dump 10.13  Distrib 8.0.30, for macos12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: skybank
@@ -24,6 +26,8 @@ DROP TABLE IF EXISTS `asistente`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `asistente` (
   `idasistente` int NOT NULL AUTO_INCREMENT,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
   PRIMARY KEY (`idasistente`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
