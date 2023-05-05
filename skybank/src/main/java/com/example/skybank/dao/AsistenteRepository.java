@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface AsistenteRepository extends JpaRepository<AsistenteEntity, Integer> {
 
-    @Query("select a from AsistenteEntity a where (a.idasistente= :user ) and a.idasistente = :password")
-    AsistenteEntity autenticar(@Param("user") String name, @Param("password") String contra);
+    @Query("select a from AsistenteEntity a where (a.email= :email ) and a.password = :password")
+    AsistenteEntity autenticar(@Param("email") String email, @Param("password") String contra);
 
 }
 

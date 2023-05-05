@@ -22,7 +22,7 @@
 <div class="container">
 
 
-  <h1 class="mt-5">Inicio Sesión como Cliente:</h1>
+  <h1 class="mt-5">Inicio Sesión como Asistente:</h1>
     <%if (error != null) { %>
   <div class="alert alert-danger mt-3" role="alert">
     ${error}
@@ -31,8 +31,8 @@
 
   <form method="post" action="/asistente/login" class="mt-3">
     <div class="mb-3">
-      <label for="DNI" class="form-label">DNI o Email de Usuario:</label>
-      <input type="text" class="form-control" id="DNI" name="DNI" required>
+      <label for="email" class="form-label">DNI o Email de Usuario:</label>
+      <input type="text" class="form-control" id="email" name="email" required>
     </div>
     <div class="mb-3">
       <label for="password" class="form-label">Contraseña:</label>

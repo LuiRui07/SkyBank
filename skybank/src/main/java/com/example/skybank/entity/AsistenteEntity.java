@@ -11,6 +11,12 @@ public class AsistenteEntity {
     @Id
     @Column(name = "idasistente", nullable = false)
     private int idasistente;
+    @Basic
+    @Column(name = "email", nullable = false, length = 100)
+    private String email;
+    @Basic
+    @Column(name = "password", nullable = false, length = 45)
+    private String password;
     @OneToMany(mappedBy = "asistenteByIdasistente")
     private List<ConversacionEntity> conversacionsByIdasistente;
 
@@ -18,8 +24,20 @@ public class AsistenteEntity {
         return idasistente;
     }
 
-    public void setIdasistente(int idasistente) {
-        this.idasistente = idasistente;
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

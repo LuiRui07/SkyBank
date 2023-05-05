@@ -36,7 +36,7 @@ public class AsistenteController {
     @GetMapping("/")
     public String mostrarInterfazAsistente(){
 
-        return "asistente/paginaPrincipal";
+        return "/asistentePaginaPrincipal";
     }
 
     @GetMapping("/login")
@@ -45,12 +45,12 @@ public class AsistenteController {
     }
 
     @PostMapping("/login")
-    public String logear(@RequestParam("DNI") String user, @RequestParam("password") String contra,
+    public String logear(@RequestParam("email") String user, @RequestParam("password") String contra,
                          HttpSession sesion, Model model){
-        String urlTo = "redirect:/cliente/";
+        String urlTo = "redirect:/asistente/";
         AsistenteEntity asistente = this.asistenteRepository.autenticar(user,contra);
         if(asistente == null){
-            model.addAttribute("error", "Cliente no encontrado");
+            model.addAttribute("error", "asistente no encontrado");
             urlTo = "clienteLogin";
         }else{
                 sesion.setAttribute("asistente",asistente);
