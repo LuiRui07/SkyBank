@@ -28,7 +28,7 @@ CREATE TABLE `asistente` (
   `idasistente` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  PRIMARY KEY (`idasistente`)
+  PRIMARY KEY (`idasistente`)asistente
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -38,6 +38,7 @@ CREATE TABLE `asistente` (
 
 LOCK TABLES `asistente` WRITE;
 /*!40000 ALTER TABLE `asistente` DISABLE KEYS */;
+INSERT INTO `skybank`.`asistente` (`idasistente`, `email`, `password`) VALUES ('1', 'pablo', 'pablo');
 /*!40000 ALTER TABLE `asistente` ENABLE KEYS */;
 UNLOCK TABLES;
 

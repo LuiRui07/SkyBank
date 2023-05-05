@@ -52,7 +52,7 @@ public class AsistenteController {
         if(asistente == null){
             model.addAttribute("error", "asistente no encontrado");
             sesion.setAttribute("asistente",asistente);
-            urlTo = "clienteLogin";
+            urlTo = "asistenteLogin";
         }else{
                 sesion.setAttribute("asistente",asistente);
             }
