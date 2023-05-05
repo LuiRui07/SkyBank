@@ -9,7 +9,6 @@
 <%@ page import="com.example.skybank.dto.Cuenta" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<% List<Cuenta> cuentas = (List<Cuenta>) request.getAttribute("cuentas");%>
 <% Cuenta cuenta = (Cuenta) request.getAttribute("cuentaOrigen");%>
 
 <html>

@@ -26,11 +26,6 @@ public class DivisaService {
         return divisaRepository.getDivisasMenos(divisa.getIddivisa()).stream().map(d -> d.toDTO()).toList();
     }
 
-    public Double obtenerValorDivisa(int divisa){
-        DivisaEntity div = divisaRepository.findById(divisa).orElse(null);
-        return div.getValor();
-    }
-
     public Divisa obtenerDivisa(int divisa){
         DivisaEntity div = divisaRepository.findById(divisa).orElse(null);
         return div == null ? null : div.toDTO();

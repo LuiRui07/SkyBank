@@ -7,35 +7,16 @@ import com.example.skybank.dao.*;
 import com.example.skybank.dto.*;
 import com.example.skybank.service.*;
 import com.example.skybank.ui.FiltroOperaciones;
-import com.example.skybank.ui.OrdenOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.text.DecimalFormat;
 import java.util.*;
-
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
-
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private CuentaRepository cuentaRepository;
-
-    @Autowired
-    private OperacionRepository operacionRepository;
-
-    @Autowired
-    private TipoOperacionRepository tipoOperacionRepository;
-
-    @Autowired
-    private DivisaRepository divisaRepository;
 
     @Autowired
     private ClienteService clienteService;
@@ -84,14 +65,13 @@ public class ClienteController {
         }else{
             if(cliente.getVerificado() == 0){
                 model.addAttribute("error", "Cliente no verificado por un Gestor, espere a ser verificado por favor.");
-                urlTo = "loginEmpresa";
+                urlTo = "clienteLogin";
             }else{
                 sesion.setAttribute("cliente", cliente);
             }
         }
         return urlTo;
     }
-
 
 
     @GetMapping("/register")
@@ -114,6 +94,7 @@ public class ClienteController {
        FiltroOperaciones filtro = new FiltroOperaciones();
        List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
        filtro.setIdCuenta(cuenta.getIdcuenta());
+
        model.addAttribute("operaciones",operaciones);
        model.addAttribute("tipos",tipos);
        model.addAttribute("filtro",filtro);
@@ -132,15 +113,12 @@ public class ClienteController {
                                        Model model, HttpSession session) {
 
         Cuenta cuenta = cuentaService.obtenerCuentaPorId(filtro.getIdCuenta());
-        List<Operacion> operaciones = operacionService.obtenerOperacionesCliente(cuenta);
+        List<Operacion> operaciones = operacionService.filtrar(filtro);
         List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
-        model.addAttribute("tipos",tipos);
-
-        operaciones = operacionService.filtrar(filtro);
 
         model.addAttribute("operaciones",operaciones);
-        model.addAttribute("filtro",filtro);
         model.addAttribute("tipos",tipos);
+        model.addAttribute("filtro",filtro);
         model.addAttribute("cuenta",cuenta);
         return "clienteHistorial";
     }
@@ -163,9 +141,11 @@ public class ClienteController {
     public String doTrans (Model model, @RequestParam("id") int idCuenta){
         Cuenta cuentaOrigen = cuentaService.obtenerCuentaPorId(idCuenta);
         List<Cuenta> cuentas = cuentaService.getCuentasByDivisa(cuentaOrigen.getDivisa(), cuentaOrigen.getIdcuenta());
+
         Operacion operacion = new Operacion();
         operacion.setCuentaOrigen(cuentaOrigen);
         operacion.setDivisa(cuentaOrigen.getDivisa());
+
         model.addAttribute("cuentaOrigen",cuentaOrigen);
         model.addAttribute("cuentas",cuentas);
         model.addAttribute("operacion",operacion);
@@ -192,7 +172,6 @@ public class ClienteController {
         Cuenta cuenta = cuentaService.obtenerCuentaPorId(idCuenta);
         Operacion operacion = new Operacion();
         operacion.setCuentaOrigen(cuenta);
-
         List<Divisa> divisas = divisaService.obtenerTodasLasDivisasMenos(cuenta.getDivisa());
 
         model.addAttribute("cuenta",cuenta);
@@ -205,10 +184,7 @@ public class ClienteController {
     public String mostrarValor (Model model,  @ModelAttribute("operacionCambio") Operacion operacionForm) {
 
         Double saldo = cuentaService.obtenerCuentaPorId(operacionForm.getCuentaOrigen().getIdcuenta()).getSaldo();
-
         Cuenta cuenta = cuentaService.obtenerCuentaPorId(operacionForm.getCuentaOrigen().getIdcuenta());
-
-
         model.addAttribute("cuenta",cuenta);
 
         if (operacionForm.getCantidad() > saldo || operacionForm.getCantidad() <= 0.00){
@@ -220,11 +196,8 @@ public class ClienteController {
         Divisa divisaOp = divisaService.obtenerDivisa(operacionForm.getDivisa().getIddivisa());
         Divisa divisaCu = divisaService.obtenerDivisa(cuenta.getDivisa().getIddivisa());
 
-
-
         model.addAttribute("divisa",divisaOp);
         model.addAttribute("divisaC", divisaCu);
-
 
         return "clienteCambioValor";
         }

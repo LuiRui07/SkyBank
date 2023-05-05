@@ -1,10 +1,7 @@
 <%--
   @author: Luis Ruiz Nuñez
 --%>
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
-<%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="com.example.skybank.dto.Cliente" %>
 <%@ page import="com.example.skybank.dto.Cuenta" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -62,13 +59,14 @@
             <%}%>
             <a class="text-muted" style="float: right;font-size: 20%"> IBAN: <%=cuenta.getIdcuenta()%></a>
             </p>
-            <a href="historial?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Historial</a>
+            <a href="historial?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-info">Historial</a>
             <% if (cuenta.getActiva() == 1){%>
             <a style="margin-top:1%" href="trans?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Transferencia</a>
             <a style="margin-top:1%" href="cambio?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
         </div>
     <%} else { %>
-        <a style="margin-top:1%" href="#" class="btn btn-outline-danger">Cuenta Bloqueada</a>
+        <h1 style="margin-top:1%"class="badge bg-danger" >Cuenta Bloqueada</h1>
+
     <%}}}}%>
 </div>
 

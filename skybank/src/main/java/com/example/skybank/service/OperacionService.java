@@ -192,7 +192,7 @@ public class OperacionService {
 
             if (filtro.getTipo() != "") {
                 List<OperacionEntity> operaciones1 = operacionRepository.filtrarPorTipo(filtro.getTipo(), idcuenta);
-                operaciones.retainAll(operaciones);
+                operaciones.retainAll(operaciones1);
             }
             if (filtro.getMax() != null) {
                 List<OperacionEntity> operaciones2 = operacionRepository.filtrarMax(filtro.getMax(), idcuenta);

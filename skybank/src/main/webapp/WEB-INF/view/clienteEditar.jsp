@@ -6,7 +6,6 @@
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="com.example.skybank.dto.Cliente" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% Cliente cliente = (Cliente) request.getAttribute("cliente");%>
 <html>
 <head>
     <title>Modificar Datos</title>
