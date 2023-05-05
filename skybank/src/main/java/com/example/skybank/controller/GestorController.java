@@ -348,12 +348,12 @@ public class GestorController {
         List<OperacionEntity> operaciones = operacionRepository.findbyAccount(id);
         FiltroOperaciones filtro = new FiltroOperaciones();
         List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
-        filtro.setIdCuenta(cuenta.getIdcuenta());
+        //filtro.setIdCuenta(cuenta.getIdcuenta());
 
         model.addAttribute("operaciones",operaciones);
         model.addAttribute("tipos",tipos);
         model.addAttribute("filtro",filtro);
-        model.addAttribute("cuenta",cuenta);
+        //model.addAttribute("cuenta",cuenta);
 
         return "gestorCliente";
     }

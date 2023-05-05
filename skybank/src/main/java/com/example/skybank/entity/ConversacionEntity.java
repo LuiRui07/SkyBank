@@ -36,9 +36,7 @@ public class ConversacionEntity {
         this.idconversacion = idconversacion;
     }
 
-    public int getIdasistente() {
-        return idconversacion;
-    }
+    public int getIdasistente() {return idasistente;}
 
     public void setIdasistente(int idasistente) {
         this.idasistente = idasistente;
@@ -93,9 +91,9 @@ public class ConversacionEntity {
         chatDTO.setIdConversacion(this.idconversacion);
         chatDTO.setCerrado(this.cerrada);
 
-        chatDTO.setNombreUsuario(clienteByIdcliente.getNombre() + " " + clienteByIdcliente.getApellido1());
-        chatDTO.setNombreAsistente(clienteByIdcliente.getNombre() + " " + clienteByIdcliente.getApellido1());
-        chatDTO.setDniUsuario(clienteByIdcliente.getDni());
+        chatDTO.setNombreAsistente(asistenteByIdasistente.getEmail());
+        chatDTO.setNombreCliente(clienteByIdcliente.getNombre() + " " + clienteByIdcliente.getApellido1());
+        chatDTO.setDniCliente(clienteByIdcliente.getDni());
         return chatDTO;
     }
 }

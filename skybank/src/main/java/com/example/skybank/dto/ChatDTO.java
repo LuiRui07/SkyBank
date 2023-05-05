@@ -6,15 +6,15 @@ import java.util.Objects;
 public class ChatDTO implements Serializable {
     private Integer idConversacion;
 
-    private Integer idAsistente;
+    private Integer idasis;
     private Integer cerrada;
-    private String nombreUsuario;
+    private String nombreCliente;
     private  String nombreAsistente;
     private String dniUsuario;
 
     public Integer getIdConversacion() {return idConversacion;}
     public Integer getIdAsistente() {
-        return idConversacion;
+        return idasis;
     }
     public void setIdConversacion(Integer idChat) {
         this.idConversacion = idChat;
@@ -49,19 +49,19 @@ public class ChatDTO implements Serializable {
         this.nombreAsistente = nombreAsistente;
     }
 
-    public String getNombreUsuario() {
-        return nombreUsuario;
+    public String getNombreCliente() {
+        return nombreCliente;
     }
 
-    public void setNombreUsuario(String nombreUsuario) {
-        this.nombreUsuario = nombreUsuario;
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public String getDniUsuario() {
         return dniUsuario;
     }
 
-    public void setDniUsuario(String dniUsuario) {
+    public void setDniCliente(String dniUsuario) {
         this.dniUsuario = dniUsuario;
     }
 }

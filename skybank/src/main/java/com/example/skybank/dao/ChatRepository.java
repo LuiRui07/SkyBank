@@ -8,8 +8,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ChatRepository extends JpaRepository<ConversacionEntity,Integer> {
-    @Query("select c from ConversacionEntity c where c.idasistente = :idAsistente")
-    public List<ConversacionEntity> filtrarChatPorAsistente(@Param("idAsistente") Integer idAsistente);
+    @Query("select c from ConversacionEntity c where c.idasistente = :idasistente")
+    public List<ConversacionEntity> filtrarChatPorAsistente(@Param("idasistente") Integer idAsistente);
 
     @Query("select c  from ConversacionEntity c where c.cerrada= :cerrado and c.idasistente = :idAsistente and c.clienteByIdcliente.dni like %:dni%  and c.clienteByIdcliente.nombre like %:nombre%")
     public List<ConversacionEntity> filtrarPorTodo(@Param("idAsistente") Integer idAsistente, @Param("cerrado") Byte cerrado,@Param("dni") String dni,@Param("nombre") String nombre);

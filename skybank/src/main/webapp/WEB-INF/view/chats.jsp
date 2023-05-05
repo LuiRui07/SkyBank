@@ -21,8 +21,7 @@
 <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">
     <td>Estado:<form:radiobutton path="activo" value="0" label="activo" /> <form:radiobutton
             path="activo" value="1" label="inactivo" /></td><br/>
-    DNI:<form:input path="DNI"></form:input>
-    Nombre: <form:input path="nombre"></form:input>
+    email:<form:input path="email"></form:input>
     <form:button>Filtrar</form:button>
     <button><a href="/asistente/limpiar" style="text-decoration: none" >Limpiar</a></button>
 </form:form>
@@ -37,7 +36,7 @@
         for(ChatDTO chat:chatEntityList){
     %>
     <tr>
-        <td><%=chat.getNombreUsuario()%> (<%=chat.getDniUsuario()%>) </td>
+        <td><%=chat.getNombreCliente()%> (<%=chat.getDniUsuario()%>) </td>
         <td><a href="/asistente/chat?idChat=<%=chat.getIdConversacion()%>">Ver mensajes</a></td>
         <td><%=chat.getCerrada()==1? "Inactivo" : "Activo"%></td>
     </tr>

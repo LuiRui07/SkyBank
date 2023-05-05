@@ -24,8 +24,8 @@ public class ChatService {
     MensajeRepository mensajeRepository;
 
 
-    public List<ChatDTO> listaChatsDeAsistente(Integer idCliente) {
-        List<ConversacionEntity> lista = chatRepository.filtrarChatPorAsistente(idCliente);
+    public List<ChatDTO> listaChatsDeAsistente(Integer idasis) {
+        List<ConversacionEntity> lista = chatRepository.filtrarChatPorAsistente(idasis);
         return listaEntidadesADTO(lista);
     }
 

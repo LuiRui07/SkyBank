@@ -51,6 +51,7 @@ public class AsistenteController {
         AsistenteEntity asistente = this.asistenteRepository.autenticar(user,contra);
         if(asistente == null){
             model.addAttribute("error", "asistente no encontrado");
+            sesion.setAttribute("asistente",asistente);
             urlTo = "clienteLogin";
         }else{
                 sesion.setAttribute("asistente",asistente);

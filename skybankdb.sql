@@ -148,6 +148,7 @@ CREATE TABLE `conversacion` (
 
 LOCK TABLES `conversacion` WRITE;
 /*!40000 ALTER TABLE `conversacion` DISABLE KEYS */;
+INSERT INTO `skybank`.`conversacion` (`idconversacion`, `idcliente`, `cerrada`, `idasis`) VALUES ('1', '1', '0', '1');
 /*!40000 ALTER TABLE `conversacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
