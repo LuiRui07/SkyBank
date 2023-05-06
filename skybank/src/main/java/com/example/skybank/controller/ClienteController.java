@@ -5,7 +5,10 @@
 package com.example.skybank.controller;
 import com.example.skybank.dao.*;
 import com.example.skybank.dto.*;
+import com.example.skybank.entity.AsistenteEntity;
+import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.service.*;
+import com.example.skybank.ui.FiltroAsistente;
 import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +32,12 @@ public class ClienteController {
 
     @Autowired
     private DivisaService divisaService;
+
+    @Autowired
+    private ChatService chatService;
+
+    @Autowired
+    private MensajeService mensajeService;
 
     @GetMapping("/")
     public String getClientes(Model model, HttpSession session){
@@ -218,4 +227,20 @@ public class ClienteController {
         return "cliente";
     }
 
+    @GetMapping("/chatsCliente")
+    public String mostrarChat(HttpSession session, Model model){
+        Cliente cliente = (Cliente) session.getAttribute("cliente");
+        List<ChatDTO> chats = this.chatService.listaChatsDeCliente(cliente.getIdcliente());
+        model.addAttribute("chats",chats);
+        return "chatsCliente";
+    }
+
+    @GetMapping("/chatCliente")
+    public String mostrarChatPrivado(Model model, @RequestParam("idconversacion") Integer idChat){
+        ChatDTO chat = this.chatService.buscarChat(idChat);
+        List<MensajeDTO> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
+        model.addAttribute("chat",chat);
+        model.addAttribute("mensajes",mensajesEntities);
+        return "chatCliente";
+    }
 }

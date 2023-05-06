@@ -35,6 +35,7 @@
     <p class="h1"><%=cliente.getNombre()%>  <%=cliente.getApellido1()%> <%=cliente.getApellido2()%>
         <div>
             <a href="editar?id=${cliente.idcliente}" class="btn btn-outline-primary">Modificar Datos</a>
+            <a href="/cliente/chatsCliente">Abrir conversaciones nuevas o ver anteriores</a>
             <a onclick="CerrarSesion()" style="float:right" class="btn btn-outline-info"> Cerrar Sesión </a>
             <%if (cliente.getBloqueado() == 1 && cliente.getSolicitudactivacion() != 1){%>
                 <a href="solicitar?id=<%=cliente.getIdcliente()%>"  class="btn btn-outline-success">Solicitar Activacion</a> <br/>

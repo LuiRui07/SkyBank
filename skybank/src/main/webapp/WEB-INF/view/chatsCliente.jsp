@@ -29,7 +29,7 @@
   <tr>
     <td><%=chat.getNombreCliente()%> (<%=chat.getDniUsuario()%>) </td>
     <td><a href="/asistente/chat?idconversacion=<%=chat.getIdConversacion()%>">Ver mensajes</a></td>
-    <td><%=chat.getCerrada()==1? "Inactivo" : "Activo"%></td>
+    <td><%if (chat.getCerrada() == 0)%> <button><a href="/cliente/cerrar">Cerrar</a></button></td>
   </tr>
   <%
     }
