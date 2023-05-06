@@ -1,3 +1,7 @@
+/*
+@author: Pablo García Platero
+*/
+
 package com.example.skybank.dto;
 
 import java.io.Serializable;

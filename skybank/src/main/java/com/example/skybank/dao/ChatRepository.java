@@ -1,3 +1,7 @@
+/*
+@author: Pablo García Platero
+*/
+
 package com.example.skybank.dao;
 
 import com.example.skybank.entity.ConversacionEntity;

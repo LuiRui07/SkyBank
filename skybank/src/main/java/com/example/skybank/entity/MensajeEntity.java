@@ -1,3 +1,7 @@
+/*
+@author: Pablo García Platero
+*/
+
 package com.example.skybank.entity;
 
 import com.example.skybank.dto.MensajeDTO;

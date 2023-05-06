@@ -1,3 +1,7 @@
+/*
+@author: Pablo García Platero
+*/
+
 package com.example.skybank.controller;
 
 import com.example.skybank.dao.AsistenteRepository;
@@ -80,11 +84,11 @@ public class AsistenteController {
     }
 
     @PostMapping("/crearNuevoMensaje")
-    public String agregarMensaje(@RequestParam("mensaje")String mensaje,@RequestParam("idconversacion") Integer idChat, @RequestParam("idcliente") Integer idCliente){
+    public String agregarMensaje(@RequestParam("mensaje")String mensaje,@RequestParam("idconversacion") Integer idChat, @RequestParam("idasistente") Integer idasistente){
         if(mensaje.equals("")|| mensaje == null){
 
         }else{
-            chatService.agregarMensaje(idChat,mensaje,idCliente);
+            chatService.agregarMensaje(idChat,mensaje,idasistente);
         }
         return "redirect:/asistente/chat?idChat=" + idChat;
     }

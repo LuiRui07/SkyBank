@@ -19,7 +19,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Hola asistente del sistema, este es el chat con <%=chat.getNombreUsuario()%> con dni <%=chat.getDniUsuario()%> <button><a href="/asistente/chats">Volver a los chats</a></button></h1>
+<h1>Hola asistente del sistema, este es el chat con <%=chat.getNombreCliente()%> con dni <%=chat.getDniUsuario()%> <button><a href="/asistente/chats">Volver a los chats</a></button></h1>
 
 
 <table>
@@ -31,7 +31,7 @@
         }if(chat.getCerrada()==0){
 
     %>
-    <form action="/asistente/crearNuevoMensaje?idChat=<%=chat.getIdConversacion()%>&idUsuario=<%=chat.getIdAsistente()%>" method="post">
+    <form action="/asistente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>&idcliente=<%=chat.getIdAsistente()%>" method="post">
         Nuevo mensaje: <input name="mensaje" type="text" >
         <button type="submit">Enviar</button>
     </form>

@@ -1,8 +1,14 @@
+/*
+@author: Pablo García Platero
+*/
+
 package com.example.skybank.service;
 
+import com.example.skybank.dao.AsistenteRepository;
 import com.example.skybank.dao.ChatRepository;
 import com.example.skybank.dao.MensajeRepository;
 import com.example.skybank.dto.ChatDTO;
+import com.example.skybank.entity.AsistenteEntity;
 import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.entity.ConversacionEntity;
 import com.example.skybank.entity.MensajeEntity;
@@ -21,6 +27,9 @@ public class ChatService {
     ChatRepository chatRepository;
 
     @Autowired
+    AsistenteRepository asistenteRepository;
+
+    @Autowired
     MensajeRepository mensajeRepository;
 
 
@@ -35,12 +44,11 @@ public class ChatService {
         return chat.toDTO();
     }
 
-    public void agregarMensaje(Integer idChat, String mensaje, Integer idUsuario) {
+    public void agregarMensaje(Integer idChat, String mensaje, Integer idasistente) {
         MensajeEntity mensajeEntity = new MensajeEntity();
         ConversacionEntity chat = this.chatRepository.findById(idChat).orElse(null);
         mensajeEntity.setConversacionByIdconversacion(chat);
         mensajeEntity.setTexto(mensaje);
-        ClienteEntity cliente;
         mensajeEntity.setFecha(new Date(System.currentTimeMillis()));
         mensajeEntity.setHora(new Timestamp(System.currentTimeMillis()));
         this.mensajeRepository.save(mensajeEntity);

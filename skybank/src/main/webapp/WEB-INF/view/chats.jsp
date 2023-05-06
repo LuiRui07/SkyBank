@@ -37,7 +37,7 @@
     %>
     <tr>
         <td><%=chat.getNombreCliente()%> (<%=chat.getDniUsuario()%>) </td>
-        <td><a href="/asistente/chat?idChat=<%=chat.getIdConversacion()%>">Ver mensajes</a></td>
+        <td><a href="/asistente/chat?idconversacion=<%=chat.getIdConversacion()%>">Ver mensajes</a></td>
         <td><%=chat.getCerrada()==1? "Inactivo" : "Activo"%></td>
     </tr>
     <%
