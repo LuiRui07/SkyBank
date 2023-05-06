@@ -88,6 +88,7 @@ public class AsistenteController {
         if(mensaje.equals("")|| mensaje == null){
 
         }else{
+            mensaje = "Asistente: " + mensaje;
             chatService.agregarMensaje(idChat,mensaje);
         }
         return "redirect:/asistente/chat?idconversacion=" + idChat;
@@ -95,22 +96,21 @@ public class AsistenteController {
 
     @PostMapping("/filtrar")
     public String doFiltrar(@ModelAttribute("filtro") FiltroAsistente filtro, HttpSession session, Model model){
-        ClienteEntity cliente = (ClienteEntity) session.getAttribute("cliente");
+        AsistenteEntity asistente = (AsistenteEntity) session.getAttribute("asistente");
         System.out.println(filtro.getActivo());
-        List<ChatDTO> chats = this.chatService.filtrarChats(filtro,cliente);
-
+        List<ChatDTO> chats = this.chatService.filtrarChats(filtro,asistente);
         model.addAttribute("chats",chats);
         model.addAttribute("filtro",filtro);
-        return "/asistente/chats";
+        return "chats";
     }
 
     @GetMapping("/limpiar")
     public String doLimpiar(HttpSession session,Model model){
-        ClienteEntity cliente = (ClienteEntity) session.getAttribute("cliente");
-        List<ChatDTO> chats = this.chatService.listaChatsDeAsistente(cliente.getIdcliente() );
+        AsistenteEntity asistenteEntity = (AsistenteEntity) session.getAttribute("asistente");
+        List<ChatDTO> chats = this.chatService.listaChatsDeAsistente(asistenteEntity.getIdasistente());
         model.addAttribute("chats",chats);
         model.addAttribute("filtro",new FiltroAsistente());
-        return "/asistente/chats";
+        return "chats";
     }
 
 }

@@ -3,9 +3,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.dto.ChatDTO" %><%--
   Created by IntelliJ IDEA.
-  User: martin
-  Date: 27/03/2023
-  Time: 10:49
+  User: Pablo García Platero
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -22,6 +20,7 @@
     <td>Estado:<form:radiobutton path="activo" value="0" label="activo" /> <form:radiobutton
             path="activo" value="1" label="inactivo" /></td><br/>
     email:<form:input path="nombre"></form:input>
+    DNI:<form:input path="DNI"></form:input>
     <form:button>Filtrar</form:button>
     <button><a href="/asistente/limpiar" style="text-decoration: none" >Limpiar</a></button>
 </form:form>

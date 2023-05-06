@@ -55,23 +55,23 @@ public class ChatService {
     }
 
 
-    public List<ChatDTO> filtrarChats(FiltroAsistente filtro, ClienteEntity usuario) {
+    public List<ChatDTO> filtrarChats(FiltroAsistente filtro, AsistenteEntity asistente) {
         List<ConversacionEntity> chats;
         if (filtro.getDNI() != null && filtro.getDNI() != "" && filtro.getActivo() != null && filtro.getNombre() != null && filtro.getNombre() != "") {
 
-            chats = chatRepository.filtrarPorTodo(usuario.getIdcliente(), filtro.getActivo(), filtro.getNombre(), filtro.getDNI());
+            chats = chatRepository.filtrarPorTodo(asistente.getIdasistente(), filtro.getActivo(), filtro.getNombre(), filtro.getDNI());
         } else if (filtro.getDNI() != null && filtro.getDNI() != "" && filtro.getActivo() != null) {
-            chats = chatRepository.filtrarSinNombre(usuario.getIdcliente(), filtro.getActivo(), filtro.getDNI());
+            chats = chatRepository.filtrarSinNombre(asistente.getIdasistente(), filtro.getActivo(), filtro.getDNI());
         } else if (filtro.getActivo() != null && filtro.getNombre() != null && filtro.getNombre() != "") {
-            chats = chatRepository.filtrarSinDNI(usuario.getIdcliente(), filtro.getActivo(), filtro.getNombre());
+            chats = chatRepository.filtrarSinDNI(asistente.getIdasistente(), filtro.getActivo(), filtro.getNombre());
         } else if (filtro.getDNI() != null && filtro.getDNI() != "" && filtro.getNombre() != null && filtro.getNombre() != "") {
-            chats = chatRepository.filtrarSinCerrado(usuario.getIdcliente(), filtro.getNombre(), filtro.getDNI());
+            chats = chatRepository.filtrarSinCerrado(asistente.getIdasistente(), filtro.getNombre(), filtro.getDNI());
         } else if (filtro.getDNI() != null && filtro.getDNI() != "") {
-            chats = chatRepository.filtrarPorSoloDNI(usuario.getIdcliente(), filtro.getDNI());
+            chats = chatRepository.filtrarPorSoloDNI(asistente.getIdasistente(), filtro.getDNI());
         } else if (filtro.getActivo() != null) {
-            chats = chatRepository.filtrarPorSoloCerrado(usuario.getIdcliente(), filtro.getActivo());
+            chats = chatRepository.filtrarPorSoloCerrado(asistente.getIdasistente(), filtro.getActivo());
         } else {
-            chats = chatRepository.filtrarPorSoloNombre(usuario.getIdcliente(), filtro.getNombre());
+            chats = chatRepository.filtrarPorSoloNombre(asistente.getIdasistente(), filtro.getNombre());
         }
         return listaEntidadesADTO(chats);
     }
@@ -79,7 +79,7 @@ public class ChatService {
     protected List<ChatDTO> listaEntidadesADTO(List<ConversacionEntity> lista) {
         ArrayList dtos = new ArrayList<ChatDTO>();
 
-        lista.forEach((final ConversacionEntity cliente) -> dtos.add(cliente.toDTO()));
+        lista.forEach((final ConversacionEntity conversaciones) -> dtos.add(conversaciones.toDTO()));
 
         return dtos;
     }

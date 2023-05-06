@@ -21,8 +21,8 @@ public class ConversacionEntity {
     @Column(name = "idasistente",nullable = false)
     private int idasistente;
     @Basic
-    @Column(name = "cerrada", nullable = false)
-    private int cerrada;
+    @Column(name = "cerrada", nullable = true)
+    private Byte cerrada;
     @ManyToOne
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
     private ClienteEntity clienteByIdcliente;
@@ -46,11 +46,11 @@ public class ConversacionEntity {
         this.idasistente = idasistente;
     }
 
-    public int getCerrada() {
+    public Byte getCerrada() {
         return cerrada;
     }
 
-    public void setCerrada(int cerrada) {
+    public void setCerrada(Byte cerrada) {
         this.cerrada = cerrada;
     }
 
