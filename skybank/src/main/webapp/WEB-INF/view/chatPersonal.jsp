@@ -31,7 +31,7 @@
         }if(chat.getCerrada()==0){
 
     %>
-    <form action="/asistente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>&idcliente=<%=chat.getIdAsistente()%>" method="post">
+    <form action="/asistente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>" method="post">
         Nuevo mensaje: <input name="mensaje" type="text" >
         <button type="submit">Enviar</button>
     </form>

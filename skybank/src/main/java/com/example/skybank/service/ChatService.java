@@ -44,7 +44,7 @@ public class ChatService {
         return chat.toDTO();
     }
 
-    public void agregarMensaje(Integer idChat, String mensaje, Integer idasistente) {
+    public void agregarMensaje(Integer idChat, String mensaje) {
         MensajeEntity mensajeEntity = new MensajeEntity();
         ConversacionEntity chat = this.chatRepository.findById(idChat).orElse(null);
         mensajeEntity.setConversacionByIdconversacion(chat);

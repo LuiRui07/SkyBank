@@ -17,7 +17,7 @@
     <title>Title</title>
 </head>
 <body>
-<h1>Aqui estan los chats que has tenido y que estan pendientes</h1>
+<h1>Conversaciones </h1>
 <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">
     <td>Estado:<form:radiobutton path="activo" value="0" label="activo" /> <form:radiobutton
             path="activo" value="1" label="inactivo" /></td><br/>

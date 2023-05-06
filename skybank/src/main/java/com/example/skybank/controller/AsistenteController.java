@@ -84,13 +84,13 @@ public class AsistenteController {
     }
 
     @PostMapping("/crearNuevoMensaje")
-    public String agregarMensaje(@RequestParam("mensaje")String mensaje,@RequestParam("idconversacion") Integer idChat, @RequestParam("idasistente") Integer idasistente){
+    public String agregarMensaje(@RequestParam("mensaje")String mensaje,@RequestParam("idconversacion") Integer idChat){
         if(mensaje.equals("")|| mensaje == null){
 
         }else{
-            chatService.agregarMensaje(idChat,mensaje,idasistente);
+            chatService.agregarMensaje(idChat,mensaje);
         }
-        return "redirect:/asistente/chat?idChat=" + idChat;
+        return "redirect:/asistente/chat?idconversacion=" + idChat;
     }
 
     @PostMapping("/filtrar")
