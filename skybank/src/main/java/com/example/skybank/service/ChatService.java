@@ -38,6 +38,12 @@ public class ChatService {
         return listaEntidadesADTO(lista);
     }
 
+    public List<ChatDTO> listaChatsDeCliente(Integer idcliente) {
+        List<ConversacionEntity> lista = chatRepository.filtrarChatPorCliente(idcliente);
+        return listaEntidadesADTO(lista);
+    }
+
+
 
     public ChatDTO buscarChat(Integer idChat) {
         ConversacionEntity chat = this.chatRepository.getById(idChat);

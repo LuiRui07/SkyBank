@@ -5,6 +5,7 @@
 package com.example.skybank.controller;
 
 import com.example.skybank.dao.AsistenteRepository;
+import com.example.skybank.dto.AsistenteDTO;
 import com.example.skybank.dto.ChatDTO;
 import com.example.skybank.dto.Cliente;
 import com.example.skybank.dto.MensajeDTO;
@@ -52,7 +53,7 @@ public class AsistenteController {
     @PostMapping("/login")
     public String logear(@RequestParam("email") String user, @RequestParam("password") String contra, HttpSession sesion, Model model){
         String urlTo = "redirect:/asistente/";
-        AsistenteEntity asistente = this.asistenteRepository.autenticar(user,contra);
+        AsistenteDTO asistente = this.asistenteService.autenticar(user,contra);
         if(asistente == null){
             model.addAttribute("error", "asistente no encontrado");
             sesion.setAttribute("asistente",asistente);
@@ -77,7 +78,6 @@ public class AsistenteController {
     public String mostrarChatPrivado(Model model, @RequestParam("idconversacion") Integer idChat){
         ChatDTO chat = this.chatService.buscarChat(idChat);
         List<MensajeDTO> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
-
         model.addAttribute("chat",chat);
         model.addAttribute("mensajes",mensajesEntities);
         return "chatPersonal";

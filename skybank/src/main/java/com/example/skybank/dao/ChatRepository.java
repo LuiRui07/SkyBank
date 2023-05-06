@@ -15,6 +15,9 @@ public interface ChatRepository extends JpaRepository<ConversacionEntity,Integer
     @Query("select c from ConversacionEntity c where c.asistenteByIdasistente.idasistente = :idAsistente")
     public List<ConversacionEntity> filtrarChatPorAsistente(@Param("idAsistente") Integer idAsistente);
 
+    @Query("select cliente from ClienteEntity cliente where cliente.idcliente = :idCliente")
+    public List<ConversacionEntity> filtrarChatPorCliente(@Param("idCliente") Integer idCliente);
+
     @Query("select c  from ConversacionEntity c where c.cerrada= :cerrado and c.idasistente = :idAsistente and c.clienteByIdcliente.dni like %:dni%  and c.clienteByIdcliente.nombre like %:nombre%")
     public List<ConversacionEntity> filtrarPorTodo(@Param("idAsistente") Integer idAsistente, @Param("cerrado") Byte cerrado,@Param("dni") String dni,@Param("nombre") String nombre);
 
