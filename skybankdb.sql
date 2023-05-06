@@ -1,6 +1,5 @@
-use skybank;
-
--- MySQL dump 10.13  Distrib 8.0.30, for macos12 (x86_64)
+USE `skybank`;
+-- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: skybank
 -- ------------------------------------------------------
@@ -28,8 +27,8 @@ CREATE TABLE `asistente` (
   `idasistente` int NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `password` varchar(100) NOT NULL,
-  PRIMARY KEY (`idasistente`)asistente
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  PRIMARY KEY (`idasistente`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +37,7 @@ CREATE TABLE `asistente` (
 
 LOCK TABLES `asistente` WRITE;
 /*!40000 ALTER TABLE `asistente` DISABLE KEYS */;
-INSERT INTO `skybank`.`asistente` (`idasistente`, `email`, `password`) VALUES ('1', 'pablo', 'pablo');
+INSERT INTO `asistente` VALUES (1,'pablo','pablo');
 /*!40000 ALTER TABLE `asistente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -134,13 +133,13 @@ CREATE TABLE `conversacion` (
   `idconversacion` int NOT NULL AUTO_INCREMENT,
   `idcliente` int NOT NULL,
   `cerrada` int NOT NULL,
-  `idasis` int NOT NULL,
+  `idasistente` int NOT NULL,
   PRIMARY KEY (`idconversacion`),
   KEY `fk_Asistente_has_Cliente_Cliente1_idx` (`idcliente`),
-  KEY `fk_Conversacion_Asistente1_idx` (`idasis`),
+  KEY `fk_Conversacion_Asistente1_idx` (`idasistente`),
   CONSTRAINT `fk_Asistente_has_Cliente_Cliente1` FOREIGN KEY (`idcliente`) REFERENCES `cliente` (`idcliente`),
-  CONSTRAINT `fk_Conversacion_Asistente1` FOREIGN KEY (`idasis`) REFERENCES `asistente` (`idasistente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+  CONSTRAINT `fk_Conversacion_Asistente1` FOREIGN KEY (`idasistente`) REFERENCES `asistente` (`idasistente`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -149,7 +148,7 @@ CREATE TABLE `conversacion` (
 
 LOCK TABLES `conversacion` WRITE;
 /*!40000 ALTER TABLE `conversacion` DISABLE KEYS */;
-INSERT INTO `skybank`.`conversacion` (`idconversacion`, `idcliente`, `cerrada`, `idasis`) VALUES ('1', '1', '0', '1');
+INSERT INTO `conversacion` VALUES (1,1,0,1);
 /*!40000 ALTER TABLE `conversacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -445,4 +444,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-04 21:15:57
+-- Dump completed on 2023-05-06 12:51:47

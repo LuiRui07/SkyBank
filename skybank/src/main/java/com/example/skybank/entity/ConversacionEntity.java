@@ -14,7 +14,7 @@ public class ConversacionEntity {
     @Column(name = "idconversacion", nullable = false)
     private int idconversacion;
     @Basic
-    @Column(name = "idasis",nullable = false)
+    @Column(name = "idasistente",nullable = false)
     private int idasistente;
     @Basic
     @Column(name = "cerrada", nullable = false)
@@ -23,7 +23,7 @@ public class ConversacionEntity {
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
     private ClienteEntity clienteByIdcliente;
     @ManyToOne
-    @JoinColumn(name = "idasistente", referencedColumnName = "idasistente", nullable = false)
+    @JoinColumn(name = "idasistente", referencedColumnName = "idasistente", nullable = false,insertable = false, updatable = false)
     private AsistenteEntity asistenteByIdasistente;
     @OneToMany(mappedBy = "conversacionByIdconversacion")
     private List<MensajeEntity> mensajesByIdconversacion;

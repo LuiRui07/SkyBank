@@ -21,7 +21,7 @@
 <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">
     <td>Estado:<form:radiobutton path="activo" value="0" label="activo" /> <form:radiobutton
             path="activo" value="1" label="inactivo" /></td><br/>
-    email:<form:input path="email"></form:input>
+    email:<form:input path="nombre"></form:input>
     <form:button>Filtrar</form:button>
     <button><a href="/asistente/limpiar" style="text-decoration: none" >Limpiar</a></button>
 </form:form>
@@ -46,3 +46,4 @@
 </table>
 </body>
 </html>
+

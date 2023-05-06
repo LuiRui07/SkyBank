@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+
 @Controller
 @RequestMapping("/asistente")
 public class AsistenteController {
@@ -45,8 +46,7 @@ public class AsistenteController {
     }
 
     @PostMapping("/login")
-    public String logear(@RequestParam("email") String user, @RequestParam("password") String contra,
-                         HttpSession sesion, Model model){
+    public String logear(@RequestParam("email") String user, @RequestParam("password") String contra, HttpSession sesion, Model model){
         String urlTo = "redirect:/asistente/";
         AsistenteEntity asistente = this.asistenteRepository.autenticar(user,contra);
         if(asistente == null){
@@ -66,16 +66,17 @@ public class AsistenteController {
         List<ChatDTO> chats = this.chatService.listaChatsDeAsistente(asistente.getIdasistente());
         model.addAttribute("chats",chats);
         model.addAttribute("filtro",new FiltroAsistente());
-        return "asistente/chats";
+        return "chats";
     }
 
     @GetMapping("/chat")
     public String mostrarChatPrivado(Model model, @RequestParam("idconversacion") Integer idChat){
         ChatDTO chat = this.chatService.buscarChat(idChat);
         List<MensajeDTO> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
+
         model.addAttribute("chat",chat);
         model.addAttribute("mensajes",mensajesEntities);
-        return "asistente/chatPersonal";
+        return "chatPersonal";
     }
 
     @PostMapping("/crearNuevoMensaje")

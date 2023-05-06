@@ -5,6 +5,7 @@ public class FiltroAsistente {
     private String DNI;
     private String nombre;
 
+
     public Byte getActivo() {
         return activo;
     }
