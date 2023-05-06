@@ -7,8 +7,10 @@ package com.example.skybank.service;
 import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.DivisaRepository;
 import com.example.skybank.dao.EmpresaRepository;
+import com.example.skybank.dto.Cliente;
 import com.example.skybank.dto.Cuenta;
 import com.example.skybank.dto.Empresa;
+import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.entity.CuentaEntity;
 import com.example.skybank.entity.DivisaEntity;
 import com.example.skybank.entity.EmpresaEntity;
@@ -111,7 +113,27 @@ public class EmpresaService {
         List<Cuenta> cuentas = e.getCuentasByIdempresa().stream().map(c -> c.toDTO()).toList();
         System.out.println(cuentas);
         return cuentas;
+    }
 
+    public List<Empresa> obtenerTodasLasEmpresas(){
+        List<Empresa> empresas = empresaRepository.findAll().stream().map(e -> e.toDTO()).toList();
+        return empresas;
+    }
+
+    public Empresa getEmpresaById (Integer idempresa){
+
+        EmpresaEntity e = empresaRepository.findById(idempresa).orElse(null);
+        return e == null ? null : e.toDTO();
+    }
+
+    public Empresa getEmpresaByCuentaId (Integer idCuenta){
+        CuentaEntity cuenta = cuentaRepository.getById(idCuenta);
+        EmpresaEntity e = cuenta.getEmpresaByIdempresa();
+        return e==null ? null : e.toDTO();
+    }
+
+    public List<Empresa> getPendientesVerificacion(){
+        return empresaRepository.getPendientesVerificar().stream().map(c -> c.toDTO()).toList();
     }
 
 }

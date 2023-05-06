@@ -1,8 +1,10 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.GestorEntity" %>
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %><%--
+<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
+<%@ page import="com.example.skybank.dto.Empresa" %>
+<%@ page import="com.example.skybank.dto.Cliente" %>
+<%@ page import="com.example.skybank.dto.Gestor" %><%--
   Created by IntelliJ IDEA.
   User: Usuario
   Date: 03/05/2023
@@ -12,9 +14,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    List<ClienteEntity> listaClientes = (List<ClienteEntity>) request.getAttribute("listaClientes");
-    List<EmpresaEntity> listaEmpresas = (List<EmpresaEntity>) request.getAttribute("listaEmpresas");
-    GestorEntity gestor = (GestorEntity) request.getAttribute("gestor");
+    List<Cliente> listaClientes = (List<Cliente>) request.getAttribute("listaClientes");
+    List<Empresa> listaEmpresas = (List<Empresa>) request.getAttribute("listaEmpresas");
+    Gestor gestor = (Gestor) request.getAttribute("gestor");
 %>
 <html>
 <head>
@@ -51,7 +53,7 @@
         <td>
             <table>
                 <%
-                    for(ClienteEntity c : listaClientes){
+                    for(Cliente c : listaClientes){
                 %>
                 <tr>
                     <td> <a href="/gestor/gestionarCliente?postId=<%=c.getIdcliente()%>"><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></a></td>
@@ -63,7 +65,7 @@
         <td>
             <table>
                 <%
-                    for(EmpresaEntity e : listaEmpresas){
+                    for(Empresa e : listaEmpresas){
                 %>
                 <tr>
                     <td> <a href="/gestor/gestionarEmpresa?postId=<%=e.getIdempresa()%>"><%=e.getNombre()%></a>  </td>

@@ -6,6 +6,7 @@ package com.example.skybank.service;
 
 import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.DivisaRepository;
+import com.example.skybank.dto.Cliente;
 import com.example.skybank.dto.Cuenta;
 import com.example.skybank.dto.Divisa;
 import com.example.skybank.dto.Empresa;
@@ -54,4 +55,13 @@ public class CuentaService {
         return cuentas;
     }
 
+    public List<Cuenta> getCuentasCliente(Cliente c){
+        List<Cuenta> cuentas = cuentaRepository.findByCliente(c.getIdcliente()).stream().map(cu -> cu.toDTO()).toList();
+        return cuentas;
+    }
+
+    public List<Cuenta> getCuentasEmpresa(Empresa e){
+        List<Cuenta> cuentas = cuentaRepository.findByEmpresa(e.getIdempresa()).stream().map(cu -> cu.toDTO()).toList();
+        return cuentas;
+    }
 }

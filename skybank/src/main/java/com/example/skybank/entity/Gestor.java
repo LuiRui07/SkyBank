@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "gestor", schema = "skybank", catalog = "")
-public class GestorEntity {
+public class Gestor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idgestor", nullable = false)
@@ -62,7 +62,7 @@ public class GestorEntity {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        GestorEntity that = (GestorEntity) o;
+        Gestor that = (Gestor) o;
         return idgestor == that.idgestor && Objects.equals(nombre, that.nombre);
     }
 
@@ -77,5 +77,14 @@ public class GestorEntity {
 
     public void setOperacionsByIdgestor(List<OperacionEntity> operacionsByIdgestor) {
         this.operacionsByIdgestor = operacionsByIdgestor;
+    }
+
+    public com.example.skybank.dto.Gestor toDTO(){
+        com.example.skybank.dto.Gestor gestor = new com.example.skybank.dto.Gestor();
+        gestor.setIdgestor(this.idgestor);
+        gestor.setDni(this.dni);
+        gestor.setNombre(this.nombre);
+        gestor.setPassword(this.password);
+        return gestor;
     }
 }

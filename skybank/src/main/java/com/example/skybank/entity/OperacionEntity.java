@@ -27,7 +27,7 @@ public class OperacionEntity {
     private String concepto;
     @ManyToOne
     @JoinColumn(name = "idgestor", referencedColumnName = "idgestor")
-    private GestorEntity gestorByIdgestor;
+    private Gestor gestorByIdgestor;
     @ManyToOne
     @JoinColumn(name = "idtipo", referencedColumnName = "idtipo", nullable = false)
     private TipoOperacionEntity tipoOperacionByTipopperacionid;
@@ -94,11 +94,11 @@ public class OperacionEntity {
         return Objects.hash(idoperación, fecha, cantidad, operacioncol);
     }
 
-    public GestorEntity getGestorByIdgestor() {
+    public Gestor getGestorByIdgestor() {
         return gestorByIdgestor;
     }
 
-    public void setGestorByIdgestor(GestorEntity gestorByIdgestor) {
+    public void setGestorByIdgestor(Gestor gestorByIdgestor) {
         this.gestorByIdgestor = gestorByIdgestor;
     }
 

@@ -63,7 +63,7 @@ public class ClienteService {
         clienteNuevo.setRegion(cliente.getRegion());
         clienteNuevo.setCp(cliente.getCp());
         clienteNuevo.setBloqueado(cliente.getBloqueado());
-        clienteNuevo.setVerificado(cliente.getBloqueado());
+        clienteNuevo.setVerificado(cliente.getVerificado());
         clienteNuevo.setSolicitudactivacion(cliente.getSolicitudactivacion());
 
         clienteRepository.save(clienteNuevo);
@@ -92,6 +92,19 @@ public class ClienteService {
         return c == null ? null : c.toDTO();
     }
 
+    public Cliente getClienteByCuentaId (Integer idCuenta){
+        CuentaEntity cuenta = cuentaRepository.getById(idCuenta);
+        ClienteEntity c = cuenta.getClienteByIdcliente();
+        //ClienteEntity c = clienteRepository.getById(cuenta.getClienteByIdcliente().getIdcliente());
+        return c==null ? null : c.toDTO();
+    }
+
+    public List<Cliente> obtenerTodosLosClientes(){
+        List<Cliente> clientes = clienteRepository.findAll().stream().map(c -> c.toDTO()).toList();
+        return clientes;
+    }
+
+
     public void editarCliente (Cliente clienteForm){
         ClienteEntity cliente = clienteRepository.getById(clienteForm.getIdcliente());
         cliente.setNombre(clienteForm.getNombre());
@@ -118,5 +131,13 @@ public class ClienteService {
         ClienteEntity cliente = clienteRepository.findById(idcliente).orElse(null);
         cliente.setSolicitudactivacion(1);
         clienteRepository.save(cliente);
+    }
+
+    public List<Cliente> getPendientesVerificacion(){
+        return clienteRepository.getPendientesDeVerificar().stream().map(c -> c.toDTO()).toList();
+    }
+
+    public List<Cliente> getSolicitudesReactivacion(){
+        return clienteRepository.getSolicitudesReactivacion().stream().map(c -> c.toDTO()).toList();
     }
 }

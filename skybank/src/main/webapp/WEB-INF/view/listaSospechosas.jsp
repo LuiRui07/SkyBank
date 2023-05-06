@@ -1,6 +1,8 @@
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %><%--
+<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
+<%@ page import="com.example.skybank.dto.Cliente" %>
+<%@ page import="com.example.skybank.dto.Empresa" %><%--
   Created by IntelliJ IDEA.
   User: Usuario
   Date: 04/05/2023
@@ -9,8 +11,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<ClienteEntity> clientesSospechosos = (List<ClienteEntity>) request.getAttribute("clientesSospechosos");
-    List<EmpresaEntity> empresasSospechosas = (List<EmpresaEntity>) request.getAttribute("empresasSospechosas");
+    List<Cliente> clientesSospechosos = (List<Cliente>) request.getAttribute("clientesSospechosos");
+    List<Empresa> empresasSospechosas = (List<Empresa>) request.getAttribute("empresasSospechosas");
 %>
 <html>
 <head>
@@ -25,10 +27,11 @@
     <td>DNI/CIF</td>
     <td>ACTIVAR</td>
     </thead>
+    <tbody>
     <%
         if(!clientesSospechosos.isEmpty()){
-            for (ClienteEntity c : clientesSospechosos){
-    if(c.getBloqueado()==0){%>
+            for (Cliente c : clientesSospechosos){
+                if(c.getBloqueado()==0){%>
     <tr>
         <td>Cliente</td>
         <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
@@ -42,11 +45,9 @@
         <td><%=c.getDni()%></td>
         <td><a href="desbloquearCliente2?postId=<%=c.getIdcliente()%>">DESBLOQUEAR</a></td>
     </tr>
-    <%}}}
-        if(!empresasSospechosas.isEmpty()){
-            for(EmpresaEntity e : empresasSospechosas){
+    <%}}} if(!empresasSospechosas.isEmpty()){
+        for(Empresa e : empresasSospechosas){
             if(e.getBloqueada()==0){
-
     %>
     <tr>
         <td>Empresa</td>
@@ -62,6 +63,8 @@
         <td><a href="desbloquearEmpresa2?postId=<%=e.getIdempresa()%>">DESBLOQUEAR</a></td>
     </tr>
     <%}}}%>
+    </tbody>
+
 </table>
 <br>
 <a href="/gestor/">VOLVER</a>

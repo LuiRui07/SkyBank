@@ -1,6 +1,8 @@
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %><%--
+<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
+<%@ page import="com.example.skybank.dto.Empresa" %>
+<%@ page import="com.example.skybank.dto.Cliente" %><%--
   Created by IntelliJ IDEA.
   User: Usuario
   Date: 04/05/2023
@@ -10,8 +12,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    List<ClienteEntity> clientesObsoletos = (List<ClienteEntity>) request.getAttribute("listaClientesObsoletos");
-    List<EmpresaEntity> empresasObsoletas = (List<EmpresaEntity>) request.getAttribute("listaEmpresasObsoletas");
+    List<Cliente> clientesObsoletos = (List<Cliente>) request.getAttribute("listaClientesObsoletos");
+    List<Empresa> empresasObsoletas = (List<Empresa>) request.getAttribute("listaEmpresasObsoletas");
 %>
 <html>
 <head>
@@ -28,7 +30,7 @@
     </thead>
     <%
         if(!clientesObsoletos.isEmpty()){
-        for (ClienteEntity c : clientesObsoletos){
+        for (Cliente c : clientesObsoletos){
             if(c.getBloqueado() == 0){
     %>
     <tr>
@@ -46,7 +48,7 @@
     </tr>
     <% }}}
     if(!empresasObsoletas.isEmpty()){
-        for(EmpresaEntity e : empresasObsoletas){
+        for(Empresa e : empresasObsoletas){
             if(e.getBloqueada() == 0){
     %>
     <tr>

@@ -8,16 +8,16 @@ import com.example.skybank.dao.AutorizadoRepository;
 import com.example.skybank.dao.EmpresaRepository;
 import com.example.skybank.dao.SocioRepository;
 import com.example.skybank.dto.Autorizado;
+import com.example.skybank.dto.Cliente;
 import com.example.skybank.dto.Empresa;
 import com.example.skybank.dto.Socio;
-import com.example.skybank.entity.AutorizadoEntity;
-import com.example.skybank.entity.EmpresaEntity;
-import com.example.skybank.entity.SocioEntity;
+import com.example.skybank.entity.*;
 import com.example.skybank.ui.TipoPersonaEmpresa;
 import com.example.skybank.ui.socioOAutorizado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -171,5 +171,39 @@ public class SocioService {
         SocioEntity a = socioRepository.getById(idSocio);
         a.setSolicituddesbloqueo(1);
         socioRepository.save(a);
+    }
+
+    public List<Socio> getSolicitudesDebloqueo(){
+        return socioRepository.getSolicitudDesbloqueo().stream().map(s -> s.toDTO()).toList();
+    }
+
+    public Socio guardarSocio(Socio socio){
+        ClienteEntity clienteNuevo = new ClienteEntity();
+        SocioEntity nuevoSocio = new SocioEntity();
+        EmpresaEntity empresaSocio = empresaRepository.getById(socio.getEmpresa().getIdempresa());
+
+        nuevoSocio.setId(socio.getId());
+        nuevoSocio.setNombre(socio.getNombre());
+        nuevoSocio.setApellido1(socio.getApellido1());
+        nuevoSocio.setApellido2(socio.getApellido2());
+        nuevoSocio.setNif(socio.getNif());
+        nuevoSocio.setSolicituddesbloqueo(socio.getSolicituddesbloqueo());
+        nuevoSocio.setCalle(socio.getCalle());
+        nuevoSocio.setBloqueado(socio.getBloqueado());
+        nuevoSocio.setCiudad(socio.getCiudad());
+        nuevoSocio.setCp(socio.getCp());
+        nuevoSocio.setEmail(socio.getEmail());
+        nuevoSocio.setFechanacimiento(socio.getFechanacimiento());
+        nuevoSocio.setNumero(socio.getNumero());
+        nuevoSocio.setPais(socio.getPais());
+        nuevoSocio.setPassword(socio.getPassword());
+        nuevoSocio.setPlanta(socio.getPlanta());
+        nuevoSocio.setRegion(socio.getRegion());
+        nuevoSocio.setEmpresaByIdempresa(empresaSocio);
+
+
+        socioRepository.save(nuevoSocio);
+
+        return nuevoSocio.toDTO();
     }
 }

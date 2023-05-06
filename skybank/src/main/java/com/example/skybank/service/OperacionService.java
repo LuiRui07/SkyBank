@@ -11,7 +11,8 @@ import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+
+import java.util.Date;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +101,11 @@ public class OperacionService {
         List<Operacion> operaciones = operacionRepository.findbyAccount(cuenta.getIdcuenta()).stream().map(o -> o.toDTO()).toList();
         return operaciones;
     }
+    public List<Operacion> obtenerOperacionesEmpresa(Cuenta cuenta) {
+        List<Operacion> operaciones = operacionRepository.findbyAccount(cuenta.getIdcuenta()).stream().map(o -> o.toDTO()).toList();
+        return operaciones;
+    }
+
 
     public List<TipoOperacion> obtenerTodosTiposOperacion() {
         return tipoOperacionRepository.findAll().stream().map(t -> t.toDTO()).toList();
@@ -212,6 +218,15 @@ public class OperacionService {
             }
 
             return operaciones.stream().map(o -> o.toDTO()).toList();
+        }
+
+        public List<Operacion> obtenerOperacionesSospechosas(){
+            List<Operacion> operaciones = operacionRepository.obtenerOperacionesSospechosas().stream().map(o -> o.toDTO()).toList();
+            return operaciones;
+        }
+
+        public List<Operacion> obtenerOperacionesRecientes(Date fecha){
+            return operacionRepository.obtenerOperacionesRecientes(fecha).stream().map(o -> o.toDTO()).toList();
         }
 
     }

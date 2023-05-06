@@ -1,9 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.CuentaEntity" %>
-<%@ page import="com.example.skybank.entity.ClienteEntity" %>
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
-<%@ page import="com.example.skybank.entity.SocioEntity" %><%--
+<%@ page import="com.example.skybank.dto.Empresa" %>
+<%@ page import="com.example.skybank.dto.Cliente" %>
+<%@ page import="com.example.skybank.dto.Socio" %><%--
   Created by IntelliJ IDEA.
   User: Rafael Ceballos
   Date: 03/05/2023
@@ -13,10 +12,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    List<EmpresaEntity> solicitadasE =(List<EmpresaEntity>) request.getAttribute("solicitadasE");
-    List<ClienteEntity> solicitadas = (List<ClienteEntity>) request.getAttribute("solicitadas");
-    List<ClienteEntity> solicitaReactivacion = (List<ClienteEntity>) request.getAttribute("solicitudesReactivar");
-    List<SocioEntity> solicitaDesbloqueo = (List<SocioEntity>) request.getAttribute("socioDesbloqueo");
+    List<Empresa> solicitadasE =(List<Empresa>) request.getAttribute("solicitadasE");
+    List<Cliente> solicitadas = (List<Cliente>) request.getAttribute("solicitadas");
+    List<Cliente> solicitaReactivacion = (List<Cliente>) request.getAttribute("solicitudesReactivar");
+    List<Socio> solicitaDesbloqueo = (List<Socio>) request.getAttribute("socioDesbloqueo");
 %>
 <html>
 <head>
@@ -32,7 +31,7 @@
         <td>DNI/CIF</td>
         <td>ACTIVAR</td>
         </thead>
-        <% for (ClienteEntity c:solicitadas){ %>
+        <% for (Cliente c:solicitadas){ %>
         <tr>
             <td>Cliente</td>
             <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
@@ -40,7 +39,7 @@
             <td><a href="aceptarCliente?postId=<%=c.getIdcliente()%>">Aceptar</a></td>
         </tr>
         <% }
-        for(EmpresaEntity e :solicitadasE){
+        for(Empresa e :solicitadasE){
         %>
         <tr>
             <td>Empresa</td>
@@ -59,7 +58,7 @@
     <td>ACTIVAR</td>
     </thead>
         <% if(solicitaReactivacion!=null){
-            for (ClienteEntity c: solicitaReactivacion){ %>
+            for (Cliente c: solicitaReactivacion){ %>
     <tr>
         <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
         <td><%=c.getDni()%></td>
@@ -78,7 +77,7 @@
     <td>DESBLOQUEAR</td>
     </thead>
     <% if(solicitaDesbloqueo!=null){
-        for (SocioEntity s: solicitaDesbloqueo){ %>
+        for (Socio s: solicitaDesbloqueo){ %>
     <tr>
         <td><%=s.getNombre()%> <%=s.getApellido1()%> <%=s.getApellido2()%></td>
         <td><%=s.getNif()%></td>

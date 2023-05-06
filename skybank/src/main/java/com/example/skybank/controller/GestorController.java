@@ -4,12 +4,9 @@ package com.example.skybank.controller;
  * @author Rafael Ceballos
  */
 
-import com.example.skybank.dao.*;
-import com.example.skybank.dto.Cuenta;
-import com.example.skybank.dto.Operacion;
-import com.example.skybank.dto.TipoOperacion;
-import com.example.skybank.entity.*;
-import com.example.skybank.service.GestorService;
+import com.example.skybank.dto.*;
+import com.example.skybank.dto.Gestor;
+import com.example.skybank.service.*;
 import com.example.skybank.ui.FiltroListadoClientes;
 import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,32 +26,27 @@ import java.util.List;
 public class GestorController {
 
     @Autowired
-    private GestorRepository gestorRepository;
-
-    @Autowired
-    private OperacionRepository operacionRepository;
-
-    @Autowired
-    private ClienteRepository clienteRepository;
-
-    @Autowired
-    private EmpresaRepository empresaRepository;
-
-    @Autowired
-    private SocioRepository socioRepository;
-
-    @Autowired
-    private CuentaRepository cuentaRepository;
-
-    @Autowired
-    private TipoOperacionRepository tipoOperacionRepository;
-
-    @Autowired
     private GestorService gestorService;
+
+    @Autowired
+    private CuentaService cuentaService;
+
+    @Autowired
+    private OperacionService operacionService;
+
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private EmpresaService empresaService;
+
+    @Autowired
+    private SocioService socioService;
+
 
     @GetMapping("/")
     public String getListadoCuentas(HttpSession session, Model model){
-        GestorEntity gestor = (GestorEntity) session.getAttribute("gestor");
+        com.example.skybank.dto.Gestor gestor = (com.example.skybank.dto.Gestor) session.getAttribute("gestor");
 
         if (gestor == null){
             return "redirect:/gestor/login";
@@ -74,7 +66,7 @@ public class GestorController {
                             HttpSession sesion, Model model){
         String urlTo = "redirect:/gestor/";
 
-        GestorEntity gestor = gestorRepository.autenticar(user,pass);
+        com.example.skybank.dto.Gestor gestor = gestorService.autenticar(user,pass);
         if(gestor == null){
             model.addAttribute("error", "Usuario no encontrado");
             urlTo = "loginGestor";
@@ -90,23 +82,24 @@ public class GestorController {
         return "redirect:/gestor/login";
     }
 
+
     @GetMapping("/solicitudes")
     public String mostrarSolicitudes(Model model, HttpSession session){
-        GestorEntity gestor = (GestorEntity) session.getAttribute("gestor");
+        Gestor gestor = (Gestor) session.getAttribute("gestor");
 
         if (gestor == null){
             return "redirect:/gestor/login";
         }else{
-            List<ClienteEntity> solicitadas = clienteRepository.getPendientesDeVerificar();
+            List<Cliente> solicitadas = clienteService.getPendientesVerificacion();
             model.addAttribute("solicitadas",solicitadas);
 
-            List<EmpresaEntity> solicitadasE = empresaRepository.getPendientesVerificar();
+            List<Empresa> solicitadasE = empresaService.getPendientesVerificacion();
             model.addAttribute("solicitadasE", solicitadasE);
 
-            List<ClienteEntity> solicitudReativacion = clienteRepository.getSolicitudesReactivacion();
+            List<Cliente> solicitudReativacion = clienteService.getSolicitudesReactivacion();
             model.addAttribute("solicitudesReactivar", solicitudReativacion);
 
-            List<SocioEntity> solicitudDesbloqueo = socioRepository.getSolicitudDesbloqueo();
+            List<Socio> solicitudDesbloqueo = socioService.getSolicitudesDebloqueo();
             model.addAttribute("socioDesbloqueo", solicitudDesbloqueo);
         }
 
@@ -115,54 +108,54 @@ public class GestorController {
 
     @GetMapping("/desbloquearSocio")
     public String desbloquarSocio(Model model, @RequestParam("postId") int idSocio){
-        SocioEntity socio = socioRepository.findById(idSocio).orElse(null);
+        Socio socio = socioService.obtenerSocio(idSocio);
 
         socio.setBloqueado(0);
         socio.setSolicituddesbloqueo(0);
-        socioRepository.save(socio);
+        socioService.guardarSocio(socio);
 
         return "redirect:/gestor/solicitudes";
     }
 
     @GetMapping("/reactivarCliente")
     public String reactivarCliente(Model model, @RequestParam("postId") int idCliente){
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(0);
         cliente.setSolicitudactivacion(0);
-        clienteRepository.save(cliente);
+        clienteService.guardarCliente(cliente);
 
         return "redirect:/gestor/solicitudes";
     }
 
     @GetMapping("/aceptarCliente")
     public String aceptarCliente(Model model, @RequestParam("postId") int idCliente){
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setVerificado(1);
-        clienteRepository.save(cliente);
+        clienteService.guardarCliente(cliente);
         return "redirect:/gestor/solicitudes";
     }
 
     @GetMapping("/aceptarEmpresa")
     public String aceptarEmpresa(Model model, @RequestParam("postId") int idEmpresa){
-        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+        Empresa empresa = empresaService.getEmpresaById(idEmpresa);
 
         empresa.setVerificado(1);
-        empresaRepository.save(empresa);
+        empresaService.guardarEmpresa(empresa);
         return "redirect:/gestor/solicitudes";
     }
 
     @PostMapping("/")
     public String doFiltrarClientesYEmpresas(@ModelAttribute("filtro") FiltroListadoClientes filtro, HttpSession session, Model model){
-        return filtrarClientesYEmpresas(filtro,(GestorEntity) session.getAttribute("gestor"),model);
+        return filtrarClientesYEmpresas(filtro,(com.example.skybank.dto.Gestor) session.getAttribute("gestor"),model);
     }
 
-    private String filtrarClientesYEmpresas(FiltroListadoClientes filtro, GestorEntity gestor, Model model){
+    private String filtrarClientesYEmpresas(FiltroListadoClientes filtro, com.example.skybank.dto.Gestor gestor, Model model){
         model.addAttribute("gestor", gestor);
 
-        List<ClienteEntity> listaClientes = new ArrayList<>();
-        List<EmpresaEntity> listaEmpresas = new ArrayList<>();
+        List<Cliente> listaClientes = new ArrayList<>();
+        List<Empresa> listaEmpresas = new ArrayList<>();
 
         if(filtro == null || (filtro != null && filtro.getTexto().isEmpty() && filtro.isClientes() && filtro.isEmpresas())){
             FiltroListadoClientes f = new FiltroListadoClientes();
@@ -172,8 +165,8 @@ public class GestorController {
             model.addAttribute("filtro",f);
 
 
-            listaClientes = clienteRepository.findAll();
-            listaEmpresas = empresaRepository.findAll();
+            listaClientes = clienteService.obtenerTodosLosClientes();
+            listaEmpresas = empresaService.obtenerTodasLasEmpresas();
 
         }else if(filtro != null){
             System.out.println(filtro.getTexto() + " a: " + filtro.isEmpresas() + " s: " + filtro.isClientes());
@@ -195,28 +188,29 @@ public class GestorController {
         return "listadoClientes";
 
     }
+    
 
     @GetMapping("/cuentasSinUso")
     public String getCuentasSinUso(Model model, HttpSession session){
-        GestorEntity gestor = (GestorEntity) session.getAttribute("gestor");
+        Gestor gestor = (Gestor) session.getAttribute("gestor");
 
         if (gestor == null){
             return "redirect:/gestor/login";
         }else{
             boolean encontrado = false;
             Date fechaActual = new Date();
-            List<OperacionEntity> operaciones = operacionRepository.obtenerOperacionesRecientes(fechaActual);
+            List<Operacion> operaciones = operacionService.obtenerOperacionesRecientes(fechaActual);
 
-            List<ClienteEntity> clientesTotales = clienteRepository.findAll();
-            List<EmpresaEntity> empresasTotales = empresaRepository.findAll();
+            List<Cliente> clientesTotales = clienteService.obtenerTodosLosClientes();
+            List<Empresa> empresasTotales = empresaService.obtenerTodasLasEmpresas();
 
-            List<ClienteEntity> clientesSinUso = new ArrayList<>();
-            List<EmpresaEntity> empresasSinUso = new ArrayList<>();
+            List<Cliente> clientesSinUso = new ArrayList<>();
+            List<Empresa> empresasSinUso = new ArrayList<>();
 
-            for(ClienteEntity c : clientesTotales){
+            for(Cliente c : clientesTotales){
 
-                    for(OperacionEntity o : operaciones){
-                        if((o.getCuentaByIdcuenta().getClienteByIdcliente() != null) && (o.getCuentaByIdcuenta().getClienteByIdcliente().getIdcliente() == (c.getIdcliente()))){
+                    for(Operacion o : operaciones){
+                        if((o.getCuentaOrigen() != null) && (o.getCuentaOrigen().getIdcuenta() == (c.getIdcliente()))){
                             encontrado = true;
                             break;
                         }
@@ -227,10 +221,10 @@ public class GestorController {
                     encontrado = false;
                 }
 
-            for(EmpresaEntity e : empresasTotales){
+            for(Empresa e : empresasTotales){
 
-                    for(OperacionEntity o : operaciones){
-                        if((o.getCuentaByIdcuenta().getEmpresaByIdempresa() != null) && (o.getCuentaByIdcuenta().getEmpresaByIdempresa().getIdempresa() == (e.getIdempresa()))){
+                    for(Operacion o : operaciones){
+                        if((o.getCuentaOrigen() != null) && (o.getCuentaOrigen().getIdcuenta() == (e.getIdempresa()))){
                             encontrado = true;
                             break;
                         }
@@ -250,51 +244,57 @@ public class GestorController {
 
     @GetMapping("/bloquearCliente")
     public String bloquearCliente(Model model, @RequestParam("postId") int idCliente){
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(1);
-        clienteRepository.save(cliente);
+        clienteService.guardarCliente(cliente);
         return "redirect:/gestor/cuentasSinUso";
     }
 
     @GetMapping("/bloquearEmpresa")
     public String bloquearEmpresa(Model model, @RequestParam("postId") int idEmpresa) {
-        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+        Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(1);
-        empresaRepository.save(empresa);
+        empresaService.guardarEmpresa(empresa);
         return "redirect:/gestor/cuentasSinUso";
     }
     @GetMapping("/desbloquearCliente")
     public String desbloquearCliente(Model model, @RequestParam("postId") int idCliente){
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(0);
-        clienteRepository.save(cliente);
+        clienteService.guardarCliente(cliente);
         return "redirect:/gestor/cuentasSinUso";
     }
     @GetMapping("/desbloquearEmpresa")
     public String desbloquearEmpresa(Model model, @RequestParam("postId") int idEmpresa){
-        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+        Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(0);
-        empresaRepository.save(empresa);
+        empresaService.guardarEmpresa(empresa);
         return "redirect:/gestor/cuentasSinUso";
     }
 
     @GetMapping("/sospechas")
     public String mostrarSospechas(Model model, HttpSession session){
-        List<OperacionEntity> opSospechosas = operacionRepository.obtenerOperacionesSospechosas();
-        List<ClienteEntity> clientesSospechosos = new ArrayList<>();
-        List<EmpresaEntity> empresasSospechosas = new ArrayList<>();
+        List<Operacion> opSospechosas = operacionService.obtenerOperacionesSospechosas();
+        List<Cliente> clientesSospechosos = new ArrayList<>();
+        List<Empresa> empresasSospechosas = new ArrayList<>();
 
-        for(OperacionEntity o : opSospechosas){
-                if(o.getCuentaByIdcuenta().getClienteByIdcliente() != null && !clientesSospechosos.contains(o.getCuentaByIdcuenta().getClienteByIdcliente())){
-                    clientesSospechosos.add(o.getCuentaByIdcuenta().getClienteByIdcliente());
-                }else if(o.getCuentaByIdcuenta().getEmpresaByIdempresa() != null && !empresasSospechosas.contains(o.getCuentaByIdcuenta().getEmpresaByIdempresa())){
-                    empresasSospechosas.add(o.getCuentaByIdcuenta().getEmpresaByIdempresa());
+        for(Operacion o : opSospechosas){
+            if(empresaService.getEmpresaByCuentaId(o.getCuentaOrigen().getIdcuenta()) != null){
+                if(!empresasSospechosas.contains(empresaService.getEmpresaByCuentaId(o.getCuentaOrigen().getIdcuenta()))){
+                    empresasSospechosas.add(empresaService.getEmpresaByCuentaId(o.getCuentaOrigen().getIdcuenta()));
                 }
+            }
+            if(clienteService.getClienteByCuentaId(o.getCuentaOrigen().getIdcuenta()) != null){
+                if(!clientesSospechosos.contains(clienteService.getClienteByCuentaId(o.getCuentaOrigen().getIdcuenta()))){
+                    clientesSospechosos.add(clienteService.getClienteByCuentaId(o.getCuentaOrigen().getIdcuenta()));
+                }
+            }
         }
+
 
         model.addAttribute("clientesSospechosos", clientesSospechosos);
         model.addAttribute("empresasSospechosas", empresasSospechosas);
@@ -304,45 +304,46 @@ public class GestorController {
 
     @GetMapping("/bloquearCliente2")
     public String bloquearCliente2(Model model, @RequestParam("postId") int idCliente){
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(1);
-        clienteRepository.save(cliente);
+        clienteService.guardarCliente(cliente);
         return "redirect:/gestor/sospechas";
     }
 
     @GetMapping("/bloquearEmpresa2")
     public String bloquearEmpresa2(Model model, @RequestParam("postId") int idEmpresa){
-        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+        Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(1);
-        empresaRepository.save(empresa);
+        empresaService.guardarEmpresa(empresa);
         return "redirect:/gestor/sospechas";
     }
 
     @GetMapping("/desbloquearCliente2")
     public String desbloquearCliente2(Model model, @RequestParam("postId") int idCliente){
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(0);
-        clienteRepository.save(cliente);
+        clienteService.guardarCliente(cliente);
         return "redirect:/gestor/sospechas";
     }
 
     @GetMapping("/desbloquearEmpresa2")
     public String desbloquearEmpresa2(Model model, @RequestParam("postId") int idEmpresa){
-        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+        Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(0);
-        empresaRepository.save(empresa);
+        empresaService.guardarEmpresa(empresa);
         return "redirect:/gestor/sospechas";
     }
 
 
     @GetMapping("/gestionarCliente")
-    public String verCliente (Model model, @RequestParam("postId") int idCliente){
+    public String verCliente (Model model, @RequestParam("postId") int idCliente, HttpSession session){
 
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+
+        Cliente cliente = clienteService.getClienteById(idCliente);;
 
         model.addAttribute("cliente",cliente);
 
@@ -352,7 +353,7 @@ public class GestorController {
     @GetMapping("/gestionarEmpresa")
     public String verEmpresa (Model model, @RequestParam("postId") int idEmpresa){
 
-        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+        Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         model.addAttribute("empresa",empresa);
 
@@ -360,42 +361,140 @@ public class GestorController {
     }
 
     @GetMapping("/historial")
-    public String verHistorial (Model model, @RequestParam("postId") int id, @RequestParam("tipo") int tipo){
-
-        List<CuentaEntity> cuentas = new ArrayList<>();
-        ClienteEntity cliente = null;
-        EmpresaEntity empresa = null;
-        if(tipo==0){
-            cliente = clienteRepository.findById(id).orElse(null);
-            cuentas = cuentaRepository.findByCliente(id);
+    public String verHistorial (Model model, @RequestParam("postId") int id, @RequestParam("tipo") int tipo, HttpSession session){
+        com.example.skybank.dto.Gestor gestor = (com.example.skybank.dto.Gestor) session.getAttribute("gestor");
+        if (gestor == null){
+            return "redirect:/gestor/login";
         }else{
-            empresa = empresaRepository.findById(id).orElse(null);
-            cuentas = cuentaRepository.findByEmpresa(id);
-        }
+            List<Cuenta> cuentas;
+            FiltroOperaciones filtro = new FiltroOperaciones();
+            Cliente cliente = null;
+            Empresa empresa = null;
+            if(tipo==0){
+                cliente = clienteService.getClienteById(id);
+                cuentas = cuentaService.getCuentasCliente(cliente);
+            }else{
+                empresa = empresaService.getEmpresaById(id);
+                cuentas = cuentaService.getCuentasEmpresa(empresa);
+            }
 
+            List<Operacion> operaciones = new ArrayList<>();
+            List<Operacion> opAux = new ArrayList<>();
 
-        List<OperacionEntity> operaciones = new ArrayList<>();
-        List<OperacionEntity> opAux = new ArrayList<>();
-
-        if(cuentas!=null){
-            for(CuentaEntity c : cuentas){
-                opAux = c.getOperacionsByIdcuenta();
-                if(opAux!=null){
-                    for(OperacionEntity o : opAux){
-                        if(o.getCantidad() > 0){
-                            operaciones.add(o);
+            if(!cuentas.isEmpty()){
+                for(Cuenta c : cuentas){
+                    opAux = operacionService.obtenerOperacionesCliente(c);
+                    if(opAux!=null){
+                        for(Operacion o : opAux){
+                            if(o.getCantidad() > 0){
+                                operaciones.add(o);
+                            }
                         }
                     }
                 }
+
+                filtro.setIdCuenta(cuentas.get(0).getIdcuenta());
             }
+
+            model.addAttribute("filtro",filtro);
+            model.addAttribute("operaciones",operaciones);
+            model.addAttribute("cliente",cliente);
+            model.addAttribute("empresa",empresa);
+            return "historialCliente";
         }
+    }
+    @PostMapping("/filtrar")
+    public String doFiltrar (@ModelAttribute("filtro") FiltroOperaciones filtro,
+                             Model model, HttpSession session) {
+        return this.procesarFiltrado(filtro,model, session);
+    }
+
+    protected String procesarFiltrado (FiltroOperaciones filtro,
+                                       Model model, HttpSession session){
+
+        Cuenta cuenta = cuentaService.obtenerCuentaPorId(filtro.getIdCuenta());
+        List<Operacion> operaciones = operacionService.filtrar(filtro);
+        List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
+        Cliente c = clienteService.getClienteByCuentaId(cuenta.getIdcuenta());
+
 
         model.addAttribute("operaciones",operaciones);
-        model.addAttribute("cliente",cliente);
-        model.addAttribute("empresa",empresa);
+        model.addAttribute("tipos",tipos);
+        model.addAttribute("filtro",filtro);
+        model.addAttribute("cliente",c);
+        model.addAttribute("cuenta",cuenta);
         return "historialCliente";
     }
 
+    @GetMapping("/historialEmpresa")
+    public String verHistorialEmpresa (Model model, @RequestParam("postId") int id, @RequestParam("tipo") int tipo, HttpSession session){
+        com.example.skybank.dto.Gestor gestor = (com.example.skybank.dto.Gestor) session.getAttribute("gestor");
+        if (gestor == null){
+            return "redirect:/gestor/login";
+        }else{
+            List<Cuenta> cuentas;
+            FiltroOperaciones filtro = new FiltroOperaciones();
+            Cliente cliente = null;
+            Empresa empresa = null;
+            if(tipo==0){
+                cliente = clienteService.getClienteById(id);
+                cuentas = cuentaService.getCuentasCliente(cliente);
+            }else{
+                empresa = empresaService.getEmpresaById(id);
+                cuentas = cuentaService.getCuentasEmpresa(empresa);
+            }
+
+            List<Operacion> operaciones = new ArrayList<>();
+            List<Operacion> opAux = new ArrayList<>();
+
+            if(!cuentas.isEmpty()){
+                for(Cuenta c : cuentas){
+                    opAux = operacionService.obtenerOperacionesEmpresa(c);
+                    if(opAux!=null){
+                        for(Operacion o : opAux){
+                            if(o.getCantidad() > 0){
+                                operaciones.add(o);
+                            }
+                        }
+                    }
+                }
+
+                filtro.setIdCuenta(cuentas.get(0).getIdcuenta());
+            }
+
+            model.addAttribute("filtro",filtro);
+            model.addAttribute("operaciones",operaciones);
+            model.addAttribute("empresa",empresa);
+            model.addAttribute("empresa",empresa);
+            return "historialEmpresa";
+        }
+    }
+    @PostMapping("/filtrar2")
+    public String doFiltrar2 (@ModelAttribute("filtro") FiltroOperaciones filtro,
+                             Model model, HttpSession session) {
+        return this.procesarFiltrado2(filtro,model, session);
+    }
+
+    protected String procesarFiltrado2 (FiltroOperaciones filtro,
+                                       Model model, HttpSession session){
+
+        Cuenta cuenta = cuentaService.obtenerCuentaPorId(filtro.getIdCuenta());
+        List<Operacion> aux = operacionService.filtrar(filtro);
+        List<Operacion> operaciones = new ArrayList<>();
+        for(Operacion o : aux){
+            if(o.getCantidad() > 0){
+                operaciones.add(o);
+            }
+        }
+        List<TipoOperacion> tipos = operacionService.obtenerTodosTiposOperacion();
+        Empresa e = empresaService.getEmpresaByCuentaId(cuenta.getIdcuenta());
 
 
+        model.addAttribute("operaciones",operaciones);
+        model.addAttribute("tipos",tipos);
+        model.addAttribute("filtro",filtro);
+        model.addAttribute("empresa",e);
+        model.addAttribute("cuenta",cuenta);
+        return "historialEmpresa";
+    }
 }

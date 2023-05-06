@@ -4,8 +4,6 @@
 
 package com.example.skybank.dto;
 
-import com.example.skybank.entity.GestorEntity;
-
 import java.util.Date;
 import java.util.Objects;
 

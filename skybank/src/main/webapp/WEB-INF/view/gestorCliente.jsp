@@ -1,6 +1,8 @@
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.ClienteEntity" %><%--
+<%@ page import="com.example.skybank.entity.ClienteEntity" %>
+<%@ page import="com.example.skybank.dto.Cliente" %>
+<%@ page import="com.example.skybank.dto.Operacion" %><%--
   Created by IntelliJ IDEA.
   User: Usuario
   Date: 05/05/2023
@@ -10,8 +12,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%
-    List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operaciones");
-    ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
+    List<Operacion> operaciones = (List<Operacion>) request.getAttribute("operaciones");
+    Cliente cliente = (Cliente) request.getAttribute("cliente");
+
 %>
 <html>
 <head>
