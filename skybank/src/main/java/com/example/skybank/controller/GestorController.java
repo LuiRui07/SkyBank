@@ -132,6 +132,7 @@ public class GestorController {
     public String aceptarCliente(Model model, @RequestParam("postId") int idCliente){
         Cliente cliente = clienteService.getClienteById(idCliente);
 
+        cliente.setSolicitudactivacion(0);
         cliente.setVerificado(1);
         clienteService.guardarCliente(cliente);
         return "redirect:/gestor/solicitudes";
@@ -188,7 +189,7 @@ public class GestorController {
         return "listadoClientes";
 
     }
-    
+
 
     @GetMapping("/cuentasSinUso")
     public String getCuentasSinUso(Model model, HttpSession session){
@@ -208,9 +209,8 @@ public class GestorController {
             List<Empresa> empresasSinUso = new ArrayList<>();
 
             for(Cliente c : clientesTotales){
-
                     for(Operacion o : operaciones){
-                        if((o.getCuentaOrigen() != null) && (o.getCuentaOrigen().getIdcuenta() == (c.getIdcliente()))){
+                        if((o.getCuentaOrigen() != null) && (cuentaService.getCuentasCliente(c)).contains(o.getCuentaOrigen())){
                             encontrado = true;
                             break;
                         }
@@ -224,7 +224,7 @@ public class GestorController {
             for(Empresa e : empresasTotales){
 
                     for(Operacion o : operaciones){
-                        if((o.getCuentaOrigen() != null) && (o.getCuentaOrigen().getIdcuenta() == (e.getIdempresa()))){
+                        if((o.getCuentaOrigen() != null) && (cuentaService.getCuentasEmpresa(e).contains(o.getCuentaOrigen()))){
                             encontrado = true;
                             break;
                         }
