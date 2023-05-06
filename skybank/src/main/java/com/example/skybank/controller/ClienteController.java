@@ -7,6 +7,7 @@ import com.example.skybank.dao.*;
 import com.example.skybank.dto.*;
 import com.example.skybank.entity.AsistenteEntity;
 import com.example.skybank.entity.ClienteEntity;
+import com.example.skybank.entity.ConversacionEntity;
 import com.example.skybank.service.*;
 import com.example.skybank.ui.FiltroAsistente;
 import com.example.skybank.ui.FiltroOperaciones;
@@ -20,6 +21,9 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
+
+    @Autowired
+    private ChatRepository chatRepository;
 
     @Autowired
     private ClienteService clienteService;
@@ -235,12 +239,34 @@ public class ClienteController {
         return "chatsCliente";
     }
 
-    @GetMapping("/chatCliente")
+
+    //arreglar
+    @GetMapping("/chat")
     public String mostrarChatPrivado(Model model, @RequestParam("idconversacion") Integer idChat){
         ChatDTO chat = this.chatService.buscarChat(idChat);
         List<MensajeDTO> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
         model.addAttribute("chat",chat);
         model.addAttribute("mensajes",mensajesEntities);
         return "chatCliente";
+    }
+
+    @PostMapping("/crearNuevoMensaje")
+    public String agregarMensaje(HttpSession session, @RequestParam("mensaje")String mensaje,@RequestParam("idconversacion") Integer idChat){
+        if(mensaje.equals("")|| mensaje == null){
+
+        }else{
+            Cliente cliente = (Cliente) session.getAttribute("cliente");
+            mensaje = cliente.getNombre() + " " + cliente.getApellido1() + ": " + mensaje;
+            chatService.agregarMensaje(idChat,mensaje);
+        }
+        return "redirect:/cliente/chat?idconversacion=" + idChat;
+    }
+
+    @GetMapping("/cerrar")
+    public String cerrarConversacion(Model model, @RequestParam("idconversacion") Integer idChat){
+        ConversacionEntity conversacion = chatRepository.getById(idChat);
+        conversacion.setCerrada((byte) 1);
+        chatRepository.save(conversacion);
+        return "redirect:/cliente/chatsCliente";
     }
 }

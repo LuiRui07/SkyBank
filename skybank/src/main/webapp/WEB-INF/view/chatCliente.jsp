@@ -16,7 +16,7 @@
   <title>Title</title>
 </head>
 <body>
-<h1>Hola asistente del sistema, este es el chat con <%=chat.getNombreCliente()%> con dni <%=chat.getDniUsuario()%> <button><a href="/asistente/chats">Volver a los chats</a></button></h1>
+<h1>Hola asistente del sistema, este es el chat con <%=chat.getNombreCliente()%> con dni <%=chat.getDniUsuario()%> <button><a href="/cliente/chatsCliente">Volver a los chats</a></button></h1>
 
 
 <table border="1">
@@ -34,7 +34,7 @@
     }
   %>
 </table>
-<form action="/asistente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>" method="post">
+<form action="/cliente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>" method="post">
   Nuevo mensaje: <input name="mensaje" type="text" >
   <button type="submit">Enviar</button>
 </form>

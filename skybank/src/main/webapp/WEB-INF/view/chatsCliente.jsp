@@ -25,13 +25,15 @@
   </tr>
   <%
     for(ChatDTO chat:chatEntityList){
+      if (chat.getCerrada() == 0){
   %>
   <tr>
     <td><%=chat.getNombreCliente()%> (<%=chat.getDniUsuario()%>) </td>
-    <td><a href="/asistente/chat?idconversacion=<%=chat.getIdConversacion()%>">Ver mensajes</a></td>
-    <td><%if (chat.getCerrada() == 0)%> <button><a href="/cliente/cerrar">Cerrar</a></button></td>
+    <td><a href="/cliente/chat?idconversacion=<%=chat.getIdConversacion()%>">Ver mensajes</a></td>
+    <td><a href="/cliente/cerrar?idconversacion=<%=chat.getIdConversacion()%>">Cerrar</a></td>
   </tr>
   <%
+      }
     }
   %>
 </table>

@@ -20,14 +20,19 @@ public class ConversacionEntity {
     @Basic
     @Column(name = "idasistente",nullable = false)
     private int idasistente;
+
+    @Basic
+    @Column(name = "idcliente",nullable = false)
+    private int idcliente;
+
     @Basic
     @Column(name = "cerrada", nullable = true)
     private Byte cerrada;
     @ManyToOne
-    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false,  insertable = false, updatable = false)
     private ClienteEntity clienteByIdcliente;
     @ManyToOne
-    @JoinColumn(name = "idasistente", referencedColumnName = "idasistente", nullable = false,insertable = false, updatable = false)
+    @JoinColumn(name = "idasistente", referencedColumnName = "idasistente", nullable = false, insertable = false, updatable = false)
     private AsistenteEntity asistenteByIdasistente;
     @OneToMany(mappedBy = "conversacionByIdconversacion")
     private List<MensajeEntity> mensajesByIdconversacion;
@@ -45,6 +50,10 @@ public class ConversacionEntity {
     public void setIdasistente(int idasistente) {
         this.idasistente = idasistente;
     }
+
+    public int getIdcliente() {return idcliente;}
+
+    public void setIdcliente(int idcliente) {this.idcliente = idcliente;}
 
     public Byte getCerrada() {
         return cerrada;
@@ -94,6 +103,8 @@ public class ConversacionEntity {
         ChatDTO chatDTO = new ChatDTO();
         chatDTO.setIdConversacion(this.idconversacion);
         chatDTO.setCerrado(this.cerrada);
+        chatDTO.setIdcliente(this.idcliente);
+        chatDTO.setIdasis(this.idasistente);
 
         chatDTO.setNombreAsistente(asistenteByIdasistente.getEmail());
         chatDTO.setNombreCliente(clienteByIdcliente.getNombre() + " " + clienteByIdcliente.getApellido1());

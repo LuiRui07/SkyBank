@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class ChatDTO implements Serializable {
     private Integer idConversacion;
-
+    private Integer idcliente;
     private Integer idasis;
     private Integer cerrada;
     private String nombreCliente;
@@ -20,6 +20,18 @@ public class ChatDTO implements Serializable {
     public Integer getIdAsistente() {
         return idasis;
     }
+    public Integer getIdcliente() {
+        return idcliente;
+    }
+
+    public void setIdasis(Integer idasis) {
+        this.idasis = idasis;
+    }
+
+    public void setIdcliente(Integer idcliente) {
+        this.idcliente = idcliente;
+    }
+
     public void setIdConversacion(Integer idChat) {
         this.idConversacion = idChat;
     }
