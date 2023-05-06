@@ -396,47 +396,6 @@ public class GestorController {
         return "historialCliente";
     }
 
-    @PostMapping("/")
-    public String doFiltrarHistorial(@ModelAttribute("filtro") FiltroListadoClientes filtro, HttpSession session, Model model){
-        return filtrarHistorial(filtro,(GestorEntity) session.getAttribute("gestor"),model);
-    }
 
-    private String filtrarHistorial(FiltroOperaciones filtro, GestorEntity gestor, Model model){
-        model.addAttribute("gestor", gestor);
-
-        List<ClienteEntity> listaClientes = new ArrayList<>();
-        List<EmpresaEntity> listaEmpresas = new ArrayList<>();
-
-        if(filtro == null || (filtro != null && filtro.getTexto().isEmpty() && filtro.isClientes() && filtro.isEmpresas())){
-            FiltroListadoClientes f = new FiltroListadoClientes();
-            f.setEmpresas(true);
-            f.setClientes(true);
-
-            model.addAttribute("filtro",f);
-
-
-            listaClientes = clienteRepository.findAll();
-            listaEmpresas = empresaRepository.findAll();
-
-        }else if(filtro != null){
-            System.out.println(filtro.getTexto() + " a: " + filtro.isEmpresas() + " s: " + filtro.isClientes());
-
-            model.addAttribute("filtro",filtro);
-
-            if(filtro.isEmpresas() && filtro.isClientes()){
-                listaClientes = gestorService.getAllClientesFiltered(filtro.getTexto());
-                listaEmpresas = gestorService.getAllEmpresasFiltered(filtro.getTexto());
-            }else if(filtro.isEmpresas() && !filtro.isClientes()){
-                listaEmpresas = gestorService.getAllEmpresasFiltered(filtro.getTexto());
-            }else if(!filtro.isEmpresas() && filtro.isClientes()){
-                listaClientes = gestorService.getAllClientesFiltered(filtro.getTexto());
-            }
-        }
-
-        model.addAttribute("listaClientes",listaClientes);
-        model.addAttribute("listaEmpresas",listaEmpresas);
-        return "listadoClientes";
-
-    }
 
 }
