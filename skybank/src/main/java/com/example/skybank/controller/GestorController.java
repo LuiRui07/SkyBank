@@ -265,21 +265,21 @@ public class GestorController {
         empresaRepository.save(empresa);
         return "redirect:/gestor/cuentasSinUso";
     }
-        @GetMapping("/desbloquearCliente")
-        public String desbloquearCliente(Model model, @RequestParam("postId") int idCliente){
-            ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+    @GetMapping("/desbloquearCliente")
+    public String desbloquearCliente(Model model, @RequestParam("postId") int idCliente){
+        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
 
-            cliente.setBloqueado(0);
-            clienteRepository.save(cliente);
-            return "redirect:/gestor/cuentasSinUso";
-        }
-        @GetMapping("/desbloquearEmpresa")
-        public String desbloquearEmpresa(Model model, @RequestParam("postId") int idEmpresa){
-            EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+        cliente.setBloqueado(0);
+        clienteRepository.save(cliente);
+        return "redirect:/gestor/cuentasSinUso";
+    }
+    @GetMapping("/desbloquearEmpresa")
+    public String desbloquearEmpresa(Model model, @RequestParam("postId") int idEmpresa){
+        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
 
-            empresa.setBloqueada(0);
-            empresaRepository.save(empresa);
-            return "redirect:/gestor/cuentasSinUso";
+        empresa.setBloqueada(0);
+        empresaRepository.save(empresa);
+        return "redirect:/gestor/cuentasSinUso";
     }
 
     @GetMapping("/sospechas")
@@ -340,22 +340,103 @@ public class GestorController {
 
 
     @GetMapping("/gestionarCliente")
-    public String verHistorial (Model model, @RequestParam("postId") int id){
+    public String verCliente (Model model, @RequestParam("postId") int idCliente){
 
-        //ARREGLAR
+        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
 
-        //CuentaEntity cuenta = cuentaRepository.findByCliente(id);
-        List<OperacionEntity> operaciones = operacionRepository.findbyAccount(id);
-        FiltroOperaciones filtro = new FiltroOperaciones();
-        List<TipoOperacionEntity> tipos = tipoOperacionRepository.findAll();
-        //filtro.setIdCuenta(cuenta.getIdcuenta());
-
-        model.addAttribute("operaciones",operaciones);
-        model.addAttribute("tipos",tipos);
-        model.addAttribute("filtro",filtro);
-        //model.addAttribute("cuenta",cuenta);
+        model.addAttribute("cliente",cliente);
 
         return "gestorCliente";
+    }
+
+    @GetMapping("/gestionarEmpresa")
+    public String verEmpresa (Model model, @RequestParam("postId") int idEmpresa){
+
+        EmpresaEntity empresa = empresaRepository.findById(idEmpresa).orElse(null);
+
+        model.addAttribute("empresa",empresa);
+
+        return "gestorEmpresa";
+    }
+
+    @GetMapping("/historial")
+    public String verHistorial (Model model, @RequestParam("postId") int id, @RequestParam("tipo") int tipo){
+
+        List<CuentaEntity> cuentas = new ArrayList<>();
+        ClienteEntity cliente = null;
+        EmpresaEntity empresa = null;
+        if(tipo==0){
+            cliente = clienteRepository.findById(id).orElse(null);
+            cuentas = cuentaRepository.findByCliente(id);
+        }else{
+            empresa = empresaRepository.findById(id).orElse(null);
+            cuentas = cuentaRepository.findByEmpresa(id);
+        }
+
+
+        List<OperacionEntity> operaciones = new ArrayList<>();
+        List<OperacionEntity> opAux = new ArrayList<>();
+
+        if(cuentas!=null){
+            for(CuentaEntity c : cuentas){
+                opAux = c.getOperacionsByIdcuenta();
+                if(opAux!=null){
+                    for(OperacionEntity o : opAux){
+                        if(o.getCantidad() > 0){
+                            operaciones.add(o);
+                        }
+                    }
+                }
+            }
+        }
+
+        model.addAttribute("operaciones",operaciones);
+        model.addAttribute("cliente",cliente);
+        model.addAttribute("empresa",empresa);
+        return "historialCliente";
+    }
+
+    @PostMapping("/")
+    public String doFiltrarHistorial(@ModelAttribute("filtro") FiltroListadoClientes filtro, HttpSession session, Model model){
+        return filtrarHistorial(filtro,(GestorEntity) session.getAttribute("gestor"),model);
+    }
+
+    private String filtrarHistorial(FiltroOperaciones filtro, GestorEntity gestor, Model model){
+        model.addAttribute("gestor", gestor);
+
+        List<ClienteEntity> listaClientes = new ArrayList<>();
+        List<EmpresaEntity> listaEmpresas = new ArrayList<>();
+
+        if(filtro == null || (filtro != null && filtro.getTexto().isEmpty() && filtro.isClientes() && filtro.isEmpresas())){
+            FiltroListadoClientes f = new FiltroListadoClientes();
+            f.setEmpresas(true);
+            f.setClientes(true);
+
+            model.addAttribute("filtro",f);
+
+
+            listaClientes = clienteRepository.findAll();
+            listaEmpresas = empresaRepository.findAll();
+
+        }else if(filtro != null){
+            System.out.println(filtro.getTexto() + " a: " + filtro.isEmpresas() + " s: " + filtro.isClientes());
+
+            model.addAttribute("filtro",filtro);
+
+            if(filtro.isEmpresas() && filtro.isClientes()){
+                listaClientes = gestorService.getAllClientesFiltered(filtro.getTexto());
+                listaEmpresas = gestorService.getAllEmpresasFiltered(filtro.getTexto());
+            }else if(filtro.isEmpresas() && !filtro.isClientes()){
+                listaEmpresas = gestorService.getAllEmpresasFiltered(filtro.getTexto());
+            }else if(!filtro.isEmpresas() && filtro.isClientes()){
+                listaClientes = gestorService.getAllClientesFiltered(filtro.getTexto());
+            }
+        }
+
+        model.addAttribute("listaClientes",listaClientes);
+        model.addAttribute("listaEmpresas",listaEmpresas);
+        return "listadoClientes";
+
     }
 
 }

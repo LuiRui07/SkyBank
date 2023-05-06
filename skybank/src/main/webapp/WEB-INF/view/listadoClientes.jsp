@@ -66,7 +66,7 @@
                     for(EmpresaEntity e : listaEmpresas){
                 %>
                 <tr>
-                    <td> <a href="/gestor/gestionarEmpresa?postId="<%=e.getIdempresa()%>"><%=e.getNombre()%></a>  </td>
+                    <td> <a href="/gestor/gestionarEmpresa?postId=<%=e.getIdempresa()%>"><%=e.getNombre()%></a>  </td>
                 </tr>
                 <% } %>
             </table>

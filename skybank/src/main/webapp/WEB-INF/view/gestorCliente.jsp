@@ -1,4 +1,6 @@
-<%--
+<%@ page import="com.example.skybank.entity.OperacionEntity" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.example.skybank.entity.ClienteEntity" %><%--
   Created by IntelliJ IDEA.
   User: Usuario
   Date: 05/05/2023
@@ -6,11 +8,25 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%
+    List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operaciones");
+    ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
+%>
 <html>
 <head>
-    <title>Title</title>
+    <title><%=cliente.getNombre()%> <%=cliente.getApellido1()%> - GESTIONAR</title>
 </head>
 <body>
-
+<h1><%=cliente.getNombre()%> <%=cliente.getApellido1()%> <%=cliente.getApellido2()%></h1>
+<h2>DATOS</h2>
+    DNI: <%=cliente.getDni()%><br>
+    EMAIL: <%=cliente.getEmail()%><br>
+    DIRECCION: Calle <%=cliente.getCalle()%>, <%=cliente.getNumero()%> (<%=cliente.getCiudad()%>, <%=cliente.getPais()%>)<br>
+    FECHA DE NACIMIENTO: <%=cliente.getNacimiento()%>
+<br><br>
+<a href="historial?postId=<%=cliente.getIdcliente()%>&tipo=0">Ver historial de operaiones</a>
+<br>
+<a href="/gestor/">VOLVER</a>
 </body>
 </html>
