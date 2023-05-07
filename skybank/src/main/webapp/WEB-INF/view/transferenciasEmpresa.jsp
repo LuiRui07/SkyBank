@@ -5,11 +5,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
-<%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.CuentaEntity" %>
 <%@ page import="com.example.skybank.dto.Empresa" %>
 <%@ page import="com.example.skybank.dto.Operacion" %>
 <%@ page import="com.example.skybank.dto.Cuenta" %>
+<%@ page import="java.util.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 
@@ -19,12 +19,15 @@
     List<List<Operacion>> transferenciasRecibidas = (List<List<Operacion>>) request.getAttribute("transferenciasEnviadas");
     List<List<Operacion>> transferenciasEnviadas = (List<List<Operacion>>) request.getAttribute("transferenciasRecibidas");
 
+    Map<Date,Double> gastoFechas = new HashMap<>();
+
 %>
 
 <html>
 <head>
     <title>Transferencias</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
 </head>
 <body>
@@ -83,6 +86,23 @@
                 <a class="text-dark" aria-current="page">Recibidas</a>
 
             </li>
+
+            <li class="nav-item d-flex align-items-center nav-link" id="navChart" onclick="displayChart()">
+
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 256 256" xml:space="preserve">
+                    <defs>
+                    </defs>
+                        <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(1.4065934065934016 1.4065934065934016) scale(2.81 2.81)">
+                            <path d="M 87.994 0 H 69.342 c -1.787 0 -2.682 2.16 -1.418 3.424 l 5.795 5.795 l -33.82 33.82 L 28.056 31.196 l -3.174 -3.174 c -1.074 -1.074 -2.815 -1.074 -3.889 0 L 0.805 48.209 c -1.074 1.074 -1.074 2.815 0 3.889 l 3.174 3.174 c 1.074 1.074 2.815 1.074 3.889 0 l 15.069 -15.069 l 14.994 14.994 c 1.074 1.074 2.815 1.074 3.889 0 l 1.614 -1.614 c 0.083 -0.066 0.17 -0.125 0.247 -0.202 l 37.1 -37.1 l 5.795 5.795 C 87.84 23.34 90 22.445 90 20.658 V 2.006 C 90 0.898 89.102 0 87.994 0 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                            <path d="M 65.626 37.8 v 49.45 c 0 1.519 1.231 2.75 2.75 2.75 h 8.782 c 1.519 0 2.75 -1.231 2.75 -2.75 V 23.518 L 65.626 37.8 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                            <path d="M 47.115 56.312 V 87.25 c 0 1.519 1.231 2.75 2.75 2.75 h 8.782 c 1.519 0 2.75 -1.231 2.75 -2.75 V 42.03 L 47.115 56.312 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                            <path d="M 39.876 60.503 c -1.937 0 -3.757 -0.754 -5.127 -2.124 l -6.146 -6.145 V 87.25 c 0 1.519 1.231 2.75 2.75 2.75 h 8.782 c 1.519 0 2.75 -1.231 2.75 -2.75 V 59.844 C 41.952 60.271 40.933 60.503 39.876 60.503 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                            <path d="M 22.937 46.567 L 11.051 58.453 c -0.298 0.298 -0.621 0.562 -0.959 0.8 V 87.25 c 0 1.519 1.231 2.75 2.75 2.75 h 8.782 c 1.519 0 2.75 -1.231 2.75 -2.75 V 48.004 L 22.937 46.567 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round"/>
+                        </g>
+                    </svg>
+                <a class="text-dark" aria-current="page">Gráfico Gastos</a>
+
+            </li>
         </ul>
 
 
@@ -109,6 +129,9 @@
             <%
                     for(List<Operacion> cuenta : transferenciasRecibidas){
                         for(Operacion transferencia : cuenta){
+                            Date fecha = transferencia.getFecha();
+                            Double gasto = transferencia.getCantidad() * -1;
+                            gastoFechas.put(fecha,gastoFechas.getOrDefault(fecha, 0.0) + gasto);
             %>
 
                 <tr>
@@ -173,6 +196,7 @@
             <%
                 for(List<Operacion> cuenta : transferenciasEnviadas){
                     for(Operacion transferencia : cuenta){
+
             %>
 
             <tr>
@@ -213,6 +237,11 @@
                 }
             %>
         </table>
+
+        <div id="graficaGastos" style="display: none;margin: auto;">
+            <canvas id="myChart" style="width:100%;font-family: Calibri;"></canvas>
+
+        </div>
 
 
         </div>
@@ -281,16 +310,21 @@
     <script>
         const tablaRecibidas = document.getElementById("tablaRecibidas");
         const tablaEnviadas = document.getElementById("tablaEnviadas");
+        const chartDiv = document.getElementById("graficaGastos");
 
         const navRecieved = document.getElementById("navRecieved");
         const navSent = document.getElementById("navSent");
+        const navChart = document.getElementById("navChart");
 
         const displaySentTable = () => {
             tablaEnviadas.style.display = 'none';
             tablaRecibidas.style.display = 'table';
+
             navRecieved.classList.remove("active");
             navSent.classList.add("active");
 
+            navChart.classList.remove("active");
+            chartDiv.style.display = 'none';
         }
 
         const displayRecievedTable = () => {
@@ -298,9 +332,64 @@
             tablaRecibidas.style.display = 'none';
             navRecieved.classList.add("active");
             navSent.classList.remove("active");
+
+            navChart.classList.remove("active");
+            chartDiv.style.display = 'none';
         }
 
+
+
     </script>
+
+    <script>
+        const displayChart = () => {
+            tablaEnviadas.style.display = 'none';
+            tablaRecibidas.style.display = 'none';
+            navRecieved.classList.remove("active");
+            navSent.classList.remove("active");
+
+            navChart.classList.add("active");
+            chartDiv.style.display = 'block';
+
+            createChart();
+        }
+
+        const createChart = () => {
+            const fechasGrafica = [];
+            const dineroFecha = [];
+
+            <%
+                    for(Date d : gastoFechas.keySet()){
+            %>
+                fechasGrafica.push("<%=d.toString()%>")
+                dineroFecha.push("<%=gastoFechas.get(d)%>")
+            <%
+                }
+            %>
+
+            new Chart("myChart", {
+                type: "line",
+                data: {
+                    labels: fechasGrafica.reverse(),
+                    datasets: [{
+                        data: dineroFecha.reverse(),
+                        borderColor: "red",
+                        fill: false,
+                        backgroundColor:[
+                            "red"
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    legend: {display: false}
+
+                }
+            });
+
+        }
+    </script>
+
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
