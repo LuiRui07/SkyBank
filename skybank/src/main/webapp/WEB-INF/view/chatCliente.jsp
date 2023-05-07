@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="container" style="margin-top: 3%;">
-<h1>Chat con el Asistente: <%=chat.getNombreAsistente()%>  </h1>
+<h1 style="margin-bottom: 2%;">Chat con el Asistente: <%=chat.getNombreAsistente()%>  </h1>
 
 
     <%
@@ -28,13 +28,13 @@
         if (!mensaje.getTexto().contains("Asistente")) { %>
             <div class="d-flex justify-content-start mb-2">
                 <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2); margin-bottom: 2%">
-                <p class="small mb-0"><%=mensaje.getTexto()%>    <small style="font-size: 8px;"><%=mensaje.gethora().toLocaleString()%></small></p>
+                    <p class="small mb-0"><%=mensaje.getTexto()%>    <footer class="blockquote-footer" style="font-size: 8px;"><%=mensaje.gethora().toLocaleString()%></footer></p>
                 </div>
             </div>
         <%} else {%>
             <div class="d-flex flex-row justify-content-end mb-2">
-                <div class="p-3 me-3 border" style="border-radius: 15px; background-color: #fbfbfb;margin-bottom: 2%">
-                <p class="small mb-0"><%=mensaje.getTexto()%>    <small style="font-size: 8px; float: right"><%=mensaje.gethora().toLocaleString()%></small></p>
+                <div class="p-3 ms-3 border" style="border-radius: 15px; background-color: #fbfbfb; margin-bottom: 2%">
+                    <p class="small mb-0"><%=mensaje.getTexto()%>    <footer class="blockquote-footer" style="font-size: 8px;"><%=mensaje.gethora().toLocaleString()%></footer></p>
                 </div>
             </div>
         <%}%>
