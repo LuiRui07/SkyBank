@@ -73,6 +73,7 @@ public class ClienteService {
 
         c.setDivisaByDivisa(d);
         c.setSaldo(10.00);
+        c.setActiva(1);
         c.setClienteByIdcliente(clienteNuevo);
         cuentaRepository.save(c);
 
@@ -121,7 +122,7 @@ public class ClienteService {
         cliente.setRegion(clienteForm.getRegion());
         cliente.setPais(clienteForm.getPais());
         cliente.setBloqueado(clienteForm.getBloqueado());
-        cliente.setVerificado(clienteForm.getBloqueado());
+        cliente.setVerificado(clienteForm.getVerificado());
         cliente.setSolicitudactivacion(clienteForm.getSolicitudactivacion());
 
         clienteRepository.save(cliente);

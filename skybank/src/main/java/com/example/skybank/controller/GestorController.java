@@ -112,7 +112,7 @@ public class GestorController {
 
         socio.setBloqueado(0);
         socio.setSolicituddesbloqueo(0);
-        socioService.guardarSocio(socio);
+        socioService.editarSocio(socio, socio.getEmpresa().getIdempresa());
 
         return "redirect:/gestor/solicitudes";
     }
@@ -123,7 +123,7 @@ public class GestorController {
 
         cliente.setBloqueado(0);
         cliente.setSolicitudactivacion(0);
-        clienteService.guardarCliente(cliente);
+        clienteService.editarCliente(cliente);
 
         return "redirect:/gestor/solicitudes";
     }
@@ -132,9 +132,8 @@ public class GestorController {
     public String aceptarCliente(Model model, @RequestParam("postId") int idCliente){
         Cliente cliente = clienteService.getClienteById(idCliente);
 
-        cliente.setSolicitudactivacion(0);
         cliente.setVerificado(1);
-        clienteService.guardarCliente(cliente);
+        clienteService.editarCliente(cliente);
         return "redirect:/gestor/solicitudes";
     }
 
@@ -143,7 +142,7 @@ public class GestorController {
         Empresa empresa = empresaService.getEmpresaById(idEmpresa);
 
         empresa.setVerificado(1);
-        empresaService.guardarEmpresa(empresa);
+        empresaService.editarEmpresa(empresa);
         return "redirect:/gestor/solicitudes";
     }
 
@@ -247,7 +246,7 @@ public class GestorController {
         Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(1);
-        clienteService.guardarCliente(cliente);
+        clienteService.editarCliente(cliente);
         return "redirect:/gestor/cuentasSinUso";
     }
 
@@ -256,7 +255,7 @@ public class GestorController {
         Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(1);
-        empresaService.guardarEmpresa(empresa);
+        empresaService.editarEmpresa(empresa);
         return "redirect:/gestor/cuentasSinUso";
     }
     @GetMapping("/desbloquearCliente")
@@ -264,7 +263,7 @@ public class GestorController {
         Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(0);
-        clienteService.guardarCliente(cliente);
+        clienteService.editarCliente(cliente);
         return "redirect:/gestor/cuentasSinUso";
     }
     @GetMapping("/desbloquearEmpresa")
@@ -272,7 +271,7 @@ public class GestorController {
         Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(0);
-        empresaService.guardarEmpresa(empresa);
+        empresaService.editarEmpresa(empresa);
         return "redirect:/gestor/cuentasSinUso";
     }
 
@@ -307,7 +306,7 @@ public class GestorController {
         Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(1);
-        clienteService.guardarCliente(cliente);
+        clienteService.editarCliente(cliente);
         return "redirect:/gestor/sospechas";
     }
 
@@ -316,7 +315,7 @@ public class GestorController {
         Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(1);
-        empresaService.guardarEmpresa(empresa);
+        empresaService.editarEmpresa(empresa);
         return "redirect:/gestor/sospechas";
     }
 
@@ -325,7 +324,7 @@ public class GestorController {
         Cliente cliente = clienteService.getClienteById(idCliente);
 
         cliente.setBloqueado(0);
-        clienteService.guardarCliente(cliente);
+        clienteService.editarCliente(cliente);
         return "redirect:/gestor/sospechas";
     }
 
@@ -334,7 +333,7 @@ public class GestorController {
         Empresa empresa =empresaService.getEmpresaById(idEmpresa);
 
         empresa.setBloqueada(0);
-        empresaService.guardarEmpresa(empresa);
+        empresaService.editarEmpresa(empresa);
         return "redirect:/gestor/sospechas";
     }
 
