@@ -8,6 +8,7 @@ import com.example.skybank.dao.*;
 import com.example.skybank.dto.*;
 import com.example.skybank.entity.*;
 import com.example.skybank.ui.FiltroOperaciones;
+import com.example.skybank.ui.FiltroTransferenciasEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,17 @@ public class OperacionService {
     public List<List<Operacion>> obtenerTransferenciasRecibidas(Empresa empresa) {
         List<List<Operacion>> transferencias = new ArrayList<>();
         empresaService.obtenerCuentasDeEmpresa(empresa).forEach(c -> transferencias.add(this.operacionRepository.obtenerPagosPositivos(c.getIdcuenta()).stream().map(o -> o.toDTO()).toList()));
+        return transferencias;
+    }
+
+    public List<List<Operacion>> obtenerTransferenciasEnviadasFiltradas(Empresa empresa, FiltroTransferenciasEmpresa filtro) {
+        List<List<Operacion>> transferencias = obtenerTransferenciasEnviadas(empresa).stream().map(l -> l.stream().filter(o ->  Integer.toString(o.getCuentaDestino().getIdcuenta()).equals(filtro.getFiltro())|| o.getConcepto().contains(filtro.getFiltro())).toList()).toList();
+
+        return transferencias;
+    }
+
+    public List<List<Operacion>> obtenerTransferenciasRecibidasFiltradas(Empresa empresa,FiltroTransferenciasEmpresa filtro) {
+        List<List<Operacion>> transferencias = obtenerTransferenciasRecibidas(empresa).stream().map(l -> l.stream().filter(o ->  Integer.toString(o.getCuentaDestino().getIdcuenta()).equals(filtro.getFiltro())|| o.getConcepto().contains(filtro.getFiltro())).toList()).toList();
         return transferencias;
     }
 

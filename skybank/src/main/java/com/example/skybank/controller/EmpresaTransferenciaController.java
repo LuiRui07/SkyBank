@@ -17,14 +17,12 @@ import com.example.skybank.entity.TipoOperacionEntity;
 import com.example.skybank.service.CuentaService;
 import com.example.skybank.service.EmpresaService;
 import com.example.skybank.service.OperacionService;
+import com.example.skybank.ui.FiltroTransferenciasEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.servlet.http.HttpSession;
@@ -47,22 +45,39 @@ public class EmpresaTransferenciaController {
 
     @GetMapping("/")
     public String mostrarTransferencias(Model model, HttpSession session){
+        return filtrarTransferencias(null,model,session);
+    }
 
+    @PostMapping("/filtrado")
+    public String mostrarTransferenciasFiltradas(@ModelAttribute("filtro") FiltroTransferenciasEmpresa filtro, Model model, HttpSession session){
+        return filtrarTransferencias(filtro,model,session);
+    }
 
+    private String filtrarTransferencias(FiltroTransferenciasEmpresa filtro, Model model, HttpSession session){
         Empresa empresa = (Empresa) session.getAttribute("empresa");
+        List<List<Operacion>> transferenciasRecibidas = new ArrayList<>();
+        List<List<Operacion>> transferenciasEnviadas = new ArrayList<>();
+        if(filtro == null || (filtro != null && filtro.getFiltro().isEmpty())){
+            model.addAttribute("filtro", new FiltroTransferenciasEmpresa());
+            transferenciasRecibidas = operacionService.obtenerTransferenciasRecibidas(empresa);
+            transferenciasEnviadas = operacionService.obtenerTransferenciasEnviadas(empresa);
 
+        }else{
+            model.addAttribute("filtro",filtro);
+            transferenciasRecibidas = operacionService.obtenerTransferenciasRecibidasFiltradas(empresa,filtro);
+            transferenciasEnviadas = operacionService.obtenerTransferenciasEnviadasFiltradas(empresa,filtro);
+        }
 
-        List<List<Operacion>> transferenciasRecibidas = operacionService.obtenerTransferenciasRecibidas(empresa);
         model.addAttribute("transferenciasRecibidas",transferenciasRecibidas);
-
-        List<List<Operacion>> transferenciasEnviadas = operacionService.obtenerTransferenciasEnviadas(empresa);
         model.addAttribute("transferenciasEnviadas",transferenciasEnviadas);
-
         model.addAttribute("cuentasEmpresa",empresaService.obtenerCuentasDeEmpresa(empresa));
+
 
         model.addAttribute("empresa",empresa);
 
+
         return "transferenciasEmpresa";
+
     }
 
     @PostMapping("/nueva")

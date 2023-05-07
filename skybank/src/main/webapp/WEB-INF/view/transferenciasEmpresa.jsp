@@ -56,6 +56,14 @@
         %>
         <h1 class="display-5">Últimas transferencias:</h1>
 
+        <form:form modelAttribute="filtro" method="post" action="/empresa/transferencias/filtrado" cssStyle="display: flex; align-items: center; gap: 50px;">
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <label>ID Cuenta Destino o Concepto: </label>
+                <form:input path="filtro" type="text" cssClass="form-control" cssStyle="max-width: 200px !important;"></form:input>
+            </div>
+            <form:button class="btn btn-danger">Filtrar</form:button>
+        </form:form>
+
         <ul class="nav nav-tabs">
             <li class="nav-item d-flex align-items-center nav-link active" id="navSent" onclick="displaySentTable()">
 
