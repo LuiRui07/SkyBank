@@ -16,10 +16,10 @@
   <title>Title</title>
 </head>
 <body>
-<h1>Hola asistente del sistema, este es el chat con <%=chat.getNombreCliente()%> con dni <%=chat.getDniUsuario()%> <button><a href="/cliente/chatsCliente">Volver a los chats</a></button></h1>
+<h1 class="display-2">Hola cliente <%=chat.getNombreCliente()%> <%=chat.getDniUsuario()%>, este es el chat con el asistente <%=chat.getNombreAsistente()%>   <button><a href="/cliente/chatsCliente">Volver a los chats</a></button></h1>
 
 
-<table border="1">
+<table border="1" class="table table-sm">
   <td>
     <%
       for(MensajeDTO mensaje : mensajesEntities){
