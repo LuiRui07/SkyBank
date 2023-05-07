@@ -5,9 +5,8 @@
 package com.example.skybank.controller;
 
 import com.example.skybank.dao.AsistenteRepository;
-import com.example.skybank.dto.AsistenteDTO;
-import com.example.skybank.dto.ChatDTO;
-import com.example.skybank.dto.MensajeDTO;
+import com.example.skybank.dto.Chat;
+import com.example.skybank.dto.Mensaje;
 import com.example.skybank.entity.AsistenteEntity;
 import com.example.skybank.service.AsistenteService;
 import com.example.skybank.service.MensajeService;
@@ -66,7 +65,7 @@ public class AsistenteController {
     @GetMapping("/chats")
     public String mostrarChat(HttpSession session, Model model){
         AsistenteEntity asistente = (AsistenteEntity) session.getAttribute("asistente");
-        List<ChatDTO> chats = this.chatService.listaChatsDeAsistente(asistente.getIdasistente());
+        List<Chat> chats = this.chatService.listaChatsDeAsistente(asistente.getIdasistente());
         model.addAttribute("chats",chats);
         model.addAttribute("filtro",new FiltroAsistente());
         return "chats";
@@ -74,8 +73,8 @@ public class AsistenteController {
 
     @GetMapping("/chat")
     public String mostrarChatPrivado(Model model, @RequestParam("idconversacion") Integer idChat){
-        ChatDTO chat = this.chatService.buscarChat(idChat);
-        List<MensajeDTO> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
+        Chat chat = this.chatService.buscarChat(idChat);
+        List<Mensaje> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
         model.addAttribute("chat",chat);
         model.addAttribute("mensajes",mensajesEntities);
         return "chatPersonal";
@@ -96,7 +95,7 @@ public class AsistenteController {
     public String doFiltrar(@ModelAttribute("filtro") FiltroAsistente filtro, HttpSession session, Model model){
         AsistenteEntity asistente = (AsistenteEntity) session.getAttribute("asistente");
         System.out.println(filtro.getActivo());
-        List<ChatDTO> chats = this.chatService.filtrarChats(filtro,asistente);
+        List<Chat> chats = this.chatService.filtrarChats(filtro,asistente);
         model.addAttribute("chats",chats);
         model.addAttribute("filtro",filtro);
         return "chats";
@@ -105,7 +104,7 @@ public class AsistenteController {
     @GetMapping("/limpiar")
     public String doLimpiar(HttpSession session,Model model){
         AsistenteEntity asistenteEntity = (AsistenteEntity) session.getAttribute("asistente");
-        List<ChatDTO> chats = this.chatService.listaChatsDeAsistente(asistenteEntity.getIdasistente());
+        List<Chat> chats = this.chatService.listaChatsDeAsistente(asistenteEntity.getIdasistente());
         model.addAttribute("chats",chats);
         model.addAttribute("filtro",new FiltroAsistente());
         return "chats";

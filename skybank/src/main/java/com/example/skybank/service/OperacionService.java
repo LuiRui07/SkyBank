@@ -1,5 +1,5 @@
 /*
-    @autor: José Luis López Ruiz(40%) y Luis Ruiz Nuñez(60%).
+    @autor: Luis Ruiz Nuñez (40%), Jose Luis Lopez Ruiz (33%) y Rafael Ceballos Martinez (27%).
  */
 
 package com.example.skybank.service;
@@ -101,6 +101,7 @@ public class OperacionService {
         List<Operacion> operaciones = operacionRepository.findbyAccount(cuenta.getIdcuenta()).stream().map(o -> o.toDTO()).toList();
         return operaciones;
     }
+
     public List<Operacion> obtenerOperacionesEmpresa(Cuenta cuenta) {
         List<Operacion> operaciones = operacionRepository.findbyAccount(cuenta.getIdcuenta()).stream().map(o -> o.toDTO()).toList();
         return operaciones;

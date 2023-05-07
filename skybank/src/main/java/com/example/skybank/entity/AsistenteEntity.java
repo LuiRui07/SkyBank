@@ -4,7 +4,7 @@
 
 package com.example.skybank.entity;
 
-import com.example.skybank.dto.AsistenteDTO;
+import com.example.skybank.dto.Asistente;
 
 import javax.persistence.*;
 import java.util.List;
@@ -67,8 +67,8 @@ public class AsistenteEntity {
         this.conversacionsByIdasistente = conversacionsByIdasistente;
     }
 
-    public AsistenteDTO toDTO(){
-        AsistenteDTO asisDTO = new AsistenteDTO();
+    public Asistente toDTO(){
+        Asistente asisDTO = new Asistente();
         asisDTO.setIdasistente(this.idasistente);
         asisDTO.setEmail(this.email);
         asisDTO.setPassword(this.password);

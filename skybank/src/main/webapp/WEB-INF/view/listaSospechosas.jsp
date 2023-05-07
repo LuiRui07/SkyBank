@@ -1,14 +1,11 @@
+<%--
+  @author: Rafael Ceballos Martinez
+--%>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.dto.Cliente" %>
-<%@ page import="com.example.skybank.dto.Empresa" %><%--
-  Created by IntelliJ IDEA.
-  User: Usuario
-  Date: 04/05/2023
-  Time: 21:18
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.skybank.dto.Empresa" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     List<Cliente> clientesSospechosos = (List<Cliente>) request.getAttribute("clientesSospechosos");

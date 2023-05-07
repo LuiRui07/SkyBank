@@ -7,7 +7,7 @@ package com.example.skybank.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ChatDTO implements Serializable {
+public class Chat implements Serializable {
     private Integer idConversacion;
     private Integer idcliente;
     private Integer idasis;
@@ -53,7 +53,7 @@ public class ChatDTO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ChatDTO chatDTO = (ChatDTO) o;
+        Chat chatDTO = (Chat) o;
         return Objects.equals(idConversacion, chatDTO.idConversacion) && Objects.equals(cerrada, chatDTO.cerrada);
     }
 

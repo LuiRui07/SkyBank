@@ -1,5 +1,4 @@
-USE `skybank`;
--- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.30, for macos12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: skybank
 -- ------------------------------------------------------
@@ -389,29 +388,6 @@ INSERT INTO `socio` VALUES (1,2,'1324324','paco','merte',NULL,'2000-03-12',0,'pa
 UNLOCK TABLES;
 
 --
--- Table structure for table `tipo-operacion`
---
-
-DROP TABLE IF EXISTS `tipo-operacion`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `tipo-operacion` (
-  `id` int NOT NULL AUTO_INCREMENT COMMENT '1. Transferencia',
-  `Tipo` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tipo-operacion`
---
-
-LOCK TABLES `tipo-operacion` WRITE;
-/*!40000 ALTER TABLE `tipo-operacion` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tipo-operacion` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tipooperacion`
 --
 
@@ -444,4 +420,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-06 12:51:47
+-- Dump completed on 2023-05-07 12:43:19

@@ -7,9 +7,8 @@ package com.example.skybank.service;
 import com.example.skybank.dao.AsistenteRepository;
 import com.example.skybank.dao.ChatRepository;
 import com.example.skybank.dao.MensajeRepository;
-import com.example.skybank.dto.ChatDTO;
+import com.example.skybank.dto.Chat;
 import com.example.skybank.entity.AsistenteEntity;
-import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.entity.ConversacionEntity;
 import com.example.skybank.entity.MensajeEntity;
 import com.example.skybank.ui.FiltroAsistente;
@@ -33,19 +32,19 @@ public class ChatService {
     MensajeRepository mensajeRepository;
 
 
-    public List<ChatDTO> listaChatsDeAsistente(Integer idasistente) {
+    public List<Chat> listaChatsDeAsistente(Integer idasistente) {
         List<ConversacionEntity> lista = chatRepository.filtrarChatPorAsistente(idasistente);
         return listaEntidadesADTO(lista);
     }
 
-    public List<ChatDTO> listaChatsDeCliente(Integer idcliente) {
+    public List<Chat> listaChatsDeCliente(Integer idcliente) {
         List<ConversacionEntity> lista = chatRepository.filtrarChatPorCliente(idcliente);
         return listaEntidadesADTO(lista);
     }
 
 
 
-    public ChatDTO buscarChat(Integer idChat) {
+    public Chat buscarChat(Integer idChat) {
         ConversacionEntity chat = this.chatRepository.getById(idChat);
         return chat.toDTO();
     }
@@ -70,7 +69,7 @@ public class ChatService {
     }
 
 
-    public List<ChatDTO> filtrarChats(FiltroAsistente filtro, AsistenteEntity asistente) {
+    public List<Chat> filtrarChats(FiltroAsistente filtro, AsistenteEntity asistente) {
         List<ConversacionEntity> chats;
         if (filtro.getDNI() != null && filtro.getDNI() != "" && filtro.getActivo() != null && filtro.getNombre() != null && filtro.getNombre() != "") {
 
@@ -91,8 +90,8 @@ public class ChatService {
         return listaEntidadesADTO(chats);
     }
 
-    protected List<ChatDTO> listaEntidadesADTO(List<ConversacionEntity> lista) {
-        ArrayList dtos = new ArrayList<ChatDTO>();
+    protected List<Chat> listaEntidadesADTO(List<ConversacionEntity> lista) {
+        ArrayList dtos = new ArrayList<Chat>();
 
         lista.forEach((final ConversacionEntity conversaciones) -> dtos.add(conversaciones.toDTO()));
 

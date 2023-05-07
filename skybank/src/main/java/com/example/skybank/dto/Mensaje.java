@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Objects;
 
-public class MensajeDTO implements Serializable {
+public class Mensaje implements Serializable {
     private Integer idMensajes;
     private Date fecha;
     private Timestamp hora;
@@ -62,7 +62,7 @@ public class MensajeDTO implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        MensajeDTO that = (MensajeDTO) o;
+        Mensaje that = (Mensaje) o;
         return Objects.equals(idMensajes, that.idMensajes)&&Objects.equals(fecha, that.fecha) && Objects.equals(hora, that.hora) && Objects.equals(texto, that.texto);
     }
 

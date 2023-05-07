@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 public class InicioController {
 
     @GetMapping("/")
-    public String doMostrar(Model model, HttpSession session){
+    public String doMostrar(){
         return "inicio";
     }
 }

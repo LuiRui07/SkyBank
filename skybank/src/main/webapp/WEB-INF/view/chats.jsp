@@ -1,14 +1,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.example.skybank.entity.ConversacionEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.dto.ChatDTO" %><%--
+<%@ page import="com.example.skybank.dto.Chat" %><%--
   Created by IntelliJ IDEA.
   User: Pablo García Platero
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    List<ChatDTO> chatEntityList = (List<ChatDTO>) request.getAttribute("chats");
+    List<Chat> chatEntityList = (List<Chat>) request.getAttribute("chats");
 %>
 <html>
 <head>
@@ -39,7 +39,7 @@
             <th scope="col">Estado</th>
         </tr>
         <%
-            for(ChatDTO chat:chatEntityList){
+            for(Chat chat:chatEntityList){
         %>
         <tr class="table-secondary">
             <td><%=chat.getNombreCliente()%> (<%=chat.getDniUsuario()%>) </td>

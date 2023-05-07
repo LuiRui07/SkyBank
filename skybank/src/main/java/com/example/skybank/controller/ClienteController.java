@@ -1,15 +1,12 @@
 /*
-@author: Luis Ruiz Nuñez
+@author: Luis Ruiz Nuñez(84%) y Pablo Garcia Platero (A partir de la linea 236)(16%).
 */
 
 package com.example.skybank.controller;
 import com.example.skybank.dao.*;
 import com.example.skybank.dto.*;
-import com.example.skybank.entity.AsistenteEntity;
-import com.example.skybank.entity.ClienteEntity;
 import com.example.skybank.entity.ConversacionEntity;
 import com.example.skybank.service.*;
-import com.example.skybank.ui.FiltroAsistente;
 import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -233,21 +230,20 @@ public class ClienteController {
 
 
 
-    //Parte asistente
+    //Parte Asistente (Pablo Garcia Platero)
+
     @GetMapping("/chatsCliente")
     public String mostrarChat(HttpSession session, Model model){
         Cliente cliente = (Cliente) session.getAttribute("cliente");
-        List<ChatDTO> chats = this.chatService.listaChatsDeCliente(cliente.getIdcliente());
+        List<Chat> chats = this.chatService.listaChatsDeCliente(cliente.getIdcliente());
         model.addAttribute("chats",chats);
         return "chatsCliente";
     }
 
-
-    //arreglar
     @GetMapping("/chat")
     public String mostrarChatPrivado(Model model, @RequestParam("idconversacion") Integer idChat){
-        ChatDTO chat = this.chatService.buscarChat(idChat);
-        List<MensajeDTO> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
+        Chat chat = this.chatService.buscarChat(idChat);
+        List<Mensaje> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
         model.addAttribute("chat",chat);
         model.addAttribute("mensajes",mensajesEntities);
         return "chatCliente";

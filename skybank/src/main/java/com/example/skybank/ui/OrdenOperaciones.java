@@ -1,3 +1,6 @@
+/*
+@author: Luis Ruiz Nuñez
+*/
 package com.example.skybank.ui;
 
 public class OrdenOperaciones {

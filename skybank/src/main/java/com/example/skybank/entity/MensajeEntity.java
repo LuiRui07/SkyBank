@@ -1,10 +1,7 @@
-/*
-@author: Pablo García Platero
-*/
 
 package com.example.skybank.entity;
 
-import com.example.skybank.dto.MensajeDTO;
+import com.example.skybank.dto.Mensaje;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -83,8 +80,8 @@ public class MensajeEntity {
     public void setConversacionByIdconversacion(ConversacionEntity conversacionByIdconversacion) {
         this.conversacionByIdconversacion = conversacionByIdconversacion;
     }
-    public MensajeDTO toDTO(){
-        MensajeDTO mensajeDTO = new MensajeDTO();
+    public Mensaje toDTO(){
+        Mensaje mensajeDTO = new Mensaje();
         mensajeDTO.setIdMensajes(idmensaje);
         mensajeDTO.setTexto(texto);
         mensajeDTO.setHora(hora);

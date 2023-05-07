@@ -1,5 +1,5 @@
 /*
-    @autor: José Luis López Ruiz(75%) y Luis Ruiz Nuñez(25%).
+    @autor: José Luis López Ruiz(33%), Luis Ruiz Nuñez(33%), Rafael Ceballos Martinez (33%).
  */
 
 package com.example.skybank.service;

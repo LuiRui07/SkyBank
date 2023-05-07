@@ -1,5 +1,5 @@
 /*
-@author: Luis Ruiz Nuñez
+@author: Luis Ruiz Nuñez (33%) y Rafael Ceballos Martinez(66%).
 */
 package com.example.skybank.dao;
 

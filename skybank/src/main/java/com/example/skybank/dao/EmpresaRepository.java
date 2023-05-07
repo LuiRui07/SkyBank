@@ -1,5 +1,5 @@
 /*
-    @autor: José Luis López Ruiz
+    @autor: José Luis López Ruiz(50%) y Rafael Ceballos Martinez(50%).
  */
 
 package com.example.skybank.dao;

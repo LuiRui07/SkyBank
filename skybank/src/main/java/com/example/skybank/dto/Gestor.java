@@ -1,3 +1,7 @@
+/*
+@author: Rafael Ceballos Martinez
+*/
+
 package com.example.skybank.dto;
 
 import java.util.Objects;

@@ -1,14 +1,13 @@
+<%--
+  @author: Rafael Ceballos Martinez
+--%>
+
 <%@ page import="com.example.skybank.entity.OperacionEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="com.example.skybank.dto.Cliente" %>
-<%@ page import="com.example.skybank.dto.Operacion" %><%--
-  Created by IntelliJ IDEA.
-  User: Usuario
-  Date: 05/05/2023
-  Time: 0:48
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="com.example.skybank.dto.Operacion" %>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%

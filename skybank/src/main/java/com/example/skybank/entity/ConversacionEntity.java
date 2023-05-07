@@ -1,10 +1,7 @@
-/*
-@author: Pablo García Platero
-*/
 
 package com.example.skybank.entity;
 
-import com.example.skybank.dto.ChatDTO;
+import com.example.skybank.dto.Chat;
 
 import javax.persistence.*;
 import java.util.List;
@@ -99,8 +96,8 @@ public class ConversacionEntity {
     public void setMensajesByIdconversacion(List<MensajeEntity> mensajesByIdconversacion) {
         this.mensajesByIdconversacion = mensajesByIdconversacion;
     }
-    public ChatDTO toDTO() {
-        ChatDTO chatDTO = new ChatDTO();
+    public Chat toDTO() {
+        Chat chatDTO = new Chat();
         chatDTO.setIdConversacion(this.idconversacion);
         chatDTO.setCerrado(this.cerrada);
         chatDTO.setIdcliente(this.idcliente);

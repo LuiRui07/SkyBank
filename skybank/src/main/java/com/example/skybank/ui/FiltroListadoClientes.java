@@ -1,3 +1,7 @@
+/*
+    @autor: Rafael Ceballos Martinez
+ */
+
 package com.example.skybank.ui;
 
 public class FiltroListadoClientes {

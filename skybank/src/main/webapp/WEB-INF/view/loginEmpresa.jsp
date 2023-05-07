@@ -51,6 +51,8 @@
             <a href="/empresa/register">¡Registrate como empresa!</a>
             <a href="/empresa/socios/login">¡Soy Socio o Autorizado!</a>
         </div>
+        <br/>
+        <a class="btn btn-outline-secondary" href="/"> Volver a Inicio</a>
 
     </div>
 

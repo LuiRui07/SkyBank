@@ -1,5 +1,5 @@
 /*
-    @autor: José Luis López Ruiz
+    @autor: José Luis López Ruiz(80%) y Rafael Ceballos Martinez (20%)
  */
 
 package com.example.skybank.service;
@@ -178,7 +178,6 @@ public class SocioService {
     }
 
     public Socio guardarSocio(Socio socio){
-        ClienteEntity clienteNuevo = new ClienteEntity();
         SocioEntity nuevoSocio = new SocioEntity();
         EmpresaEntity empresaSocio = empresaRepository.getById(socio.getEmpresa().getIdempresa());
 

@@ -1,15 +1,15 @@
 <%@ page import="com.example.skybank.entity.ConversacionEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.MensajeEntity" %>
-<%@ page import="com.example.skybank.dto.ChatDTO" %>
-<%@ page import="com.example.skybank.dto.MensajeDTO" %><%--
+<%@ page import="com.example.skybank.dto.Chat" %>
+<%@ page import="com.example.skybank.dto.Mensaje" %><%--
   Created by IntelliJ IDEA.
   User: Pablo García Platero
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    ChatDTO chat = (ChatDTO) request.getAttribute("chat");
-    List<MensajeDTO> mensajesEntities = (List<MensajeDTO>) request.getAttribute("mensajes");
+    Chat chat = (Chat) request.getAttribute("chat");
+    List<Mensaje> mensajesEntities = (List<Mensaje>) request.getAttribute("mensajes");
 %>
 <html>
 <head>
@@ -25,7 +25,7 @@
 <table border="1">
     <td>
         <%
-            for(MensajeDTO mensaje : mensajesEntities){
+            for(Mensaje mensaje : mensajesEntities){
         %>
         <%=mensaje.getTexto()%> <small style="font-size: 8px"><%=mensaje.gethora()%></small></p>
         <%

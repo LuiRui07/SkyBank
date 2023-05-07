@@ -1,13 +1,11 @@
+/*
+@author: Pablo García Platero
+*/
 package com.example.skybank.dto;
 
-import com.example.skybank.entity.AsistenteEntity;
-import com.example.skybank.entity.ConversacionEntity;
-
-import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
-public class AsistenteDTO {
+public class Asistente {
 
 
     private int idasistente;
@@ -40,7 +38,7 @@ public class AsistenteDTO {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AsistenteDTO asistente = (AsistenteDTO) o;
+        Asistente asistente = (Asistente) o;
         return idasistente == asistente.idasistente;
     }
 
