@@ -26,13 +26,10 @@
     %>
     <%=mensaje.getTexto()%> <small style="font-size: 8px"><%=mensaje.gethora()%></small></p>
     <%
-      }if(chat.getCerrada()==0){
+      }
 
     %>
   </td>
-  <%
-    }
-  %>
 </table>
 <form action="/cliente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>" method="post">
   Nuevo mensaje: <input name="mensaje" type="text" >

@@ -231,6 +231,9 @@ public class ClienteController {
         return "cliente";
     }
 
+
+
+    //Parte asistente
     @GetMapping("/chatsCliente")
     public String mostrarChat(HttpSession session, Model model){
         Cliente cliente = (Cliente) session.getAttribute("cliente");
@@ -269,4 +272,13 @@ public class ClienteController {
         chatRepository.save(conversacion);
         return "redirect:/cliente/chatsCliente";
     }
+
+    @GetMapping("/nuevaConversacion")
+    public String nuevaConversacion(@RequestParam("idcliente") Integer idcliente){
+        chatService.agregarConversacion(idcliente);
+
+        return "redirect:/cliente/chatsCliente";
+    }
 }
+
+

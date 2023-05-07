@@ -60,6 +60,15 @@ public class ChatService {
         this.mensajeRepository.save(mensajeEntity);
     }
 
+    public void agregarConversacion(Integer idcliente) {
+        ConversacionEntity conversacion = new ConversacionEntity();
+        conversacion.setCerrada((byte) 0);
+        conversacion.setIdasistente(1);
+        conversacion.setIdcliente(idcliente);
+
+        this.chatRepository.save(conversacion);
+    }
+
 
     public List<ChatDTO> filtrarChats(FiltroAsistente filtro, AsistenteEntity asistente) {
         List<ConversacionEntity> chats;

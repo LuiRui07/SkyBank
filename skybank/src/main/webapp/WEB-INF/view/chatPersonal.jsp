@@ -30,14 +30,16 @@
 
         %>
     </td>
-        <%
-            }
-        %>
+
 </table>
 <form action="/asistente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>" method="post">
     Nuevo mensaje: <input name="mensaje" type="text" >
     <button type="submit">Enviar</button>
 </form>
+
+<%
+    }
+%>
 
 </body>
 </html>

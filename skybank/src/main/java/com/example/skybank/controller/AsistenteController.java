@@ -51,7 +51,7 @@ public class AsistenteController {
     @PostMapping("/login")
     public String logear(@RequestParam("email") String user, @RequestParam("password") String contra, HttpSession sesion, Model model){
         String urlTo = "redirect:/asistente/";
-        AsistenteDTO asistente = this.asistenteService.autenticar(user,contra);
+        AsistenteEntity asistente = asistenteRepository.autenticar(user,contra);
         if(asistente == null){
             model.addAttribute("error", "asistente no encontrado");
             sesion.setAttribute("asistente",asistente);
