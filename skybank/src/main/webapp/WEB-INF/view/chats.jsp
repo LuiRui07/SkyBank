@@ -31,7 +31,7 @@
 </div>
 
 
-<div align="center" margin="1rem">
+<div class="container" align="center" margin="1rem">
     <table border="1" class="table table-sm">
         <tr class="table-primary">
             <th scope="col">Nombre (dni)</th>

@@ -35,10 +35,11 @@
     <p class="h1"><%=cliente.getNombre()%>  <%=cliente.getApellido1()%> <%=cliente.getApellido2()%>
         <div>
             <a href="editar?id=${cliente.idcliente}" class="btn btn-outline-primary">Modificar Datos</a>
-            <a href="/cliente/chatsCliente">Abrir conversaciones nuevas o ver anteriores</a>
             <a onclick="CerrarSesion()" style="float:right" class="btn btn-outline-info"> Cerrar Sesión </a>
+            <a href="/cliente/chatsCliente"  style="float:right; margin-right: 1%" class="btn btn-outline-success">Contactar con Asistente</a>
+
             <%if (cliente.getBloqueado() == 1 && cliente.getSolicitudactivacion() != 1){%>
-                <a href="solicitar?id=<%=cliente.getIdcliente()%>"  class="btn btn-outline-success">Solicitar Activacion</a> <br/>
+                <a href="solicitar?id=<%=cliente.getIdcliente()%>"  class="btn btn-outline-warning">Solicitar Activacion</a> <br/>
         </div>
     </p>
 
@@ -66,7 +67,7 @@
             <a style="margin-top:1%" href="cambio?id=<%=cuenta.getIdcuenta()%>" class="btn btn-outline-primary">Realizar Cambio de Divisas</a>
         </div>
     <%} else { %>
-        <h1 style="margin-top:1%"class="badge bg-danger" >Cuenta Bloqueada</h1>
+        <h1 style="margin-top:1%; color: white"class="badge bg-danger" >Cuenta Bloqueada</h1>
 
     <%}}}}%>
 </div>
