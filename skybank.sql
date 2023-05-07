@@ -1,3 +1,5 @@
+create database skybank; 
+use skybank;
 -- MySQL dump 10.13  Distrib 8.0.30, for macos12 (x86_64)
 --
 -- Host: 127.0.0.1    Database: skybank
@@ -291,7 +293,7 @@ CREATE TABLE `mensaje` (
   PRIMARY KEY (`idmensaje`),
   KEY `fk_Mensaje_Conversacion1_idx` (`idconversacion`),
   CONSTRAINT `fk_Mensaje_Conversacion1` FOREIGN KEY (`idconversacion`) REFERENCES `conversacion` (`idconversacion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -300,6 +302,7 @@ CREATE TABLE `mensaje` (
 
 LOCK TABLES `mensaje` WRITE;
 /*!40000 ALTER TABLE `mensaje` DISABLE KEYS */;
+INSERT INTO `mensaje` VALUES (1,'2023-05-07','2023-05-07 18:40:26','Luis Ruiz: Hola',1),(2,'2023-05-07','2023-05-07 18:40:40','Asistente: Adios',1);
 /*!40000 ALTER TABLE `mensaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +335,7 @@ CREATE TABLE `operacion` (
   CONSTRAINT `fk_Operacion_Gestor1` FOREIGN KEY (`idgestor`) REFERENCES `gestor` (`idgestor`),
   CONSTRAINT `fk_Operacion_Tipo-Operacion1` FOREIGN KEY (`idtipo`) REFERENCES `tipooperacion` (`idtipo`),
   CONSTRAINT `fk_operación_Cuenta2` FOREIGN KEY (`idcuenta2`) REFERENCES `cuenta` (`idcuenta`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -341,7 +344,7 @@ CREATE TABLE `operacion` (
 
 LOCK TABLES `operacion` WRITE;
 /*!40000 ALTER TABLE `operacion` DISABLE KEYS */;
-INSERT INTO `operacion` VALUES (26,'2023-04-29',NULL,1,12,3,-5,NULL,1,'2asdadsad'),(27,'2023-04-29',NULL,1,12,3,5,NULL,1,'2asdadsad'),(30,'2023-05-01',NULL,1,13,4,20,NULL,1,'Bizum: Cafe'),(31,'2023-05-01',NULL,1,4,13,30,NULL,1,NULL),(33,'2023-05-04',NULL,1,12,4,10,NULL,1,'');
+INSERT INTO `operacion` VALUES (26,'2023-04-29',NULL,1,12,3,-5,NULL,1,'2asdadsad'),(27,'2023-04-29',NULL,1,12,3,5,NULL,1,'2asdadsad'),(30,'2023-05-01',NULL,1,13,4,20,NULL,1,'Bizum: Cafe'),(31,'2023-05-01',NULL,1,4,13,30,NULL,1,NULL),(33,'2023-05-04',NULL,1,12,4,10,NULL,1,''),(34,'2023-05-04',NULL,1,12,3,10,NULL,1,'Pago'),(35,'2023-05-04',NULL,1,12,3,-10,NULL,1,'Pago'),(36,'2023-05-05',NULL,1,12,3,40,NULL,1,'Compra'),(37,'2023-05-05',NULL,1,12,3,-40,NULL,1,'Compra'),(38,'2023-05-06',NULL,1,12,3,150,NULL,1,'Discoteca'),(39,'2023-05-06',NULL,1,12,3,-150,NULL,1,'Discoteca');
 /*!40000 ALTER TABLE `operacion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -420,4 +423,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-07 12:43:19
+-- Dump completed on 2023-05-07 22:41:22
