@@ -68,6 +68,12 @@ public class ChatService {
         this.chatRepository.save(conversacion);
     }
 
+    public void cerrarConversacion(Integer idChat){
+        ConversacionEntity conversacion = this.chatRepository.getById(idChat);
+        conversacion.setCerrada((byte) 1);
+        chatRepository.save(conversacion);
+    }
+
 
     public List<Chat> filtrarChats(FiltroAsistente filtro, AsistenteEntity asistente) {
         List<ConversacionEntity> chats;

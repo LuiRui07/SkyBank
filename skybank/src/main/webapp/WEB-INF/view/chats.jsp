@@ -17,6 +17,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body class="container">
+<script>
+    function CerrarSesion() {
+        var result = confirm("¿Seguro que quieres cerrar sesión?");
+        if (result == true) {
+            window.location = "/asistente/logout"
+        }
+    }
+</script>
+
 <h1 class="display-4" style="text-align: center; margin-top: 4%; margin-bottom: 3%">Conversaciones </h1>
 <div align="center">
     <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">
@@ -50,7 +59,8 @@
         %>
     </table>
 
-<a href="/asistente/" class="btn btn-danger">Volver</a>
+<a onclick="CerrarSesion()" class="btn btn-danger"> Cerrar Sesión </a>
+
 
 </body>
 

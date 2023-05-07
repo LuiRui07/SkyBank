@@ -18,7 +18,7 @@
     <div class="container">
 
 
-        <h1>Inicio Sesión de Empresa:</h1>
+        <h1 class="mt-5">Inicio Sesión de Empresa:</h1>
 
 
         <%

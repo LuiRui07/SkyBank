@@ -3,9 +3,7 @@
 */
 
 package com.example.skybank.controller;
-import com.example.skybank.dao.*;
 import com.example.skybank.dto.*;
-import com.example.skybank.entity.ConversacionEntity;
 import com.example.skybank.service.*;
 import com.example.skybank.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +16,6 @@ import javax.servlet.http.HttpSession;
 @Controller
 @RequestMapping("/cliente")
 public class ClienteController {
-
-    @Autowired
-    private ChatRepository chatRepository;
 
     @Autowired
     private ClienteService clienteService;
@@ -263,9 +258,7 @@ public class ClienteController {
 
     @GetMapping("/cerrar")
     public String cerrarConversacion(Model model, @RequestParam("idconversacion") Integer idChat){
-        ConversacionEntity conversacion = chatRepository.getById(idChat);
-        conversacion.setCerrada((byte) 1);
-        chatRepository.save(conversacion);
+        chatService.cerrarConversacion(idChat);
         return "redirect:/cliente/chatsCliente";
     }
 

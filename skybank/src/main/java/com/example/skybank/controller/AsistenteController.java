@@ -39,7 +39,7 @@ public class AsistenteController {
     @GetMapping("/")
     public String mostrarInterfazAsistente(){
 
-        return "/asistentePaginaPrincipal";
+        return "redirect:/asistente/login";
     }
 
     @GetMapping("/login")
@@ -47,12 +47,17 @@ public class AsistenteController {
         return "asistenteLogin";
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession sesion){
+        sesion.invalidate();
+        return "redirect:/asistente/login";
+    }
     @PostMapping("/login")
     public String logear(@RequestParam("email") String user, @RequestParam("password") String contra, HttpSession sesion, Model model){
-        String urlTo = "redirect:/asistente/";
+        String urlTo = "redirect:/asistente/chats";
         AsistenteEntity asistente = asistenteRepository.autenticar(user,contra);
         if(asistente == null){
-            model.addAttribute("error", "asistente no encontrado");
+            model.addAttribute("error", "Asistente no encontrado");
             sesion.setAttribute("asistente",asistente);
             urlTo = "asistenteLogin";
         }else{
