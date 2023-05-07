@@ -1,2 +1,0 @@
-# SkyBank
-Trabajo de TAW
