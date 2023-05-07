@@ -9,8 +9,7 @@
 <div style="margin: auto; justify-content: center; justify-items: center;margin-top: 50px; display: flex; flex-direction: column; padding: 10px;">
 
     <img src="https://i.imgur.com/iiy0n2o.png" width="350px" height="250px" style="margin: auto">
-    <h3 style="color: darkslateblue; font-family: Arial; margin: auto;">"Haz que tus cuentas suban hasta las nubes"</h3>
-
+    <h3 style="color: #0089b1; font-family: Arial; margin: auto;">"Haz que tus cuentas suban hasta las nubes"</h3>
 </div>
 
 

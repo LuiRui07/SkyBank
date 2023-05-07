@@ -98,7 +98,7 @@
                 <form:input type="password" path="password" cssClass="form-control" cssStyle="width: 25%" required="required"  ></form:input>
             <br>
             <div class="container" style="">
-                <form:button class="btn btn-outline-danger">Registrar</form:button>
+                <form:button class="btn btn-primary">Registrarme</form:button>
                 </form:form>
 
                 <a  style=" margin-left: 3%" class="btn btn-outline-success" href="/cliente/logout">Ya tengo una cuenta</a>

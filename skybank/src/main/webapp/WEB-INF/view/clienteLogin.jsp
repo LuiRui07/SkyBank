@@ -35,8 +35,8 @@
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <div>
-            <button type="submit" class="btn btn-outline-danger">Iniciar Sesión</button>
-            <a class="btn btn-outline-primary ml-3" href="/cliente/register">Regístrate</a>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            <a class="btn btn-outline-info ml-3" href="/cliente/register">Regístrate</a>
             <a class="btn btn-outline-secondary" href="/" style="float: right"> Volver a Inicio</a>
         </div>
 
