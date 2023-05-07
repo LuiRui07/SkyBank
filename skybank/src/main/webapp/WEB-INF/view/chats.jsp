@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-<h1 class="display-4">Conversaciones </h1>
+<body class="container">
+<h1 class="display-4" style="text-align: center; margin-top: 4%; margin-bottom: 3%">Conversaciones </h1>
 <div align="center">
     <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">
         <td><h6>Estado: <form:radiobutton path="activo" value="0" label="activo" /> <form:radiobutton path="activo" value="1" label="inactivo" /></h6>
@@ -31,7 +31,6 @@
 </div>
 
 
-<div class="container" align="center" margin="1rem">
     <table border="1" class="table table-sm">
         <tr class="table-primary">
             <th scope="col">Nombre (dni)</th>
@@ -50,7 +49,8 @@
             }
         %>
     </table>
-</div>
+
+<a href="/asistente/" class="btn btn-danger">Volver</a>
 
 </body>
 

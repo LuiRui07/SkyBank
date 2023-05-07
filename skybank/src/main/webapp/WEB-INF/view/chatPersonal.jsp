@@ -17,32 +17,41 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body class="container">
-<h4>Buenas asistente, este es el chat con <%=chat.getNombreCliente()%>, con dni <%=chat.getDniUsuario()%></h4>
+<body class="container" style="margin-top: 3%;">
+<h1 style="margin-bottom: 2%;"> Chat con <%=chat.getNombreCliente()%>, con dni <%=chat.getDniUsuario()%></h1>
 
 
 
-<table border="1">
-    <td>
+
+
         <%
             for(Mensaje mensaje : mensajesEntities){
         %>
-        <%=mensaje.getTexto()%> <small style="font-size: 8px"><%=mensaje.gethora()%></small></p>
+        <%
+        if (mensaje.getTexto().contains("Asistente")) { %>
+        <div class="d-flex justify-content-start mb-2">
+            <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2); margin-bottom: 2%">
+                <p class="small mb-0"><%=mensaje.getTexto()%>    <footer class="blockquote-footer" style="font-size: 8px;"><%=mensaje.gethora().toLocaleString()%></footer></p>
+            </div>
+        </div>
+        <%} else {%>
+        <div class="d-flex flex-row justify-content-end mb-2">
+            <div class="p-3 ms-3 border" style="border-radius: 15px; background-color: #fbfbfb; margin-bottom: 2%">
+                <p class="small mb-0"><%=mensaje.getTexto()%>    <footer class="blockquote-footer" style="font-size: 8px;"><%=mensaje.gethora().toLocaleString()%></footer></p>
+            </div>
+        </div>
+        <%}%>
         <%
             }if(chat.getCerrada()==0){
 
         %>
-    </td>
 
-</table>
+
 <form action="/asistente/crearNuevoMensaje?idconversacion=<%=chat.getIdConversacion()%>" method="post">
-    Nuevo mensaje:<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text" id="basic-addon1">Mensaje</span>
+    <div class="input-group">
+        <input class="form-control"  style="width: 90%" placeholder="Nuevo Mensaje" name="mensaje" type="text">
+        <button class="btn btn-primary" type="submit" style="margin-left: 1%">Enviar</button>
     </div>
-    <input name="mensaje" type="text" class="form-control" placeholder="Texto a enviar" aria-label="Username" aria-describedby="basic-addon1">
-    <button type="submit">Enviar</button>
-</div>
 </form>
 
 <%

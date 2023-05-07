@@ -40,6 +40,7 @@
     </div>
     <div>
       <button type="submit" class="btn btn-outline-danger">Iniciar Sesión</button>
+      <a class="btn btn-outline-secondary" href="/" style="float: right"> Volver a Inicio</a>
     </div>
 
   </form>
