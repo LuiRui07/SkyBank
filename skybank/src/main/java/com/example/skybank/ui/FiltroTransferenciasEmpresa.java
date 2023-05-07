@@ -1,5 +1,10 @@
 package com.example.skybank.ui;
 
+/*
+    @author: José Luis López Ruiz
+
+ */
+
 public class FiltroTransferenciasEmpresa {
 
     private String filtro;
