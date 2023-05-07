@@ -31,9 +31,12 @@
 <html>
 <head>
   <title>HISTORIAL</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
-<h2>HISTORIAL OPERACIONES</h2>
+<div class="container mt-4">
+<h1 class="display-3 mt-5 mb-4">HISTORIAL OPERACIONES</h1>
 <div>
   <form:form modelAttribute="filtro" method="post" action="/gestor/filtrar2" >
     <div style="margin-bottom: 2%">
@@ -59,14 +62,14 @@
 </div>
 
 
-<table border="1">
+<table class="table">
   <thead>
-  <td>TIPO OPERACION</td>
-  <td>CUENTA ORIGEN</td>
-  <td>CUENTA DESTINO</td>
-  <td>CANTIDAD</td>
-  <td>FECHA</td>
-  <td>CONCEPTO</td>
+  <th scope="col">TIPO OPERACION</th>
+  <th scope="col">CUENTA ORIGEN</td>
+  <th scope="col">CUENTA DESTINO</td>
+  <th scope="col">CANTIDAD</td>
+  <th scope="col">FECHA</td>
+  <th scope="col">CONCEPTO</td>
   </thead>
   <tbody>
   <% for(Operacion o : operaciones){%>
@@ -83,7 +86,7 @@
   </tbody>
 </table>
 <br>
-<a href="gestionarEmpresa?postId=<%=empresa.getIdempresa()%>">VOLVER</a>
-
+<a href="gestionarEmpresa?postId=<%=empresa.getIdempresa()%>" class="btn btn-danger">VOLVER</a>
+</div>
 </body>
 </html>

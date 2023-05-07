@@ -19,16 +19,35 @@
 <html>
 <head>
   <title><%=e.getNombre()%> - GESTIONAR</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
-<h1><%=e.getNombre()%></h1>
-<h2>DATOS</h2>
-CIF: <%=e.getCif()%><br>
-EMAIL: <%=e.getEmailcorporativo()%><br>
-DIRECCION: Calle <%=e.getCalle()%>, <%=e.getNumero()%> (<%=e.getCiudad()%>, <%=e.getPais()%>)<br>
-<br><br>
-<a href="historialEmpresa?postId=<%=e.getIdempresa()%>&tipo=1">Ver historial de operaciones</a>
-<br>
-<a href="/gestor/">VOLVER</a>
+<div class="container mt-4">
+  <h1 class="display-3 mt-5"><%=e.getNombre()%></h1>
+  <h2>DATOS</h2>
+
+  <table class="table">
+    <tbody>
+      <tr>
+        <td>
+          <strong>CIF: </strong><%=e.getCif()%>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <strong>EMAIL: </strong><%=e.getEmailcorporativo()%>
+        </td>
+      </tr>
+    <tr>
+      <td>
+        <strong>DIRECCION: </strong>Calle <%=e.getCalle()%>, <%=e.getNumero()%> (<%=e.getCiudad()%>, <%=e.getPais()%>)
+      </td>
+    </tr>
+    </tbody>
+  </table>
+<a href="historialEmpresa?postId=<%=e.getIdempresa()%>&tipo=1" class="btn btn-primary">Ver historial de operaciones</a>
+<a href="/gestor/" class="btn btn-danger">VOLVER</a>
+</div>
 </body>
 </html>

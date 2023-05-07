@@ -1,13 +1,8 @@
-<%@ page import="com.example.skybank.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.skybank.entity.EmpresaEntity" %>
 <%@ page import="com.example.skybank.dto.Empresa" %>
 <%@ page import="com.example.skybank.dto.Cliente" %><%--
   Created by IntelliJ IDEA.
-  User: Usuario
-  Date: 04/05/2023
-  Time: 18:57
-  To change this template use File | Settings | File Templates.
+  Rafael Ceballos
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
@@ -18,15 +13,18 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">    <meta name="viewport" content="width=device-width, initial-scale=1">
+
 </head>
 <body>
-<h1>Listado Cuentas en Desuso</h1>
-<table border="1">
+<div class="container mt-4">
+<h1 class="display-3 mt-5">Listado Cuentas en Desuso</h1>
+<table class="table">
     <thead>
-    <td>CLIENTE/EMPRESA</td>
-    <td>NOMBRE</td>
-    <td>DNI/CIF</td>
-    <td>ACTIVAR</td>
+    <th scope="col">CLIENTE/EMPRESA</th>
+    <th scope="col">NOMBRE</th>
+    <th scope="col">DNI/CIF</th>
+    <th scope="col">ACTIVAR</th>
     </thead>
     <%
         if(!clientesObsoletos.isEmpty()){
@@ -67,6 +65,9 @@
     <%}}} %>
 </table>
 <br>
-<a href="/gestor/">VOLVER</a>
+<a href="/gestor/" class="btn btn-danger">VOLVER</a>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
+
 </body>
 </html>
