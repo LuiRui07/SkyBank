@@ -24,6 +24,7 @@
 </head>
 <body>
 <div class="container">
+
     <div class="container" style="margin-bottom: 4%">
         <h1 class="display-3 mt-5">LISTADO CLIENTES Y EMPRESAS</h1>
     </div>
@@ -79,7 +80,7 @@
         </tr>
     </table>
     <br>
-    <div style="margin-left: 35%">
+    <div style="margin-left: 30%">
         <a class="btn btn-primary" href="solicitudes"> Ver Solicitudes </a>
 
         <a class="btn btn-primary" href="cuentasSinUso">Gestionar Cuentas en desuso</a>
@@ -88,7 +89,6 @@
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 </body>
 </html>
