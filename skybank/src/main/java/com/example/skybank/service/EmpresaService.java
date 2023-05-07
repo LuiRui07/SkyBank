@@ -7,13 +7,11 @@ package com.example.skybank.service;
 import com.example.skybank.dao.CuentaRepository;
 import com.example.skybank.dao.DivisaRepository;
 import com.example.skybank.dao.EmpresaRepository;
+import com.example.skybank.dao.SocioRepository;
 import com.example.skybank.dto.Cliente;
 import com.example.skybank.dto.Cuenta;
 import com.example.skybank.dto.Empresa;
-import com.example.skybank.entity.ClienteEntity;
-import com.example.skybank.entity.CuentaEntity;
-import com.example.skybank.entity.DivisaEntity;
-import com.example.skybank.entity.EmpresaEntity;
+import com.example.skybank.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +29,9 @@ public class EmpresaService {
 
     @Autowired
     private DivisaRepository divisaRepository;
+
+    @Autowired
+    private SocioRepository socioRepository;
 
     public Empresa guardarEmpresa(Empresa empresaDTO){
         EmpresaEntity nuevaEmpresa = new EmpresaEntity();
@@ -134,6 +135,19 @@ public class EmpresaService {
 
     public List<Empresa> getPendientesVerificacion(){
         return empresaRepository.getPendientesVerificar().stream().map(c -> c.toDTO()).toList();
+    }
+
+    public void eliminarEmpresa(Empresa empresa){
+        EmpresaEntity e = empresaRepository.findById(empresa.getIdempresa()).orElse(null);
+        List<CuentaEntity> cuentas =  cuentaRepository.findByEmpresa(e.getIdempresa());
+        List<SocioEntity> socios = socioRepository.todosDeUnaEmpresa(e.getIdempresa());
+        for(CuentaEntity c : cuentas){
+            cuentaRepository.delete(c);
+        }
+        for(SocioEntity s : socios){
+            socioRepository.delete(s);
+        }
+        empresaRepository.delete(e);
     }
 
 }

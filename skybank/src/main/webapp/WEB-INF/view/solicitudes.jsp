@@ -38,6 +38,7 @@
         <th scope="col">NOMBRE</th>
         <th scope="col">DNI/CIF</th>
         <th scope="col">ACTIVAR</th>
+        <th scope="col">RECHAZAR</th>
         </thead>
         <% for (Cliente c:solicitadas){ %>
         <tr>
@@ -45,6 +46,7 @@
             <td><%=c.getNombre()%> <%=c.getApellido1()%> <%=c.getApellido2()%></td>
             <td><%=c.getDni()%></td>
             <td><a href="aceptarCliente?postId=<%=c.getIdcliente()%>">Aceptar</a></td>
+            <td><a href="rechazarCliente?postId=<%=c.getIdcliente()%>">Rechazar</a> </td>
         </tr>
         <% }
             for(Empresa e :solicitadasE){
@@ -54,6 +56,7 @@
             <td><%=e.getNombre()%></td>
             <td><%=e.getCif()%></td>
             <td><a href="aceptarEmpresa?postId=<%=e.getIdempresa()%>">Aceptar</a></td>
+            <td><a href="rechazarEmpresa?postId=<%=e.getIdempresa()%>">Rechazar</a> </td>
         </tr>
         <% }%>
     </table>

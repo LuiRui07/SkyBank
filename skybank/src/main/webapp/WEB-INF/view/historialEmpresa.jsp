@@ -46,6 +46,7 @@
         <form:options items="${ordenes}" itemLabel="orden" itemValue="orden"/>
       </form:select>
     </div>
+    Tipo de operacion:
     <form:select multiple="false" path="tipo" cssStyle="margin-right: 2%;">
       <form:option value="" label="Todos" />
       <form:options items="${tipos}" itemLabel="tipo" itemValue="tipo"/>
@@ -57,7 +58,7 @@
 
     <form:input path="min" placeholder="Minima cantidad" size="15"></form:input>
     <form:input path="max" placeholder="Maxima cantidad" size="15"></form:input>
-    <button style="margin-left: 2%" class="btn btn-info">Filtrar</button>
+    <button style="margin-left: 2%" class="btn btn-warning">Filtrar</button>
   </form:form>
 </div>
 

@@ -141,4 +141,14 @@ public class ClienteService {
     public List<Cliente> getSolicitudesReactivacion(){
         return clienteRepository.getSolicitudesReactivacion().stream().map(c -> c.toDTO()).toList();
     }
+
+    public void eliminarCliente(Cliente cliente){
+        ClienteEntity c = clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+        List<CuentaEntity> cuentas =  cuentaRepository.findByCliente(c.getIdcliente());
+
+        for(CuentaEntity cu : cuentas){
+            cuentaRepository.delete(cu);
+        }
+        clienteRepository.delete(c);
+    }
 }

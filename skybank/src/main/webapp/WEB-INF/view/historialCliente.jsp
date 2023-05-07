@@ -39,11 +39,13 @@
     <h1 class="display-3 mt-5 mb-4">HISTORIAL OPERACIONES</h1>
     <div>
         <form:form modelAttribute="filtro" method="post" action="/gestor/filtrar" >
+                <div style="margin-bottom: 2%">
                 Ordenar por:
                 <form:select path="ordenOperaciones.orden" multiple="false">
                     <form:option value="" label="" />
                     <form:options items="${ordenes}" itemLabel="orden" itemValue="orden"/>
                 </form:select>
+                </div>
                 Tipo de operacion:
             <form:select multiple="false" path="tipo" cssStyle="margin-right: 2%;">
                 <form:option value="" label="Todos" />

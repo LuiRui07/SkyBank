@@ -137,12 +137,28 @@ public class GestorController {
         return "redirect:/gestor/solicitudes";
     }
 
+    @GetMapping("/rechazarCliente")
+    public String rechazarCliente(Model model, @RequestParam("postId") int idCliente){
+        Cliente cliente = clienteService.getClienteById(idCliente);
+
+        clienteService.eliminarCliente(cliente);
+        return "redirect:/gestor/solicitudes";
+    }
+
     @GetMapping("/aceptarEmpresa")
     public String aceptarEmpresa(Model model, @RequestParam("postId") int idEmpresa){
         Empresa empresa = empresaService.getEmpresaById(idEmpresa);
 
         empresa.setVerificado(1);
         empresaService.editarEmpresa(empresa);
+        return "redirect:/gestor/solicitudes";
+    }
+
+    @GetMapping("/rechazarEmpresa")
+    public String rechazarEmpresa(Model model, @RequestParam("postId") int idEmpresa){
+        Empresa empresa = empresaService.getEmpresaById(idEmpresa);
+
+        empresaService.eliminarEmpresa(empresa);
         return "redirect:/gestor/solicitudes";
     }
 
