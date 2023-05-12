@@ -2,7 +2,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.skybank.entity.MensajeEntity" %>
 <%@ page import="com.example.skybank.dto.Chat" %>
-<%@ page import="com.example.skybank.dto.Mensaje" %><%--
+<%@ page import="com.example.skybank.dto.Mensaje" %>
+<%@ page import="com.example.skybank.dto.Cliente" %><%--
   Created by IntelliJ IDEA.
   User: Pablo García Platero
 --%>
@@ -10,6 +11,7 @@
 <%
   Chat chat = (Chat) request.getAttribute("chat");
   List<Mensaje> mensajesEntities = (List<Mensaje>) request.getAttribute("mensajes");
+  Cliente cliente = (Cliente) request.getAttribute("cliente");
 %>
 <html>
 <head>
@@ -25,7 +27,7 @@
       for(Mensaje mensaje : mensajesEntities){
     %>
     <%
-        if (!mensaje.getTexto().contains("Asistente")) { %>
+        if (!mensaje.getTexto().contains(cliente.getNombre())) { %>
             <div class="d-flex justify-content-start mb-2">
                 <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2); margin-bottom: 2%">
                     <p class="small mb-0"><%=mensaje.getTexto()%>    <footer class="blockquote-footer" style="font-size: 8px;"><%=mensaje.gethora().toLocaleString()%></footer></p>

@@ -239,8 +239,10 @@ public class ClienteController {
     public String mostrarChatPrivado(Model model, @RequestParam("idconversacion") Integer idChat){
         Chat chat = this.chatService.buscarChat(idChat);
         List<Mensaje> mensajesEntities = this.mensajeService.listMensajesPorIdChat(idChat);
+        Cliente cliente = this.clienteService.getClienteById(chat.getIdcliente());
         model.addAttribute("chat",chat);
         model.addAttribute("mensajes",mensajesEntities);
+        model.addAttribute("cliente", cliente);
         return "chatCliente";
     }
 

@@ -28,7 +28,7 @@
             for(Mensaje mensaje : mensajesEntities){
         %>
         <%
-        if (mensaje.getTexto().contains("Asistente")) { %>
+        if (mensaje.getTexto().contains("Asistente:")) { %>
         <div class="d-flex justify-content-start mb-2">
             <div class="p-3 ms-3" style="border-radius: 15px; background-color: rgba(57, 192, 237,.2); margin-bottom: 2%">
                 <p class="small mb-0"><%=mensaje.getTexto()%>    <footer class="blockquote-footer" style="font-size: 8px;"><%=mensaje.gethora().toLocaleString()%></footer></p>
